@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMM Order Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #111827;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #000;
+    }
+
+    #price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🚀 SMM Order</h1>
+
+  <label>Service</label>
+  <select id="service" onchange="calculatePrice()">
+    <option value="views">Views</option>
+    <option value="likes">Likes</option>
+    <option value="followers">Followers</option>
+    <option value="shares">Shares</option>
+  </select>
+
+  <label>Quantity</label>
+  <input type="number" id="quantity" placeholder="Enter quantity" oninput="calculatePrice()">
+
+  <label>Post / Reel Link</label>
+  <input type="url" id="link" placeholder="https://instagram.com/...">
+
+  <div id="price">Price: ₹0</div>
+
+  <button onclick="placeOrder()">Place Order</button>
+</div>
+
+<script>
+function calculatePrice() {
+  const service = document.getElementById("service").value;
+  const quantity = Number(document.getElementById("quantity").value) || 0;
+
+  let rate = 0;
+
+  if (service === "views") rate = 29 / 10000;
+  if (service === "likes") rate = 29 / 300;
+  if (service === "followers") rate = 50 / 1000;
+  if (service === "shares") rate = 20 / 1000;
+
+  const price = quantity * rate;
+
+  document.getElementById("price").innerText =
+    "Price: ₹" + price.toFixed(2);
+}
+
+function placeOrder() {
+  const quantity = document.getElementById("quantity").value;
+  const link = document.getElementById("link").value;
+
+  if (!quantity || !link) {
+    alert("Please fill all details.");
+    return;
+  }
+
+  alert("Order form working. Backend and payment verification will be added next.");
+}
+</script>
+
+</body>
+</html>
