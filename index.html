@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SMM Order Website</title>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,9 +25,8 @@
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
-      margin-bottom: 25px;
     }
 
     label {
@@ -54,17 +57,112 @@
       background: #000;
     }
 
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .secondary:hover {
+      background: #d1d5db;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     #price {
       font-size: 20px;
       font-weight: bold;
       margin-top: 15px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar button {
+      width: auto;
+      margin-top: 0;
+      padding: 8px 14px;
+    }
+
+    .switch {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .switch span {
+      color: #2563eb;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- SIGN UP -->
+<div class="container" id="signupPage">
+  <h1>Create Account</h1>
+
+  <label>Name</label>
+  <input type="text" id="signupName" placeholder="Enter your name">
+
+  <label>Email</label>
+  <input type="email" id="signupEmail" placeholder="Enter email">
+
+  <label>Password</label>
+  <input type="password" id="signupPassword" placeholder="Create password">
+
+  <button onclick="signUp()">Sign Up</button>
+
+  <div id="signupMessage" class="message"></div>
+
+  <div class="switch">
+    Already have an account?
+    <span onclick="showLogin()">Sign In</span>
+  </div>
+</div>
+
+
+<!-- SIGN IN -->
+<div class="container hidden" id="loginPage">
+  <h1>Customer Login</h1>
+
+  <label>Email</label>
+  <input type="email" id="loginEmail" placeholder="Enter email">
+
+  <label>Password</label>
+  <input type="password" id="loginPassword" placeholder="Enter password">
+
+  <button onclick="signIn()">Sign In</button>
+
+  <div id="loginMessage" class="message"></div>
+
+  <div class="switch">
+    Don't have an account?
+    <span onclick="showSignup()">Create Account</span>
+  </div>
+</div>
+
+
+<!-- ORDER PAGE -->
+<div class="container hidden" id="orderPage">
+
+  <div class="topbar">
+    <strong id="customerName">Customer</strong>
+    <button class="secondary" onclick="signOut()">Logout</button>
+  </div>
+
   <h1>🚀 SMM Order</h1>
 
   <label>Service</label>
@@ -76,45 +174,318 @@
   </select>
 
   <label>Quantity</label>
-  <input type="number" id="quantity" placeholder="Enter quantity" oninput="calculatePrice()">
+  <input
+    type="number"
+    id="quantity"
+    placeholder="Enter quantity"
+    oninput="calculatePrice()"
+  >
 
   <label>Post / Reel Link</label>
-  <input type="url" id="link" placeholder="https://instagram.com/...">
+  <input
+    type="url"
+    id="link"
+    placeholder="https://instagram.com/..."
+  >
 
-  <div id="price">Price: ₹0</div>
+  <div id="price">Price: ₹0.00</div>
 
   <button onclick="placeOrder()">Place Order</button>
+
+  <div id="orderMessage" class="message"></div>
+
 </div>
 
+
 <script>
-function calculatePrice() {
-  const service = document.getElementById("service").value;
-  const quantity = Number(document.getElementById("quantity").value) || 0;
+  // ==========================================
+  // SUPABASE CONNECTION
+  // ==========================================
 
-  let rate = 0;
+  const SUPABASE_URL =
+    "https://rxfffsibplxmhgxmbkvi.supabase.co";
 
-  if (service === "views") rate = 29 / 10000;
-  if (service === "likes") rate = 29 / 300;
-  if (service === "followers") rate = 50 / 1000;
-  if (service === "shares") rate = 20 / 1000;
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
 
-  const price = quantity * rate;
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
-  document.getElementById("price").innerText =
-    "Price: ₹" + price.toFixed(2);
-}
 
-function placeOrder() {
-  const quantity = document.getElementById("quantity").value;
-  const link = document.getElementById("link").value;
+  // ==========================================
+  // PAGE SWITCHING
+  // ==========================================
 
-  if (!quantity || !link) {
-    alert("Please fill all details.");
-    return;
+  function showSignup() {
+    document.getElementById("signupPage").classList.remove("hidden");
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("orderPage").classList.add("hidden");
   }
 
-  alert("Order form working. Backend and payment verification will be added next.");
-}
+  function showLogin() {
+    document.getElementById("signupPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
+    document.getElementById("orderPage").classList.add("hidden");
+  }
+
+  function showOrderPage() {
+    document.getElementById("signupPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("orderPage").classList.remove("hidden");
+  }
+
+
+  // ==========================================
+  // SIGN UP
+  // ==========================================
+
+  async function signUp() {
+
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+
+    const message = document.getElementById("signupMessage");
+
+    message.innerText = "";
+
+    if (!name || !email || !password) {
+      message.innerText = "Please fill all details.";
+      return;
+    }
+
+    if (password.length < 6) {
+      message.innerText = "Password must be at least 6 characters.";
+      return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          name: name
+        }
+      }
+    });
+
+    if (error) {
+      message.innerText = error.message;
+      return;
+    }
+
+    message.innerText =
+      "Account created successfully. Please sign in.";
+
+    document.getElementById("signupName").value = "";
+    document.getElementById("signupEmail").value = "";
+    document.getElementById("signupPassword").value = "";
+
+    setTimeout(() => {
+      showLogin();
+    }, 1500);
+  }
+
+
+  // ==========================================
+  // SIGN IN
+  // ==========================================
+
+  async function signIn() {
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    const message = document.getElementById("loginMessage");
+
+    message.innerText = "";
+
+    if (!email || !password) {
+      message.innerText = "Please enter email and password.";
+      return;
+    }
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+    if (error) {
+      message.innerText = error.message;
+      return;
+    }
+
+    const user = data.user;
+
+    const name =
+      user.user_metadata?.name ||
+      user.email ||
+      "Customer";
+
+    document.getElementById("customerName").innerText = name;
+
+    document.getElementById("loginEmail").value = "";
+    document.getElementById("loginPassword").value = "";
+
+    showOrderPage();
+  }
+
+
+  // ==========================================
+  // LOGOUT
+  // ==========================================
+
+  async function signOut() {
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    showLogin();
+  }
+
+
+  // ==========================================
+  // CHECK LOGIN WHEN WEBSITE OPENS
+  // ==========================================
+
+  async function checkUser() {
+
+    const { data } =
+      await supabaseClient.auth.getSession();
+
+    if (data.session) {
+
+      const user = data.session.user;
+
+      const name =
+        user.user_metadata?.name ||
+        user.email ||
+        "Customer";
+
+      document.getElementById("customerName").innerText = name;
+
+      showOrderPage();
+
+    } else {
+
+      showSignup();
+
+    }
+  }
+
+
+  // ==========================================
+  // PRICE CALCULATION
+  // ==========================================
+
+  function calculatePrice() {
+
+    const service =
+      document.getElementById("service").value;
+
+    const quantity =
+      Number(document.getElementById("quantity").value) || 0;
+
+    let rate = 0;
+
+    if (service === "views") {
+      rate = 30 / 10000;
+    }
+
+    if (service === "likes") {
+      rate = 20 / 1000;
+    }
+
+    if (service === "followers") {
+      rate = 400 / 1000;
+    }
+
+    if (service === "shares") {
+      rate = 20 / 1000;
+    }
+
+    const price = quantity * rate;
+
+    document.getElementById("price").innerText =
+      "Price: ₹" + price.toFixed(2);
+  }
+
+
+  // ==========================================
+  // PLACE ORDER
+  // ==========================================
+
+  async function placeOrder() {
+
+    const service =
+      document.getElementById("service").value;
+
+    const quantity =
+      Number(document.getElementById("quantity").value);
+
+    const link =
+      document.getElementById("link").value.trim();
+
+    const message =
+      document.getElementById("orderMessage");
+
+    message.innerText = "";
+
+    if (!quantity || !link) {
+      message.innerText =
+        "Please fill all details.";
+      return;
+    }
+
+    const { data } =
+      await supabaseClient.auth.getSession();
+
+    if (!data.session) {
+      message.innerText =
+        "Please sign in first.";
+      showLogin();
+      return;
+    }
+
+    let rate = 0;
+
+    if (service === "views") {
+      rate = 30 / 10000;
+    }
+
+    if (service === "likes") {
+      rate = 20 / 1000;
+    }
+
+    if (service === "followers") {
+      rate = 400 / 1000;
+    }
+
+    if (service === "shares") {
+      rate = 20 / 1000;
+    }
+
+    const price = quantity * rate;
+
+    message.innerText =
+      "Order details ready. Price: ₹" +
+      price.toFixed(2);
+  }
+
+
+  // ==========================================
+  // START WEBSITE
+  // ==========================================
+
+  checkUser();
+
 </script>
 
 </body>
