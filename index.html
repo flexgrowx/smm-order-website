@@ -245,6 +245,41 @@
       color: #111827;
     }
 
+    /* PAYMENT QR */
+
+    .payment-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 15px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    .payment-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #111827;
+      margin-bottom: 12px;
+    }
+
+    .payment-qr {
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .payment-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
     .limits {
       text-align: center;
       margin-top: 10px;
@@ -289,6 +324,10 @@
 
       .hero h1 {
         font-size: 25px;
+      }
+
+      .payment-qr {
+        width: 200px;
       }
     }
   </style>
@@ -492,13 +531,13 @@
         type="number"
         id="quantity"
         placeholder="Enter quantity"
-        min="501"
-        max="2000000"
+        min="500"
+        max="2159899"
         oninput="calculatePrice()"
       >
 
       <div class="limits" id="limits">
-        Minimum: 501 · Maximum: 2,000,000
+        Minimum: 500 · Maximum: 2,159,899
       </div>
 
 
@@ -519,6 +558,27 @@
 
         <div id="price">
           ₹0.00
+        </div>
+
+      </div>
+
+
+      <!-- PAYMENT QR -->
+
+      <div class="payment-box">
+
+        <div class="payment-title">
+          Scan & Pay
+        </div>
+
+        <img
+          src="IMG-20260923-WA0004~2.jpg"
+          alt="GROWX Payment QR"
+          class="payment-qr"
+        >
+
+        <div class="payment-note">
+          Scan the QR code to make payment.
         </div>
 
       </div>
@@ -568,8 +628,8 @@
         name: "Instagram Views",
         rate: 2 / 1000,
         displayRate: "₹2 / 1,000",
-        min: 501,
-        max: 2000000
+        min: 500,
+        max: 2159899
       },
 
       likes: {
