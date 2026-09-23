@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>GROWX ORDER</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -295,7 +295,10 @@
 
 <body>
 
+  <!-- ========================= -->
   <!-- SIGN UP -->
+  <!-- ========================= -->
+
   <div class="container" id="signupPage">
 
     <div class="brand">
@@ -306,6 +309,7 @@
     <h1>Create Account</h1>
 
     <label>Name</label>
+
     <input
       type="text"
       id="signupName"
@@ -314,6 +318,7 @@
     >
 
     <label>Email</label>
+
     <input
       type="email"
       id="signupEmail"
@@ -322,6 +327,7 @@
     >
 
     <label>Password</label>
+
     <input
       type="password"
       id="signupPassword"
@@ -329,7 +335,9 @@
       autocomplete="new-password"
     >
 
-    <button onclick="signUp()">Create Account</button>
+    <button onclick="signUp()">
+      Create Account
+    </button>
 
     <div id="signupMessage" class="message"></div>
 
@@ -345,7 +353,10 @@
   </div>
 
 
+  <!-- ========================= -->
   <!-- SIGN IN -->
+  <!-- ========================= -->
+
   <div class="container hidden" id="loginPage">
 
     <div class="brand">
@@ -356,6 +367,7 @@
     <h1>Welcome Back</h1>
 
     <label>Email</label>
+
     <input
       type="email"
       id="loginEmail"
@@ -364,6 +376,7 @@
     >
 
     <label>Password</label>
+
     <input
       type="password"
       id="loginPassword"
@@ -371,7 +384,9 @@
       autocomplete="current-password"
     >
 
-    <button onclick="signIn()">Sign In</button>
+    <button onclick="signIn()">
+      Sign In
+    </button>
 
     <div id="loginMessage" class="message"></div>
 
@@ -387,14 +402,24 @@
   </div>
 
 
+  <!-- ========================= -->
   <!-- ORDER PAGE -->
+  <!-- ========================= -->
+
   <div class="container hidden" id="orderPage">
 
     <div class="topbar">
 
       <div class="customer-box">
-        <div class="avatar" id="avatar">C</div>
-        <strong id="customerName">Customer</strong>
+
+        <div class="avatar" id="avatar">
+          C
+        </div>
+
+        <strong id="customerName">
+          Customer
+        </strong>
+
       </div>
 
       <button class="secondary" onclick="signOut()">
@@ -405,11 +430,14 @@
 
 
     <div class="hero">
+
       <h1>GROWX ORDER</h1>
+
       <p>
         Grow fast with GROWX.<br>
         Simple. Fast. Built to Grow.
       </p>
+
     </div>
 
 
@@ -447,6 +475,7 @@
 
 
       <div class="service-info">
+
         <span id="rateText">
           ₹20 / 10,000
         </span>
@@ -454,6 +483,7 @@
         <span class="service-rate">
           GROWX
         </span>
+
       </div>
 
 
@@ -511,639 +541,605 @@
   </div>
 
 
-<script>
+  <script>
 
-  // ==========================================
-  // SUPABASE CONNECTION
-  // ==========================================
+    // ==========================================
+    // SUPABASE CONNECTION
+    // ==========================================
 
-  const SUPABASE_URL =
-    "https://rxfffsibplxmhgxmbkvi.supabase.co";
+    const SUPABASE_URL =
+      "https://rxfffsibplxmhgxmbkvi.supabase.co";
 
-  const SUPABASE_ANON_KEY =
-    "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
 
 
-  // ==========================================
-  // SERVICE SETTINGS
-  // ==========================================
+    // ==========================================
+    // SERVICE SETTINGS
+    // ==========================================
 
-  const SERVICES = {
+    const SERVICES = {
 
-    views: {
-      name: "Instagram Views",
-      rate: 20 / 10000,
-      displayRate: "₹20 / 10,000",
-      min: 501,
-      max: 2000000
-    },
+      views: {
+        name: "Instagram Views",
+        rate: 20 / 10000,
+        displayRate: "₹20 / 10,000",
+        min: 501,
+        max: 2000000
+      },
 
-    likes: {
-      name: "Instagram Likes",
-      rate: 20 / 1000,
-      displayRate: "₹20 / 1,000",
-      min: 50,
-      max: 500000
-    },
+      likes: {
+        name: "Instagram Likes",
+        rate: 20 / 1000,
+        displayRate: "₹20 / 1,000",
+        min: 50,
+        max: 500000
+      },
 
-    followers: {
-      name: "Instagram Followers",
-      rate: 400 / 1000,
-      displayRate: "₹400 / 1,000",
-      min: 100,
-      max: 20000
-    },
+      followers: {
+        name: "Instagram Followers",
+        rate: 400 / 1000,
+        displayRate: "₹400 / 1,000",
+        min: 100,
+        max: 20000
+      },
 
-    shares: {
-      name: "Instagram Shares",
-      rate: 5 / 1000,
-      displayRate: "₹5 / 1,000",
-      min: 200,
-      max: 100000
-    },
+      shares: {
+        name: "Instagram Shares",
+        rate: 5 / 1000,
+        displayRate: "₹5 / 1,000",
+        min: 200,
+        max: 100000
+      },
 
-    repost: {
-      name: "Instagram Repost",
-      rate: 10 / 1000,
-      displayRate: "₹10 / 1,000",
-      min: 100,
-      max: 50000
-    },
+      repost: {
+        name: "Instagram Repost",
+        rate: 10 / 1000,
+        displayRate: "₹10 / 1,000",
+        min: 100,
+        max: 50000
+      },
 
-    save: {
-      name: "Instagram Save",
-      rate: 10 / 1000,
-      displayRate: "₹10 / 1,000",
-      min: 100,
-      max: 50000
+      save: {
+        name: "Instagram Save",
+        rate: 10 / 1000,
+        displayRate: "₹10 / 1,000",
+        min: 100,
+        max: 50000
+      }
+
+    };
+
+
+    // ==========================================
+    // PAGE SWITCHING
+    // ==========================================
+
+    function showSignup() {
+
+      document
+        .getElementById("signupPage")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+      document
+        .getElementById("orderPage")
+        .classList.add("hidden");
+
     }
 
-  };
 
+    function showLogin() {
 
-  // ==========================================
-  // PAGE SWITCHING
-  // ==========================================
+      document
+        .getElementById("signupPage")
+        .classList.add("hidden");
 
-  function showSignup() {
+      document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
 
-    document
-      .getElementById("signupPage")
-      .classList.remove("hidden");
+      document
+        .getElementById("orderPage")
+        .classList.add("hidden");
 
-    document
-      .getElementById("loginPage")
-      .classList.add("hidden");
-
-    document
-      .getElementById("orderPage")
-      .classList.add("hidden");
-  }
-
-
-  function showLogin() {
-
-    document
-      .getElementById("signupPage")
-      .classList.add("hidden");
-
-    document
-      .getElementById("loginPage")
-      .classList.remove("hidden");
-
-    document
-      .getElementById("orderPage")
-      .classList.add("hidden");
-  }
-
-
-  function showOrderPage() {
-
-    document
-      .getElementById("signupPage")
-      .classList.add("hidden");
-
-    document
-      .getElementById("loginPage")
-      .classList.add("hidden");
-
-    document
-      .getElementById("orderPage")
-      .classList.remove("hidden");
-
-    // IMPORTANT:
-    // Refresh service/price every time order page opens.
-    updateService();
-  }
-
-
-  // ==========================================
-  // SIGN UP
-  // ==========================================
-
-  async function signUp() {
-
-    const name =
-      document.getElementById("signupName")
-      .value.trim();
-
-    const email =
-      document.getElementById("signupEmail")
-      .value.trim();
-
-    const password =
-      document.getElementById("signupPassword")
-      .value;
-
-    const message =
-      document.getElementById("signupMessage");
-
-    message.innerText = "";
-
-    if (!name || !email || !password) {
-
-      message.innerText =
-        "Please fill all details.";
-
-      return;
     }
 
-    if (password.length < 6) {
 
-      message.innerText =
-        "Password must be at least 6 characters.";
+    function showOrderPage() {
 
-      return;
+      document
+        .getElementById("signupPage")
+        .classList.add("hidden");
+
+      document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+      document
+        .getElementById("orderPage")
+        .classList.remove("hidden");
+
+      updateService();
+
     }
 
-    const { data, error } =
-      await supabaseClient.auth.signUp({
 
-        email: email,
+    // ==========================================
+    // SIGN UP
+    // ==========================================
 
-        password: password,
+    async function signUp() {
 
-        options: {
-          data: {
-            name: name
+      const name =
+        document
+          .getElementById("signupName")
+          .value
+          .trim();
+
+      const email =
+        document
+          .getElementById("signupEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("signupPassword")
+          .value;
+
+      const message =
+        document.getElementById("signupMessage");
+
+      message.innerText = "";
+
+
+      if (!name || !email || !password) {
+
+        message.innerText =
+          "Please fill all details.";
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        message.innerText =
+          "Password must be at least 6 characters.";
+
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+
+            data: {
+              name: name
+            }
+
           }
-        }
 
-      });
+        });
 
 
-    if (error) {
+      if (error) {
+
+        message.innerText =
+          error.message;
+
+        return;
+      }
+
 
       message.innerText =
-        error.message;
+        "Account created successfully. Please sign in.";
 
-      return;
+
+      document
+        .getElementById("signupName")
+        .value = "";
+
+      document
+        .getElementById("signupEmail")
+        .value = "";
+
+      document
+        .getElementById("signupPassword")
+        .value = "";
+
+
+      setTimeout(() => {
+
+        showLogin();
+
+      }, 1500);
+
     }
 
 
-    message.innerText =
-      "Account created successfully. Please sign in.";
+    // ==========================================
+    // SIGN IN
+    // ==========================================
 
+    async function signIn() {
 
-    document.getElementById("signupName").value = "";
-    document.getElementById("signupEmail").value = "";
-    document.getElementById("signupPassword").value = "";
+      const email =
+        document
+          .getElementById("loginEmail")
+          .value
+          .trim();
 
+      const password =
+        document
+          .getElementById("loginPassword")
+          .value;
 
-    setTimeout(() => {
+      const message =
+        document.getElementById("loginMessage");
 
-      showLogin();
+      message.innerText = "";
 
-    }, 1500);
 
-  }
+      if (!email || !password) {
 
+        message.innerText =
+          "Please enter email and password.";
 
-  // ==========================================
-  // SIGN IN
-  // ==========================================
+        return;
+      }
 
-  async function signIn() {
 
-    const email =
-      document.getElementById("loginEmail")
-      .value.trim();
+      const { data, error } =
+        await supabaseClient.auth
+          .signInWithPassword({
 
-    const password =
-      document.getElementById("loginPassword")
-      .value;
+            email: email,
 
-    const message =
-      document.getElementById("loginMessage");
+            password: password
 
-    message.innerText = "";
+          });
 
 
-    if (!email || !password) {
+      if (error) {
 
-      message.innerText =
-        "Please enter email and password.";
+        message.innerText =
+          error.message;
 
-      return;
-    }
+        return;
+      }
 
 
-    const { data, error } =
-      await supabaseClient.auth
-      .signInWithPassword({
-
-        email: email,
-
-        password: password
-
-      });
-
-
-    if (error) {
-
-      message.innerText =
-        error.message;
-
-      return;
-    }
-
-
-    const user = data.user;
-
-    setCustomerName(user);
-
-
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
-
-
-    // Price/service refresh happens here.
-    showOrderPage();
-
-  }
-
-
-  // ==========================================
-  // CUSTOMER NAME
-  // ==========================================
-
-  function setCustomerName(user) {
-
-    const name =
-      user.user_metadata?.name ||
-      user.email ||
-      "Customer";
-
-
-    document.getElementById("customerName")
-      .innerText = name;
-
-
-    const firstLetter =
-      name.charAt(0).toUpperCase();
-
-
-    document.getElementById("avatar")
-      .innerText = firstLetter;
-
-  }
-
-
-  // ==========================================
-  // LOGOUT
-  // ==========================================
-
-  async function signOut() {
-
-    const { error } =
-      await supabaseClient.auth.signOut();
-
-
-    if (error) {
-
-      alert(error.message);
-
-      return;
-    }
-
-
-    document.getElementById("quantity").value = "";
-
-    document.getElementById("link").value = "";
-
-    document.getElementById("orderMessage").innerText = "";
-
-    document.getElementById("price").innerText = "₹0.00";
-
-
-    showLogin();
-
-  }
-
-
-  // ==========================================
-  // CHECK LOGIN WHEN WEBSITE OPENS
-  // ==========================================
-
-  async function checkUser() {
-
-    const { data, error } =
-      await supabaseClient.auth.getSession();
-
-
-    if (error) {
-
-      showLogin();
-
-      return;
-    }
-
-
-    if (data.session) {
-
-      const user =
-        data.session.user;
+      const user = data.user;
 
       setCustomerName(user);
 
+
+      document
+        .getElementById("loginEmail")
+        .value = "";
+
+      document
+        .getElementById("loginPassword")
+        .value = "";
+
+
       showOrderPage();
 
-    } else {
-
-      showSignup();
-
-    }
-
-  }
-
-
-  // ==========================================
-  // UPDATE SERVICE
-  // ==========================================
-
-  function updateService() {
-
-    const service =
-      document.getElementById("service").value;
-
-    const settings =
-      SERVICES[service];
-
-
-    if (!settings) {
-      return;
     }
 
 
-    const quantity =
-      document.getElementById("quantity");
+    // ==========================================
+    // CUSTOMER NAME
+    // ==========================================
+
+    function setCustomerName(user) {
+
+      const name =
+        user.user_metadata?.name ||
+        user.email ||
+        "Customer";
 
 
-    quantity.min =
-      settings.min;
-
-    quantity.max =
-      settings.max;
+      document
+        .getElementById("customerName")
+        .innerText = name;
 
 
-    document.getElementById("rateText")
-      .innerText =
-      settings.displayRate;
+      const firstLetter =
+        name.charAt(0).toUpperCase();
 
 
-    document.getElementById("limits")
-      .innerText =
-      "Minimum: " +
-      settings.min.toLocaleString() +
-      " · Maximum: " +
-      settings.max.toLocaleString();
+      document
+        .getElementById("avatar")
+        .innerText = firstLetter;
 
-
-    // Clear old quantity when service changes
-    quantity.value = "";
-
-
-    calculatePrice();
-
-  }
-
-
-  // ==========================================
-  // PRICE CALCULATION
-  // ==========================================
-
-  function calculatePrice() {
-
-    const service =
-      document.getElementById("service").value;
-
-    const quantity =
-      Number(
-        document.getElementById("quantity").value
-      ) || 0;
-
-
-    const settings =
-      SERVICES[service];
-
-
-    if (!settings) {
-      return;
     }
 
 
-    const price =
-      quantity * settings.rate;
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    async function signOut() {
+
+      const { error } =
+        await supabaseClient.auth.signOut();
 
 
-    document.getElementById("price")
-      .innerText =
-      "₹" + price.toFixed(2);
+      if (error) {
 
-  }
+        alert(error.message);
 
-
-  // ==========================================
-  // GENERATE ORDER ID
-  // ==========================================
-
-  function generateOrderId() {
-
-    const random =
-      Math.floor(
-        1000 + Math.random() * 9000
-      );
-
-    return "GX" +
-      Date.now() +
-      random;
-
-  }
+        return;
+      }
 
 
-  // ==========================================
-  // PLACE ORDER
-  // ==========================================
+      document
+        .getElementById("quantity")
+        .value = "";
 
-  async function placeOrder() {
+      document
+        .getElementById("link")
+        .value = "";
 
-    const service =
-      document.getElementById("service").value;
+      document
+        .getElementById("orderMessage")
+        .innerText = "";
 
-    const quantity =
-      Number(
-        document.getElementById("quantity").value
-      );
+      document
+        .getElementById("price")
+        .innerText = "₹0.00";
 
-    const link =
-      document.getElementById("link")
-      .value.trim();
-
-    const message =
-      document.getElementById("orderMessage");
-
-
-    message.innerText = "";
-
-
-    const settings =
-      SERVICES[service];
-
-
-    if (!settings) {
-
-      message.innerText =
-        "Please select a valid service.";
-
-      return;
-    }
-
-
-    // Check quantity
-    if (!quantity) {
-
-      message.innerText =
-        "Please enter quantity.";
-
-      return;
-    }
-
-
-    if (quantity < settings.min) {
-
-      message.innerText =
-        "Minimum quantity is " +
-        settings.min.toLocaleString() +
-        ".";
-
-      return;
-    }
-
-
-    if (quantity > settings.max) {
-
-      message.innerText =
-        "Maximum quantity is " +
-        settings.max.toLocaleString() +
-        ".";
-
-      return;
-    }
-
-
-    if (!link) {
-
-      message.innerText =
-        "Please enter your post/reel link.";
-
-      return;
-    }
-
-
-    // Check login
-    const { data, error: sessionError } =
-      await supabaseClient.auth.getSession();
-
-
-    if (sessionError || !data.session) {
-
-      message.innerText =
-        "Please sign in first.";
 
       showLogin();
 
-      return;
     }
 
 
-    const user =
-      data.session.user;
+    // ==========================================
+    // CHECK LOGIN WHEN WEBSITE OPENS
+    // ==========================================
+
+    async function checkUser() {
+
+      const { data, error } =
+        await supabaseClient.auth.getSession();
 
 
-    const price =
-      quantity * settings.rate;
+      if (error) {
+
+        showLogin();
+
+        return;
+      }
 
 
-    const orderId =
-      generateOrderId();
+      if (data.session) {
 
+        const user =
+          data.session.user;
 
-    // Save order in Supabase
-    const { error } =
-      await supabaseClient
-      .from("Orders")
-      .insert({
+        setCustomerName(user);
 
-        order_id: orderId,
+        showOrderPage();
 
-        service: settings.name,
+      } else {
 
-        quantity: quantity,
+        showSignup();
 
-        link: link,
+      }
 
-        price: price,
-
-        status: "Pending",
-
-        user_id: user.id
-
-      });
-
-
-    if (error) {
-
-      console.error(error);
-
-      message.innerText =
-        "Order could not be placed: " +
-        error.message;
-
-      return;
     }
 
 
-    message.innerText =
-      "Order placed successfully! Order ID: " +
-      orderId;
+    // ==========================================
+    // UPDATE SERVICE
+    // ==========================================
+
+    function updateService() {
+
+      const service =
+        document
+          .getElementById("service")
+          .value;
+
+      const settings =
+        SERVICES[service];
 
 
-    document.getElementById("quantity")
-      .value = "";
-
-    document.getElementById("link")
-      .value = "";
-
-    document.getElementById("price")
-      .innerText = "₹0.00";
-
-  }
+      if (!settings) {
+        return;
+      }
 
 
-  // =================
+      const quantity =
+        document.getElementById("quantity");
+
+
+      quantity.min =
+        settings.min;
+
+      quantity.max =
+        settings.max;
+
+
+      document
+        .getElementById("rateText")
+        .innerText =
+        settings.displayRate;
+
+
+      document
+        .getElementById("limits")
+        .innerText =
+        "Minimum: " +
+        settings.min.toLocaleString() +
+        " · Maximum: " +
+        settings.max.toLocaleString();
+
+
+      quantity.value = "";
+
+      calculatePrice();
+
+    }
+
+
+    // ==========================================
+    // PRICE CALCULATION
+    // ==========================================
+
+    function calculatePrice() {
+
+      const service =
+        document
+          .getElementById("service")
+          .value;
+
+      const quantity =
+        Number(
+          document
+            .getElementById("quantity")
+            .value
+        ) || 0;
+
+
+      const settings =
+        SERVICES[service];
+
+
+      if (!settings) {
+        return;
+      }
+
+
+      const price =
+        quantity * settings.rate;
+
+
+      document
+        .getElementById("price")
+        .innerText =
+        "₹" + price.toFixed(2);
+
+    }
+
+
+    // ==========================================
+    // GENERATE ORDER ID
+    // ==========================================
+
+    function generateOrderId() {
+
+      const random =
+        Math.floor(
+          1000 + Math.random() * 9000
+        );
+
+
+      return "GX" +
+        Date.now() +
+        random;
+
+    }
+
+
+    // ==========================================
+    // PLACE ORDER
+    // ==========================================
+
+    async function placeOrder() {
+
+      const service =
+        document
+          .getElementById("service")
+          .value;
+
+
+      const quantity =
+        Number(
+          document
+            .getElementById("quantity")
+            .value
+        );
+
+
+      const link =
+        document
+          .getElementById("link")
+          .value
+          .trim();
+
+
+      const message =
+        document
+          .getElementById("orderMessage");
+
+
+      message.innerText = "";
+
+
+      const settings =
+        SERVICES[service];
+
+
+      if (!settings) {
+
+        message.innerText =
+          "Please select a valid service.";
+
+        return;
+      }
+
+
+      if (!quantity) {
+
+        message.innerText =
+          "Please enter quantity.";
+
+        return;
+      }
+
+
+      if (quantity < settings.min) {
+
+        message.innerText =
+          "Minimum quantity is " +
+          settings.min.toLocaleString() +
+          ".";
+
+        return;
+      }
+
+
+      if (quantity > settings.max) {
+
+        message.innerText =
+          "Maximum quantity is " +
+          settings.max.toLocaleString() +
+          ".";
+
+        return;
+      }
+
+
+      if (!link) {
+
+        message.innerTe
