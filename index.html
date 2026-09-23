@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GROWX ORDER</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 :root{
@@ -484,26 +481,11 @@ h2{font-size:20px}
 .avatar{width:42px;height:42px}
 .logout{padding:8px 9px}
 }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div id="signupPage" class="card hidden">
-
-<div class="brand">
+</style></head><body><div class="container"><div id="signupPage" class="card hidden"><div class="brand">
 <div class="brand-icon">G</div>
 <div class="brand-name">GROWX</div>
 <div class="brand-subtitle">PREMIUM ORDER PANEL</div>
-</div>
-
-<h2>Create Account</h2>
-
-<div id="signupMessage" class="message"></div>
-
-<label>Name</label>
+</div><h2>Create Account</h2><div id="signupMessage" class="message"></div><label>Name</label>
 <input type="text" id="signupName" placeholder="Enter your name">
 
 <label>Email</label>
@@ -519,24 +501,11 @@ Already have an account?
 <span onclick="showSignin()" style="color:#a78bfa;cursor:pointer;font-weight:800">
 Sign In
 </span>
-</p>
-
-</div>
-
-
-<div id="signinPage" class="card hidden">
-
-<div class="brand">
+</p></div><div id="signinPage" class="card hidden"><div class="brand">
 <div class="brand-icon">G</div>
 <div class="brand-name">GROWX</div>
 <div class="brand-subtitle">PREMIUM ORDER PANEL</div>
-</div>
-
-<h2>Welcome Back</h2>
-
-<div id="signinMessage" class="message"></div>
-
-<label>Email</label>
+</div><h2>Welcome Back</h2><div id="signinMessage" class="message"></div><label>Email</label>
 <input type="email" id="signinEmail" placeholder="Enter your email">
 
 <label>Password</label>
@@ -549,77 +518,36 @@ Don't have an account?
 <span onclick="showSignup()" style="color:#a78bfa;cursor:pointer;font-weight:800">
 Create Account
 </span>
-</p>
-
-</div>
-
-
-<div id="orderPage" class="card hidden">
-
-<div class="user-box">
-
-<div id="avatar" class="avatar">G</div>
-
-<div class="user-info">
+</p></div><div id="orderPage" class="card hidden"><div class="user-box"><div id="avatar" class="avatar">G</div><div class="user-info">
 <div class="user-name" id="customerName">Customer</div>
 <div class="user-label">GROWX CUSTOMER</div>
-</div>
+</div><button class="logout" onclick="logout()">Logout</button>
 
-<button class="logout" onclick="logout()">Logout</button>
-
-</div>
-
-
-<div id="orderForm">
-
-<div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
+</div><div id="orderForm"><div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
 ORDER SERVICE
-</div>
+</div><h2>Place Your Order</h2><div id="orderMessage" class="message"></div><label>Choose Service</label>
 
-<h2>Place Your Order</h2>
-
-<div id="orderMessage" class="message"></div>
-
-<label>Choose Service</label>
-
-<select id="service">
-
-<option value="">Choose Service</option>
-
-<option value="Instagram Views" data-min="501" data-max="2000000">
+<select id="service"><option value="">Choose Service</option><option value="Instagram Views" data-min="501" data-max="2000000">
 Instagram Views
-</option>
-
-<option value="Instagram Likes" data-min="50" data-max="500000">
+</option><option value="Instagram Likes" data-min="50" data-max="500000">
 Instagram Likes
-</option>
-
-<option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
+</option><option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
 Instagram Followers — ₹400 / 1000
-</option>
-
-<option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
+</option><option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
 Instagram Shares — ₹5 / 1000
-</option>
-
-<option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
+</option><option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
 Instagram Repost — ₹10 / 1000
-</option>
-
-<option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
+</option><option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
 Instagram Save — ₹10 / 1000
-</option>
-
-</select>
-
-<label>Quantity</label>
+</option></select><label>Quantity</label>
 
 <input
 type="number"
 id="quantity"
 placeholder="Enter quantity"
 oninput="calculatePrice()"
->
+
+«»
 
 <label>Post / Reel Link</label>
 
@@ -627,132 +555,88 @@ oninput="calculatePrice()"
 type="url"
 id="link"
 placeholder="Paste your post or reel link"
->
 
-<div class="price-box">
+«»
 
-<div class="price-label">Total Order Cost</div>
-
-<div class="price" id="price">₹0.00</div>
-
-</div>
-
-<button onclick="startPayment()">
+<div class="price-box"><div class="price-label">Total Order Cost</div><div class="price" id="price">₹0.00</div></div><button onclick="startPayment()">
 Continue to Payment
-</button>
-
-</div>
-
-
-<div id="paymentPage" class="hidden">
-
-<div class="payment-box">
-
-<div class="payment-title">Scan & Pay</div>
-
-<div class="payment-subtitle">
+</button></div><div id="paymentPage" class="hidden"><div class="payment-box"><div class="payment-title">Scan & Pay</div><div class="payment-subtitle">
 Complete your payment to continue
-</div>
-
-<div class="payment-amount-box">
-
-<span class="payment-amount-label">PAY</span>
+</div><div class="payment-amount-box"><span class="payment-amount-label">PAY</span>
 
 <span class="payment-amount" id="paymentAmount">
 ₹0.00
-</span>
-
-</div>
-
-<div class="qr-frame">
-
-<img
+</span></div><div class="qr-frame"><img
 src="IMG-20260923-WA0004~2.jpg"
 alt="GROWX Payment QR"
 class="payment-qr"
->
 
-</div>
+«»
 
-<div class="payment-note">
+</div><div class="payment-note">
 Scan the QR code using your UPI app
 and complete the payment.
 Then upload your payment screenshot below.
-</div>
-
-<div class="upload-box">
-
-<label class="upload-label">
+</div><div class="upload-box"><label class="upload-label">
 Payment Screenshot
-</label>
-
-<input
+</label><input
 type="file"
 id="paymentScreenshot"
 class="file-input"
 accept="image/*"
->
 
-</div>
+«»
 
-<button
+</div><button
 class="confirm-btn"
 onclick="confirmPayment()"
->
+
+«»
+
 Confirm Payment
 </button>
 
 <button
 class="back-btn"
 onclick="backToOrder()"
->
+
+«»
+
 Back to Order
 </button>
 
-</div>
-
-</div>
-
-
-<div id="successPage" class="hidden">
-
-<div class="success-box">
-
-<div class="success-icon">✓</div>
-
-<div class="success-title">
+</div></div><div id="successPage" class="hidden"><div class="success-box"><div class="success-icon">✓</div><div class="success-title">
 Order Successfully Submitted
-</div>
-
-<div class="success-text">
+</div><div class="success-text">
 Your order has been submitted successfully.
 <br>
 Please keep your Order ID for reference.
-</div>
-
-<div class="order-id">
+</div><div class="order-id">
 Order ID:
 <span id="successOrderId">-</span>
-</div>
-
-<button style="margin-top:20px" onclick="newOrder()">
+</div><button style="margin-top:20px" onclick="newOrder()">
 Place New Order
+</button></div></div></div><!-- =========================
+     ADMIN PANEL
+========================= --><div id="adminPage" class="card hidden"><div class="brand">
+<div class="brand-icon">A</div>
+<div class="brand-name">GROWX ADMIN</div>
+<div class="brand-subtitle">ORDER MANAGEMENT PANEL</div>
+</div><div id="adminMessage" class="message"></div><h2>Orders</h2><div id="adminOrders">
+Loading orders...
+</div><button
+class="back-btn"
+onclick="logoutAdmin()"
+style="margin-top:20px"
+
+«»
+
+Logout Admin
 </button>
 
-</div>
-
-</div>
-
-</div>
-
-<div class="footer">
+</div><div class="footer">
 GROWX • PREMIUM ORDER SYSTEM
-</div>
-
-</div>
-
-
-<script>
+</div></div><script>
 
 const SUPABASE_URL =
 "https://rxfffsibplxmhgxmbkvi.supabase.co";
@@ -776,6 +660,7 @@ function showSignup(){
 document.getElementById("signupPage").classList.remove("hidden");
 document.getElementById("signinPage").classList.add("hidden");
 document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("adminPage").classList.add("hidden");
 
 }
 
@@ -784,6 +669,7 @@ function showSignin(){
 document.getElementById("signinPage").classList.remove("hidden");
 document.getElementById("signupPage").classList.add("hidden");
 document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("adminPage").classList.add("hidden");
 
 }
 
@@ -792,6 +678,7 @@ function showOrder(){
 document.getElementById("orderPage").classList.remove("hidden");
 document.getElementById("signupPage").classList.add("hidden");
 document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("adminPage").classList.add("hidden");
 
 }
 
@@ -1372,15 +1259,10 @@ if(error){
 
 console.error(error);
 
-
-/* Remove uploaded screenshot
-   if order creation fails */
-
 await supabaseClient
 .storage
 .from("payment-screenshots")
 .remove([filePath]);
-
 
 alert(
 "Order submit nahi hua: "+
@@ -1520,7 +1402,5 @@ loadCustomer();
 
 checkSession();
 
-</script>
-
-</body>
+</script></body>
 </html>
