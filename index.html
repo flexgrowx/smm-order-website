@@ -320,11 +320,6 @@ border:1px solid rgba(34,197,94,.22);
 color:#86efac;
 }
 
-
-/* =========================
-   PAYMENT SUBMIT WAIT TEXT
-========================= */
-
 .payment-submit-wait{
 display:none;
 text-align:center;
@@ -334,11 +329,6 @@ color:#94a3b8;
 font-size:12px;
 line-height:1.5;
 }
-
-
-/* =========================
-   PAYMENT PAGE
-========================= */
 
 .payment-box{
 text-align:center;
@@ -514,10 +504,39 @@ font-weight:700;
 color:#c4b5fd;
 }
 
-.admin-order{
-padding:15px;
-margin-bottom:12px;
+/* =========================
+   ADMIN
+========================= */
+
+.admin-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+padding:13px;
+margin-bottom:18px;
 border-radius:15px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.admin-top-title{
+font-size:12px;
+font-weight:800;
+color:#cbd5e1;
+}
+
+.admin-top-email{
+font-size:11px;
+color:#94a3b8;
+margin-top:3px;
+word-break:break-all;
+}
+
+.admin-order{
+padding:16px;
+margin-bottom:13px;
+border-radius:17px;
 background:rgba(30,41,59,.55);
 border:1px solid rgba(148,163,184,.13);
 }
@@ -525,13 +544,65 @@ border:1px solid rgba(148,163,184,.13);
 .admin-order-title{
 font-size:14px;
 font-weight:850;
-margin-bottom:8px;
+margin-bottom:12px;
+color:#f8fafc;
 }
 
 .admin-order-info{
 font-size:12px;
 color:#94a3b8;
-line-height:1.7;
+line-height:1.75;
+word-break:break-word;
+}
+
+.admin-order-info strong{
+color:#cbd5e1;
+font-weight:750;
+}
+
+.admin-status{
+margin-top:12px;
+}
+
+.admin-status label{
+margin-bottom:6px;
+}
+
+.admin-status select{
+height:44px;
+margin-bottom:0;
+font-size:12px;
+}
+
+.admin-action{
+margin-top:10px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+min-height:43px;
+font-size:12px;
+}
+
+.admin-screenshot{
+display:inline-block;
+margin-top:8px;
+padding:8px 11px;
+border-radius:9px;
+background:rgba(124,58,237,.12);
+border:1px solid rgba(124,58,237,.22);
+color:#c4b5fd;
+font-size:11px;
+font-weight:800;
+text-decoration:none;
+}
+
+.admin-screenshot:hover{
+background:rgba(124,58,237,.20);
+}
+
+.admin-empty{
+padding:20px 10px;
+text-align:center;
+color:#64748b;
+font-size:12px;
 }
 
 .hidden{
@@ -606,7 +677,6 @@ padding:8px 9px;
 <body>
 
 <div class="container">
-
 
 <!-- =========================
      SIGNUP
@@ -886,8 +956,6 @@ id="price"
 </div>
 
 
-<!-- CONTINUE TO PAYMENT -->
-
 <button
 id="continuePaymentBtn"
 onclick="startPayment()"
@@ -977,8 +1045,6 @@ onclick="confirmPayment()"
 Payment Complete
 </button>
 
-
-<!-- PAYMENT SUBMIT WAIT -->
 
 <div
 id="paymentSubmitWait"
@@ -1083,6 +1149,27 @@ id="adminMessage"
 class="message"
 ></div>
 
+
+<div class="admin-top">
+
+<div>
+
+<div class="admin-top-title">
+ADMIN ACCOUNT
+</div>
+
+<div
+id="adminEmail"
+class="admin-top-email"
+>
+-
+</div>
+
+</div>
+
+</div>
+
+
 <h2>
 Orders
 </h2>
@@ -1091,10 +1178,20 @@ Orders
 Loading orders...
 </div>
 
+
+<button
+class="back-btn"
+onclick="loadAdminOrders()"
+style="margin-top:5px"
+>
+Refresh Orders
+</button>
+
+
 <button
 class="back-btn"
 onclick="logoutAdmin()"
-style="margin-top:20px"
+style="margin-top:10px"
 >
 Logout Admin
 </button>
@@ -1129,6 +1226,44 @@ SUPABASE_KEY
 ========================= */
 
 let currentOrder = null;
+
+
+/* =========================
+   ADMIN CHECK
+========================= */
+
+async function checkAdmin(user){
+
+if(!user){
+return false;
+}
+
+const {
+data:admin,
+error
+} =
+await supabaseClient
+.from("admins")
+.select("id,email")
+.eq("id",user.id)
+.maybeSingle();
+
+
+if(error){
+
+console.error(
+"Admin check error:",
+error
+);
+
+return false;
+
+}
+
+
+return !!admin;
+
+}
 
 
 /* =========================
@@ -1262,7 +1397,7 @@ return;
 }
 
 
-const {error} =
+const {data,error} =
 await supabaseClient.auth.signUp({
 
 email:email,
@@ -1329,7 +1464,10 @@ return;
 }
 
 
-const {error} =
+const {
+data,
+error
+} =
 await supabaseClient.auth
 .signInWithPassword({
 
@@ -1352,6 +1490,47 @@ return;
 
 }
 
+
+const user =
+data?.user;
+
+
+if(!user){
+
+showMessage(
+"signinMessage",
+"Login failed. Please try again.",
+"error"
+);
+
+return;
+
+}
+
+
+/* CHECK ADMIN */
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(isAdmin){
+
+document.getElementById(
+"adminEmail"
+).textContent =
+user.email || "-";
+
+showAdmin();
+
+loadAdminOrders();
+
+return;
+
+}
+
+
+/* NORMAL CUSTOMER */
 
 loadCustomer();
 
@@ -1623,8 +1802,6 @@ document.getElementById("link")
 .trim();
 
 
-/* SERVICE CHECK */
-
 if(
 !selected ||
 !selected.value
@@ -1638,8 +1815,6 @@ return;
 
 }
 
-
-/* QUANTITY RANGE */
 
 const min =
 Number(
@@ -1671,8 +1846,6 @@ return;
 }
 
 
-/* RATE */
-
 const rate =
 getCurrentRate(
 selected.value,
@@ -1691,8 +1864,6 @@ return;
 }
 
 
-/* LINK */
-
 if(!link){
 
 alert(
@@ -1704,13 +1875,9 @@ return;
 }
 
 
-/* TOTAL */
-
 const total =
 (quantity / 1000) * rate;
 
-
-/* SAVE ORDER */
 
 currentOrder = {
 
@@ -1731,8 +1898,6 @@ total.toFixed(2)
 };
 
 
-/* PAYMENT AMOUNT */
-
 document.getElementById(
 "paymentAmount"
 ).textContent =
@@ -1740,19 +1905,11 @@ document.getElementById(
 total.toFixed(2);
 
 
-/* CLEAR OLD SCREENSHOT */
-
 document.getElementById(
 "paymentScreenshot"
 ).value =
 "";
 
-
-/*
-   IMPORTANT:
-   PAYMENT PAGE OPENS IMMEDIATELY.
-   NO 10-15 SECOND DELAY.
-*/
 
 document.getElementById(
 "orderForm"
@@ -1775,15 +1932,11 @@ document.getElementById(
 
 function backToOrder(){
 
-/* HIDE PAYMENT WAIT MESSAGE */
-
 document.getElementById(
 "paymentSubmitWait"
 ).style.display =
 "none";
 
-
-/* RESET PAYMENT BUTTON */
 
 const button =
 document.getElementById(
@@ -1795,8 +1948,6 @@ button.disabled = false;
 button.textContent =
 "Payment Complete";
 
-
-/* PAGE SWITCH */
 
 document.getElementById(
 "paymentPage"
@@ -1884,23 +2035,16 @@ document.getElementById(
 );
 
 
-/* SHOW SUBMITTING */
-
 button.disabled = true;
 
 button.textContent =
 "Submitting...";
-
-
-/* SHOW WAIT MESSAGE UNDER BUTTON */
 
 waitText.style.display =
 "block";
 
 
 try{
-
-/* GET USER */
 
 const {
 data:{user},
@@ -1921,8 +2065,6 @@ throw new Error(
 }
 
 
-/* FILE EXTENSION */
-
 const extension =
 file.name
 .split(".")
@@ -1937,8 +2079,6 @@ Date.now() +
 "-payment." +
 extension;
 
-
-/* UPLOAD SCREENSHOT */
 
 const {
 error:uploadError
@@ -1962,12 +2102,70 @@ throw uploadError;
 }
 
 
-/* INSERT ORDER */
+/*
+=================================
+TRY TO SAVE CUSTOMER EMAIL
+=================================
+*/
 
-const {
-data:orderData,
-error:orderError
-} =
+let orderData = null;
+let orderError = null;
+
+
+/*
+FIRST TRY:
+customer_email column available
+*/
+
+const firstInsert =
+await supabaseClient
+.from("Orders")
+.insert([{
+
+service:
+currentOrder.service,
+
+quantity:
+currentOrder.quantity,
+
+link:
+currentOrder.link,
+
+price:
+currentOrder.price,
+
+status:
+"Payment Submitted",
+
+user_id:
+user.id,
+
+customer_email:
+user.email,
+
+payment_screenshot_path:
+filePath
+
+}])
+.select("order_id")
+.single();
+
+
+orderData =
+firstInsert.data;
+
+orderError =
+firstInsert.error;
+
+
+/*
+IF customer_email COLUMN DOES NOT EXIST,
+RETRY WITHOUT IT.
+*/
+
+if(orderError){
+
+const retryInsert =
 await supabaseClient
 .from("Orders")
 .insert([{
@@ -1998,7 +2196,14 @@ filePath
 .single();
 
 
-/* DELETE FILE IF ORDER FAILS */
+orderData =
+retryInsert.data;
+
+orderError =
+retryInsert.error;
+
+}
+
 
 if(orderError){
 
@@ -2051,13 +2256,8 @@ error.message ||
 }
 finally{
 
-/* HIDE WAIT MESSAGE */
-
 waitText.style.display =
 "none";
-
-
-/* RESET BUTTON */
 
 button.disabled = false;
 
@@ -2077,8 +2277,6 @@ function newOrder(){
 
 currentOrder = null;
 
-
-/* RESET FORM */
 
 document.getElementById(
 "service"
@@ -2106,8 +2304,6 @@ document.getElementById(
 "";
 
 
-/* RESET PAYMENT */
-
 document.getElementById(
 "paymentSubmitWait"
 ).style.display =
@@ -2125,8 +2321,6 @@ button.textContent =
 "Payment Complete";
 
 
-/* PAGE */
-
 document.getElementById(
 "successPage"
 ).classList.add("hidden");
@@ -2143,6 +2337,486 @@ document.getElementById(
 
 
 /* =========================
+   ADMIN ORDERS
+========================= */
+
+async function loadAdminOrders(){
+
+const ordersContainer =
+document.getElementById(
+"adminOrders"
+);
+
+ordersContainer.innerHTML =
+"Loading orders...";
+
+
+/* CHECK CURRENT USER */
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+showSignin();
+
+return;
+
+}
+
+
+/* VERIFY ADMIN */
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(!isAdmin){
+
+showSignin();
+
+return;
+
+}
+
+
+/*
+TRY WITH CUSTOMER EMAIL
+*/
+
+let result =
+await supabaseClient
+.from("Orders")
+.select(`
+order_id,
+service,
+quantity,
+link,
+price,
+status,
+user_id,
+customer_email,
+payment_screenshot_path
+`)
+.order(
+"order_id",
+{
+ascending:false
+});
+
+
+/*
+IF customer_email COLUMN DOES NOT EXIST,
+LOAD WITHOUT IT.
+*/
+
+if(result.error){
+
+console.log(
+"Loading orders without customer_email column."
+);
+
+result =
+await supabaseClient
+.from("Orders")
+.select(`
+order_id,
+service,
+quantity,
+link,
+price,
+status,
+user_id,
+payment_screenshot_path
+`)
+.order(
+"order_id",
+{
+ascending:false
+});
+
+}
+
+
+if(result.error){
+
+console.error(result.error);
+
+ordersContainer.innerHTML = "";
+
+showMessage(
+"adminMessage",
+"Could not load orders: " +
+result.error.message,
+"error"
+);
+
+return;
+
+}
+
+
+const orders =
+result.data || [];
+
+
+if(orders.length === 0){
+
+ordersContainer.innerHTML = `
+<div class="admin-empty">
+No orders found.
+</div>
+`;
+
+return;
+
+}
+
+
+ordersContainer.innerHTML =
+"";
+
+
+orders.forEach(
+order => {
+
+const orderBox =
+document.createElement(
+"div"
+);
+
+orderBox.className =
+"admin-order";
+
+
+const email =
+order.customer_email ||
+"Email not available";
+
+
+const screenshot =
+order.payment_screenshot_path;
+
+
+let screenshotHTML =
+"";
+
+
+if(screenshot){
+
+const {
+data:publicData
+} =
+supabaseClient.storage
+.from("payment-screenshots")
+.getPublicUrl(
+screenshot
+);
+
+
+/*
+If bucket is public this works.
+If private, admin can still see
+the path.
+*/
+
+if(
+publicData?.publicUrl
+){
+
+screenshotHTML = `
+<a
+class="admin-screenshot"
+href="${publicData.publicUrl}"
+target="_blank"
+rel="noopener"
+>
+View Payment Screenshot
+</a>
+`;
+
+}
+
+}
+
+
+orderBox.innerHTML = `
+
+<div class="admin-order-title">
+Order #${escapeHTML(
+String(order.order_id || "-")
+)}
+</div>
+
+<div class="admin-order-info">
+
+<div>
+<strong>Customer ID:</strong>
+${escapeHTML(
+String(order.user_id || "-")
+)}
+</div>
+
+<div>
+<strong>Customer Email:</strong>
+${escapeHTML(
+String(email)
+)}
+</div>
+
+<div>
+<strong>Service:</strong>
+${escapeHTML(
+String(order.service || "-")
+)}
+</div>
+
+<div>
+<strong>Quantity:</strong>
+${escapeHTML(
+String(order.quantity || "-")
+)}
+</div>
+
+<div>
+<strong>Price:</strong>
+₹${escapeHTML(
+String(order.price ?? "0")
+)}
+</div>
+
+<div>
+<strong>Status:</strong>
+${escapeHTML(
+String(order.status || "-")
+)}
+</div>
+
+<div>
+<strong>Post / Reel Link:</strong>
+${escapeHTML(
+String(order.link || "-")
+)}
+</div>
+
+${screenshotHTML}
+
+</div>
+
+
+<div class="admin-status">
+
+<label>
+Change Order Status
+</label>
+
+<select
+id="status-${escapeHTML(
+String(order.order_id)
+)}"
+>
+
+<option
+value="Payment Submitted"
+${order.status==="Payment Submitted" ? "selected" : ""}
+>
+Payment Submitted
+</option>
+
+<option
+value="Payment Verified"
+${order.status==="Payment Verified" ? "selected" : ""}
+>
+Payment Verified
+</option>
+
+<option
+value="Processing"
+${order.status==="Processing" ? "selected" : ""}
+>
+Processing
+</option>
+
+<option
+value="In Progress"
+${order.status==="In Progress" ? "selected" : ""}
+>
+In Progress
+</option>
+
+<option
+value="Completed"
+${order.status==="Completed" ? "selected" : ""}
+>
+Completed
+</option>
+
+<option
+value="Cancelled"
+${order.status==="Cancelled" ? "selected" : ""}
+>
+Cancelled
+</option>
+
+</select>
+
+<button
+class="admin-action"
+onclick="updateOrderStatus('${escapeAttribute(String(order.order_id))}')"
+>
+Update Status
+</button>
+
+</div>
+
+`;
+
+
+ordersContainer.appendChild(
+orderBox
+);
+
+});
+
+}
+
+
+/* =========================
+   UPDATE ORDER STATUS
+========================= */
+
+async function updateOrderStatus(orderId){
+
+const select =
+document.getElementById(
+"status-" + orderId
+);
+
+
+if(!select){
+
+alert(
+"Status selector not found."
+);
+
+return;
+
+}
+
+
+const newStatus =
+select.value;
+
+
+/* CHECK ADMIN */
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+alert(
+"Please sign in again."
+);
+
+showSignin();
+
+return;
+
+}
+
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(!isAdmin){
+
+alert(
+"Admin access required."
+);
+
+showSignin();
+
+return;
+
+}
+
+
+/* UPDATE */
+
+const {
+error
+} =
+await supabaseClient
+.from("Orders")
+.update({
+
+status:newStatus
+
+})
+.eq(
+"order_id",
+orderId
+);
+
+
+if(error){
+
+console.error(error);
+
+alert(
+"Status update failed: " +
+error.message
+);
+
+return;
+
+}
+
+
+alert(
+"Order status updated successfully."
+);
+
+
+loadAdminOrders();
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+return value
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+return value
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'");
+
+}
+
+
+/* =========================
    PAGE LOAD
 ========================= */
 
@@ -2154,16 +2828,40 @@ data:{user}
 await supabaseClient.auth.getUser();
 
 
-if(user){
-
-loadCustomer();
-
-}
-else{
+if(!user){
 
 showSignin();
 
+return;
+
 }
+
+
+/* CHECK ADMIN */
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(isAdmin){
+
+document.getElementById(
+"adminEmail"
+).textContent =
+user.email || "-";
+
+showAdmin();
+
+loadAdminOrders();
+
+return;
+
+}
+
+
+/* NORMAL CUSTOMER */
+
+loadCustomer();
 
 })();
 
