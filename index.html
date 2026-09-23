@@ -293,10 +293,10 @@ letter-spacing:1px;
 margin-top:5px;
 font-size:29px;
 font-weight:950;
-background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);
--webkit-background-clip:text;
-background-clip:text;
-color:transparent;
+color:#ffffff;
+background:none;
+-webkit-background-clip:initial;
+background-clip:initial;
 }
 
 .message{
@@ -318,6 +318,18 @@ color:#fca5a5;
 background:rgba(34,197,94,.10);
 border:1px solid rgba(34,197,94,.22);
 color:#86efac;
+}
+
+/* CONTINUE PAYMENT WAIT TEXT */
+
+.payment-wait-text{
+display:none;
+text-align:center;
+margin-top:10px;
+margin-bottom:3px;
+color:#94a3b8;
+font-size:12px;
+line-height:1.5;
 }
 
 .payment-box{
@@ -725,7 +737,7 @@ Instagram Save — ₹10 / 1000
 type="number"
 id="quantity"
 placeholder="Enter quantity"
-oninput="calculatePrice()"
+oninput="calculatePrice"
 >
 
 
@@ -750,9 +762,22 @@ Total Order Cost
 
 </div>
 
-<button onclick="startPayment()">
+
+<!-- CONTINUE PAYMENT -->
+
+<button
+id="continuePaymentBtn"
+onclick="startPayment()"
+>
 Continue to Payment
 </button>
+
+<div
+id="paymentWaitText"
+class="payment-wait-text"
+>
+Please wait 10–15 seconds...
+</div>
 
 </div>
 
@@ -880,7 +905,10 @@ Order ID:
 <span id="successOrderId">-</span>
 </div>
 
-<button style="margin-top:20px" onclick="newOrder()">
+<button
+style="margin-top:20px"
+onclick="newOrder()"
+>
 Place New Order
 </button>
 
@@ -1341,9 +1369,8 @@ document.getElementById("quantity").value
 
 if(!selected || !selected.value || !quantity){
 
-document.getElementById(
-"price"
-).textContent = "₹0.00";
+document.getElementById("price").textContent =
+"₹0.00";
 
 return;
 
@@ -1359,9 +1386,8 @@ quantity
 
 if(rate===0){
 
-document.getElementById(
-"price"
-).textContent = "₹0.00";
+document.getElementById("price").textContent =
+"₹0.00";
 
 return;
 
@@ -1369,13 +1395,11 @@ return;
 
 
 const total =
-(quantity / 1000) * rate;
+(quantity/1000)*rate;
 
 
-document.getElementById(
-"price"
-).textContent =
-"₹" + total.toFixed(2);
+document.getElementById("price").textContent =
+"₹"+total.toFixed(2);
 
 }
 
@@ -1403,11 +1427,7 @@ document.getElementById("link").value.trim();
 
 if(!selected || !selected.value){
 
-showMessage(
-"orderMessage",
-"Please choose a service.",
-"error"
-);
+alert("Please select a service.");
 
 return;
 
@@ -1421,16 +1441,18 @@ const max =
 Number(selected.dataset.max);
 
 
-if(!quantity || quantity<min || quantity>max){
+if(
+!quantity ||
+quantity<min ||
+quantity>max
+){
 
-showMessage(
-"orderMessage",
-"Quantity must be between " +
-min.toLocaleString() +
-" and " +
-max.toLocaleString() +
-".",
-"error"
+alert(
+"Quantity must be between "+
+min+
+" and "+
+max+
+"."
 );
 
 return;
@@ -1447,10 +1469,8 @@ quantity
 
 if(rate===0){
 
-showMessage(
-"orderMessage",
-"Please enter a valid quantity.",
-"error"
+alert(
+"Please enter a valid quantity."
 );
 
 return;
@@ -1460,10 +1480,8 @@ return;
 
 if(!link){
 
-showMessage(
-"orderMessage",
-"Please enter Post / Reel link.",
-"error"
+alert(
+"Please enter your post or reel link."
 );
 
 return;
@@ -1472,14 +1490,8 @@ return;
 
 
 const total =
-(quantity / 1000) * rate;
+(quantity/1000)*rate;
 
-
-/*
-Save order information temporarily.
-Order is actually submitted only after
-Payment Complete is pressed.
-*/
 
 currentOrder = {
 
@@ -1489,45 +1501,87 @@ quantity:quantity,
 
 link:link,
 
-price:Number(total.toFixed(2))
+price:Number(
+total.toFixed(2)
+)
 
 };
 
 
-/*
-Show amount on payment page.
-*/
+/* =========================
+   SHOW SUBMITTING
+========================= */
+
+const button =
+document.getElementById(
+"continuePaymentBtn"
+);
+
+const waitText =
+document.getElementById(
+"paymentWaitText"
+);
+
+
+button.disabled = true;
+
+button.textContent =
+"Submitting...";
+
+
+waitText.style.display =
+"block";
+
+
+/* =========================
+   SET PAYMENT AMOUNT
+========================= */
 
 document.getElementById(
 "paymentAmount"
 ).textContent =
-"₹" + total.toFixed(2);
+"₹"+total.toFixed(2);
 
-
-/*
-Clear old screenshot.
-*/
 
 document.getElementById(
 "paymentScreenshot"
 ).value = "";
 
 
-/*
-Show payment page.
-*/
+/* =========================
+   OPEN PAYMENT PAGE
+========================= */
 
 document.getElementById(
 "orderForm"
 ).classList.add("hidden");
 
+
 document.getElementById(
 "paymentPage"
 ).classList.remove("hidden");
 
+
 document.getElementById(
 "successPage"
 ).classList.add("hidden");
+
+
+/* =========================
+   RESET BUTTON
+========================= */
+
+setTimeout(()=>{
+
+button.disabled = false;
+
+button.textContent =
+"Continue to Payment";
+
+waitText.style.display =
+"none";
+
+},500);
 
 }
 
@@ -1561,13 +1615,9 @@ async function confirmPayment(){
 
 if(!currentOrder){
 
-showMessage(
-"orderMessage",
-"Order information is missing. Please try again.",
-"error"
+alert(
+"Order information not found. Please try again."
 );
-
-backToOrder();
 
 return;
 
@@ -1591,10 +1641,6 @@ return;
 }
 
 
-/*
-Only image files are accepted.
-*/
-
 if(!file.type.startsWith("image/")){
 
 alert(
@@ -1605,10 +1651,6 @@ return;
 
 }
 
-
-/*
-Limit screenshot size to 10 MB.
-*/
 
 if(file.size > 10 * 1024 * 1024){
 
@@ -1626,6 +1668,7 @@ document.getElementById(
 "confirmPaymentBtn"
 );
 
+
 button.disabled = true;
 
 button.textContent =
@@ -1634,9 +1677,9 @@ button.textContent =
 
 try{
 
-/*
-Get logged-in user.
-*/
+/* =========================
+   GET USER
+========================= */
 
 const {
 data:{user},
@@ -1654,24 +1697,28 @@ throw new Error(
 }
 
 
-/*
-Create unique screenshot path.
-*/
+/* =========================
+   FILE PATH
+========================= */
 
 const extension =
-file.name.split(".").pop().toLowerCase();
+file.name
+.split(".")
+.pop()
+.toLowerCase();
+
 
 const filePath =
-user.id +
-"/" +
-Date.now() +
-"-payment." +
+user.id+
+"/"+
+Date.now()+
+"-payment."+
 extension;
 
 
-/*
-Upload screenshot to existing bucket.
-*/
+/* =========================
+   UPLOAD SCREENSHOT
+========================= */
 
 const {
 error:uploadError
@@ -1695,9 +1742,9 @@ throw uploadError;
 }
 
 
-/*
-Create order in Orders table.
-*/
+/* =========================
+   INSERT ORDER
+========================= */
 
 const {
 data:orderData,
@@ -1707,58 +1754,69 @@ await supabaseClient
 .from("Orders")
 .insert([{
 
-service:currentOrder.service,
+service:
+currentOrder.service,
 
-quantity:currentOrder.quantity,
+quantity:
+currentOrder.quantity,
 
-link:currentOrder.link,
+link:
+currentOrder.link,
 
-price:currentOrder.price,
+price:
+currentOrder.price,
 
-status:"Payment Submitted",
+status:
+"Payment Submitted",
 
-user_id:user.id,
+user_id:
+user.id,
 
-payment_screenshot_path:filePath
+payment_screenshot_path:
+filePath
 
 }])
 .select("order_id")
 .single();
 
 
-if(orderError){
+/* =========================
+   DELETE FILE IF ORDER FAILS
+========================= */
 
-/*
-If order insert fails, remove uploaded
-screenshot so unused files are not left.
-*/
+if(orderError){
 
 await supabaseClient.storage
 .from("payment-screenshots")
-.remove([filePath]);
+.remove([
+filePath
+]);
 
 throw orderError;
 
 }
 
 
-/*
-Show success page.
-*/
+/* =========================
+   SUCCESS
+========================= */
 
 document.getElementById(
 "successOrderId"
 ).textContent =
-orderData?.order_id || "Submitted";
+orderData?.order_id ||
+"Submitted";
 
 
 document.getElementById(
 "paymentPage"
 ).classList.add("hidden");
 
+
 document.getElementById(
 "orderForm"
 ).classList.add("hidden");
+
 
 document.getElementById(
 "successPage"
@@ -1771,8 +1829,9 @@ catch(error){
 console.error(error);
 
 alert(
-"Order submit failed: " +
-(error.message || "Please try again.")
+"Order submit failed: "+
+(error.message ||
+"Please try again.")
 );
 
 }
@@ -1797,42 +1856,41 @@ function newOrder(){
 currentOrder = null;
 
 
-/*
-Reset order fields.
-*/
-
 document.getElementById(
 "service"
 ).value = "";
+
 
 document.getElementById(
 "quantity"
 ).value = "";
 
+
 document.getElementById(
 "link"
 ).value = "";
+
+
+document.getElementById(
+"price"
+).textContent =
+"₹0.00";
+
 
 document.getElementById(
 "paymentScreenshot"
 ).value = "";
 
-document.getElementById(
-"price"
-).textContent = "₹0.00";
-
-
-/*
-Show order form.
-*/
 
 document.getElementById(
 "successPage"
 ).classList.add("hidden");
 
+
 document.getElementById(
 "paymentPage"
 ).classList.add("hidden");
+
 
 document.getElementById(
 "orderForm"
@@ -1842,56 +1900,29 @@ document.getElementById(
 
 
 /* =========================
-   SESSION CHECK
+   PAGE LOAD
 ========================= */
 
-async function checkSession(){
+(async function(){
 
 const {
-data:{session}
+data:{user}
 } =
-await supabaseClient.auth.getSession();
+await supabaseClient.auth.getUser();
 
 
-if(session){
+if(user){
 
 loadCustomer();
 
-}else{
+}
+else{
 
 showSignin();
 
 }
 
-}
-
-
-/* =========================
-   AUTH STATE
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-(event,session)=>{
-
-if(session){
-
-loadCustomer();
-
-}else{
-
-showSignin();
-
-}
-
-}
-);
-
-
-/* =========================
-   START
-========================= */
-
-checkSession();
+})();
 
 </script>
 
