@@ -294,9 +294,6 @@ margin-top:5px;
 font-size:29px;
 font-weight:950;
 color:#ffffff;
-background:none;
--webkit-background-clip:initial;
-background-clip:initial;
 }
 
 .message{
@@ -504,9 +501,7 @@ font-weight:700;
 color:#c4b5fd;
 }
 
-/* =========================
-   ADMIN
-========================= */
+/* ADMIN */
 
 .admin-top{
 display:flex;
@@ -678,9 +673,7 @@ padding:8px 9px;
 
 <div class="container">
 
-<!-- =========================
-     SIGNUP
-========================= -->
+<!-- SIGNUP -->
 
 <div id="signupPage" class="card hidden">
 
@@ -738,9 +731,7 @@ Sign In
 </div>
 
 
-<!-- =========================
-     SIGNIN
-========================= -->
+<!-- SIGNIN -->
 
 <div id="signinPage" class="card hidden">
 
@@ -796,9 +787,7 @@ Create Account
 </div>
 
 
-<!-- =========================
-     CUSTOMER ORDER PAGE
-========================= -->
+<!-- CUSTOMER ORDER PAGE -->
 
 <div id="orderPage" class="card hidden">
 
@@ -832,10 +821,6 @@ Logout
 
 </div>
 
-
-<!-- =========================
-     ORDER FORM
-========================= -->
 
 <div id="orderForm">
 
@@ -916,7 +901,6 @@ Instagram Save — ₹10 / 1000
 
 </select>
 
-
 <label>
 Quantity
 </label>
@@ -928,7 +912,6 @@ placeholder="Enter quantity"
 oninput="calculatePrice()"
 >
 
-
 <label>
 Post / Reel Link
 </label>
@@ -938,7 +921,6 @@ type="url"
 id="link"
 placeholder="Paste your post or reel link"
 >
-
 
 <div class="price-box">
 
@@ -955,7 +937,6 @@ id="price"
 
 </div>
 
-
 <button
 id="continuePaymentBtn"
 onclick="startPayment()"
@@ -966,9 +947,7 @@ Continue to Payment
 </div>
 
 
-<!-- =========================
-     PAYMENT PAGE
-========================= -->
+<!-- PAYMENT PAGE -->
 
 <div
 id="paymentPage"
@@ -985,7 +964,6 @@ Scan & Pay
 Complete your payment to continue
 </div>
 
-
 <div class="payment-amount-box">
 
 <span class="payment-amount-label">
@@ -1001,7 +979,6 @@ id="paymentAmount"
 
 </div>
 
-
 <div class="qr-frame">
 
 <img
@@ -1012,14 +989,12 @@ class="payment-qr"
 
 </div>
 
-
 <div class="payment-note">
 
 Scan the QR code using your UPI app and complete the payment.
 Then upload your payment screenshot below.
 
 </div>
-
 
 <div class="upload-box">
 
@@ -1036,7 +1011,6 @@ accept="image/*"
 
 </div>
 
-
 <button
 class="confirm-btn"
 id="confirmPaymentBtn"
@@ -1045,14 +1019,12 @@ onclick="confirmPayment()"
 Payment Complete
 </button>
 
-
 <div
 id="paymentSubmitWait"
 class="payment-submit-wait"
 >
 Please wait 10–15 seconds...
 </div>
-
 
 <button
 class="back-btn"
@@ -1066,9 +1038,7 @@ Back to Order
 </div>
 
 
-<!-- =========================
-     SUCCESS PAGE
-========================= -->
+<!-- SUCCESS PAGE -->
 
 <div
 id="successPage"
@@ -1119,9 +1089,7 @@ Place New Order
 </div>
 
 
-<!-- =========================
-     ADMIN PANEL
-========================= -->
+<!-- ADMIN PANEL -->
 
 <div
 id="adminPage"
@@ -1149,7 +1117,6 @@ id="adminMessage"
 class="message"
 ></div>
 
-
 <div class="admin-top">
 
 <div>
@@ -1169,7 +1136,6 @@ class="admin-top-email"
 
 </div>
 
-
 <h2>
 Orders
 </h2>
@@ -1178,7 +1144,6 @@ Orders
 Loading orders...
 </div>
 
-
 <button
 class="back-btn"
 onclick="loadAdminOrders()"
@@ -1186,7 +1151,6 @@ style="margin-top:5px"
 >
 Refresh Orders
 </button>
-
 
 <button
 class="back-btn"
@@ -1230,11 +1194,12 @@ let currentOrder = null;
 
 /* =========================
    ADMIN CHECK
+   EMAIL BASED
 ========================= */
 
 async function checkAdmin(user){
 
-if(!user){
+if(!user || !user.email){
 return false;
 }
 
@@ -1245,7 +1210,7 @@ error
 await supabaseClient
 .from("admins")
 .select("id,email")
-.eq("id",user.id)
+.eq("email",user.email)
 .maybeSingle();
 
 
@@ -2103,21 +2068,13 @@ throw uploadError;
 
 
 /*
-=================================
-TRY TO SAVE CUSTOMER EMAIL
-=================================
+SAVE ORDER
 */
 
-let orderData = null;
-let orderError = null;
-
-
-/*
-FIRST TRY:
-customer_email column available
-*/
-
-const firstInsert =
+const {
+data:orderData,
+error:orderError
+} =
 await supabaseClient
 .from("Orders")
 .insert([{
@@ -2149,60 +2106,6 @@ filePath
 }])
 .select("order_id")
 .single();
-
-
-orderData =
-firstInsert.data;
-
-orderError =
-firstInsert.error;
-
-
-/*
-IF customer_email COLUMN DOES NOT EXIST,
-RETRY WITHOUT IT.
-*/
-
-if(orderError){
-
-const retryInsert =
-await supabaseClient
-.from("Orders")
-.insert([{
-
-service:
-currentOrder.service,
-
-quantity:
-currentOrder.quantity,
-
-link:
-currentOrder.link,
-
-price:
-currentOrder.price,
-
-status:
-"Payment Submitted",
-
-user_id:
-user.id,
-
-payment_screenshot_path:
-filePath
-
-}])
-.select("order_id")
-.single();
-
-
-orderData =
-retryInsert.data;
-
-orderError =
-retryInsert.error;
-
-}
 
 
 if(orderError){
@@ -2383,11 +2286,9 @@ return;
 }
 
 
-/*
-TRY WITH CUSTOMER EMAIL
-*/
+/* LOAD ORDERS */
 
-let result =
+const result =
 await supabaseClient
 .from("Orders")
 .select(`
@@ -2405,40 +2306,8 @@ payment_screenshot_path
 "order_id",
 {
 ascending:false
-});
-
-
-/*
-IF customer_email COLUMN DOES NOT EXIST,
-LOAD WITHOUT IT.
-*/
-
-if(result.error){
-
-console.log(
-"Loading orders without customer_email column."
-);
-
-result =
-await supabaseClient
-.from("Orders")
-.select(`
-order_id,
-service,
-quantity,
-link,
-price,
-status,
-user_id,
-payment_screenshot_path
-`)
-.order(
-"order_id",
-{
-ascending:false
-});
-
 }
+);
 
 
 if(result.error){
@@ -2517,12 +2386,6 @@ screenshot
 );
 
 
-/*
-If bucket is public this works.
-If private, admin can still see
-the path.
-*/
-
 if(
 publicData?.publicUrl
 ){
@@ -2530,7 +2393,7 @@ publicData?.publicUrl
 screenshotHTML = `
 <a
 class="admin-screenshot"
-href="${publicData.publicUrl}"
+href="${escapeAttribute(publicData.publicUrl)}"
 target="_blank"
 rel="noopener"
 >
@@ -2606,7 +2469,6 @@ ${screenshotHTML}
 
 </div>
 
-
 <div class="admin-status">
 
 <label>
@@ -2614,9 +2476,7 @@ Change Order Status
 </label>
 
 <select
-id="status-${escapeHTML(
-String(order.order_id)
-)}"
+id="status-${escapeAttribute(String(order.order_id))}"
 >
 
 <option
@@ -2673,7 +2533,6 @@ Update Status
 </div>
 
 `;
-
 
 ordersContainer.appendChild(
 orderBox
@@ -2797,7 +2656,7 @@ loadAdminOrders();
 
 function escapeHTML(value){
 
-return value
+return String(value)
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
@@ -2809,9 +2668,10 @@ return value
 
 function escapeAttribute(value){
 
-return value
+return String(value)
 .replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
