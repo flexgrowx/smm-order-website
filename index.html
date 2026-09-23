@@ -1,2560 +1,1524 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GROWX ORDER</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-/* =====================================================
-   GROWX PREMIUM DESIGN
-===================================================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-    --bg:#050816;
-    --card:rgba(15,23,42,.78);
-    --card2:rgba(30,41,59,.65);
-    --border:rgba(148,163,184,.18);
-    --text:#f8fafc;
-    --muted:#94a3b8;
-    --primary:#7c3aed;
-    --primary2:#4f46e5;
-    --cyan:#06b6d4;
-    --green:#22c55e;
-    --red:#ef4444;
+--bg:#050816;
+--card:rgba(15,23,42,.78);
+--border:rgba(148,163,184,.18);
+--text:#f8fafc;
+--muted:#94a3b8;
+--primary:#7c3aed;
+--primary2:#4f46e5;
+--green:#22c55e;
 }
 
-html{
-    scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
-    min-height:100vh;
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(124,58,237,.24),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(6,182,212,.16),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(79,70,229,.18),
-            transparent 35%
-        ),
-        #050816;
-
-    color:var(--text);
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    overflow-x:hidden;
+min-height:100vh;
+background:
+radial-gradient(circle at 15% 10%,rgba(124,58,237,.24),transparent 30%),
+radial-gradient(circle at 85% 20%,rgba(6,182,212,.16),transparent 28%),
+radial-gradient(circle at 50% 100%,rgba(79,70,229,.18),transparent 35%),
+#050816;
+color:var(--text);
+font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+overflow-x:hidden;
 }
 
-
-/* =====================================================
-   BACKGROUND LIGHTS
-===================================================== */
-
-body::before{
-    content:"";
-    position:fixed;
-    width:300px;
-    height:300px;
-    left:-140px;
-    top:35%;
-    background:rgba(124,58,237,.15);
-    filter:blur(90px);
-    border-radius:50%;
-    pointer-events:none;
+body:before{
+content:"";
+position:fixed;
+width:300px;height:300px;
+left:-140px;top:35%;
+background:rgba(124,58,237,.15);
+filter:blur(90px);
+border-radius:50%;
+pointer-events:none;
 }
 
-body::after{
-    content:"";
-    position:fixed;
-    width:280px;
-    height:280px;
-    right:-130px;
-    top:55%;
-    background:rgba(6,182,212,.12);
-    filter:blur(90px);
-    border-radius:50%;
-    pointer-events:none;
+body:after{
+content:"";
+position:fixed;
+width:280px;height:280px;
+right:-130px;top:55%;
+background:rgba(6,182,212,.12);
+filter:blur(90px);
+border-radius:50%;
+pointer-events:none;
 }
-
-
-/* =====================================================
-   CONTAINER
-===================================================== */
 
 .container{
-    width:100%;
-    max-width:520px;
-    margin:0 auto;
-    padding:24px 16px 45px;
-    position:relative;
-    z-index:2;
+width:100%;
+max-width:520px;
+margin:0 auto;
+padding:24px 16px 45px;
+position:relative;
+z-index:2;
 }
-
-
-/* =====================================================
-   PREMIUM CARD
-===================================================== */
 
 .card{
-    position:relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15,23,42,.92),
-            rgba(15,23,42,.70)
-        );
-
-    border:1px solid var(--border);
-
-    border-radius:26px;
-
-    padding:25px;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.04);
-
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-
-    overflow:hidden;
+position:relative;
+background:linear-gradient(145deg,rgba(15,23,42,.92),rgba(15,23,42,.70));
+border:1px solid var(--border);
+border-radius:26px;
+padding:25px;
+box-shadow:0 25px 70px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04);
+backdrop-filter:blur(24px);
+-webkit-backdrop-filter:blur(24px);
+overflow:hidden;
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    width:170px;
-    height:170px;
-    top:-100px;
-    right:-80px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(124,58,237,.28),
-            transparent 70%
-        );
-
-    pointer-events:none;
+.card:before{
+content:"";
+position:absolute;
+width:170px;height:170px;
+top:-100px;right:-80px;
+background:radial-gradient(circle,rgba(124,58,237,.28),transparent 70%);
+pointer-events:none;
 }
 
-
-/* =====================================================
-   BRAND
-===================================================== */
-
-.brand{
-    text-align:center;
-    margin-bottom:28px;
-}
+.brand{text-align:center;margin-bottom:28px}
 
 .brand-icon{
-    width:58px;
-    height:58px;
-
-    margin:0 auto 13px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #4f46e5,
-            #06b6d4
-        );
-
-    box-shadow:
-        0 12px 35px rgba(124,58,237,.35);
-
-    font-size:25px;
-    font-weight:1000;
+width:58px;height:58px;
+margin:0 auto 13px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:18px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5,#06b6d4);
+box-shadow:0 12px 35px rgba(124,58,237,.35);
+font-size:25px;
+font-weight:1000;
 }
 
 .brand-name{
-    font-size:27px;
-    font-weight:950;
-    letter-spacing:1.5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #c4b5fd,
-            #67e8f9
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+font-size:27px;
+font-weight:950;
+letter-spacing:1.5px;
+background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
 }
 
 .brand-subtitle{
-    margin-top:5px;
-    color:var(--muted);
-    font-size:12px;
-    letter-spacing:1.5px;
+margin-top:5px;
+color:var(--muted);
+font-size:12px;
+letter-spacing:1.5px;
 }
 
-
-/* =====================================================
-   HEADINGS
-===================================================== */
-
-h1{
-    display:none;
-}
+h1{display:none}
 
 h2{
-    font-size:22px;
-    font-weight:850;
-    margin-bottom:20px;
-    letter-spacing:-.3px;
+font-size:22px;
+font-weight:850;
+margin-bottom:20px;
+letter-spacing:-.3px;
 }
 
-
-/* =====================================================
-   USER HEADER
-===================================================== */
-
 .user-box{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    padding:12px;
-
-    margin-bottom:25px;
-
-    border-radius:17px;
-
-    background:
-        rgba(30,41,59,.58);
-
-    border:1px solid rgba(148,163,184,.13);
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+margin-bottom:25px;
+border-radius:17px;
+background:rgba(30,41,59,.58);
+border:1px solid rgba(148,163,184,.13);
 }
 
 .avatar{
-    width:46px;
-    height:46px;
-    flex-shrink:0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #4f46e5
-        );
-
-    box-shadow:
-        0 8px 25px rgba(124,58,237,.25);
-
-    color:white;
-    font-size:17px;
-    font-weight:900;
+width:46px;height:46px;
+flex-shrink:0;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:15px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+box-shadow:0 8px 25px rgba(124,58,237,.25);
+color:white;
+font-size:17px;
+font-weight:900;
 }
 
-.user-info{
-    flex:1;
-    min-width:0;
-}
+.user-info{flex:1;min-width:0}
 
 .user-name{
-    font-size:14px;
-    font-weight:800;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+font-size:14px;
+font-weight:800;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
 .user-label{
-    margin-top:3px;
-    color:var(--muted);
-    font-size:11px;
+margin-top:3px;
+color:var(--muted);
+font-size:11px;
 }
-
-
-/* =====================================================
-   LABELS
-===================================================== */
 
 label{
-    display:block;
-    margin-bottom:7px;
-
-    color:#cbd5e1;
-
-    font-size:12px;
-    font-weight:750;
-
-    letter-spacing:.3px;
+display:block;
+margin-bottom:7px;
+color:#cbd5e1;
+font-size:12px;
+font-weight:750;
+letter-spacing:.3px;
 }
 
-
-/* =====================================================
-   INPUT / SELECT
-===================================================== */
-
-input,
-select{
-    width:100%;
-
-    height:50px;
-
-    margin-bottom:18px;
-
-    padding:0 15px;
-
-    border-radius:13px;
-
-    border:1px solid rgba(148,163,184,.17);
-
-    background:
-        rgba(2,6,23,.60);
-
-    color:#f8fafc;
-
-    outline:none;
-
-    font-size:14px;
-
-    transition:
-        border .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
+input,select{
+width:100%;
+height:50px;
+margin-bottom:18px;
+padding:0 15px;
+border-radius:13px;
+border:1px solid rgba(148,163,184,.17);
+background:rgba(2,6,23,.60);
+color:#f8fafc;
+outline:none;
+font-size:14px;
+transition:border .2s,box-shadow .2s,background .2s;
 }
 
-input::placeholder{
-    color:#64748b;
-}
+input::placeholder{color:#64748b}
 
-select{
-    cursor:pointer;
-}
+select{cursor:pointer}
 
 select option{
-    background:#0f172a;
-    color:white;
+background:#0f172a;
+color:white;
 }
 
-input:focus,
-select:focus{
-    border-color:
-        rgba(124,58,237,.85);
-
-    background:
-        rgba(2,6,23,.82);
-
-    box-shadow:
-        0 0 0 4px rgba(124,58,237,.10);
+input:focus,select:focus{
+border-color:rgba(124,58,237,.85);
+background:rgba(2,6,23,.82);
+box-shadow:0 0 0 4px rgba(124,58,237,.10);
 }
-
-
-/* =====================================================
-   BUTTON
-===================================================== */
 
 button{
-    width:100%;
-
-    min-height:50px;
-
-    border:0;
-    border-radius:14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #4f46e5
-        );
-
-    color:white;
-
-    font-size:14px;
-    font-weight:850;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 12px 28px rgba(79,70,229,.25);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        opacity .2s ease;
+width:100%;
+min-height:50px;
+border:0;
+border-radius:14px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+font-size:14px;
+font-weight:850;
+cursor:pointer;
+box-shadow:0 12px 28px rgba(79,70,229,.25);
+transition:transform .2s,box-shadow .2s,opacity .2s;
 }
 
 button:hover{
-    transform:translateY(-1px);
-
-    box-shadow:
-        0 16px 34px rgba(79,70,229,.34);
+transform:translateY(-1px);
+box-shadow:0 16px 34px rgba(79,70,229,.34);
 }
 
-button:active{
-    transform:translateY(0);
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
+button:active{transform:translateY(0)}
 
 .logout{
-    width:auto;
-    min-height:auto;
-
-    padding:9px 13px;
-
-    border-radius:10px;
-
-    font-size:11px;
-
-    background:
-        rgba(239,68,68,.10);
-
-    border:
-        1px solid rgba(239,68,68,.22);
-
-    color:#fca5a5;
-
-    box-shadow:none;
+width:auto;
+min-height:auto;
+padding:9px 13px;
+border-radius:10px;
+font-size:11px;
+background:rgba(239,68,68,.10);
+border:1px solid rgba(239,68,68,.22);
+color:#fca5a5;
+box-shadow:none;
 }
 
 .logout:hover{
-    background:
-        rgba(239,68,68,.18);
-
-    box-shadow:none;
+background:rgba(239,68,68,.18);
+box-shadow:none;
 }
 
-
-/* =====================================================
-   PRICE BOX
-===================================================== */
-
 .price-box{
-    position:relative;
-
-    margin-top:2px;
-    margin-bottom:20px;
-
-    padding:17px;
-
-    border-radius:17px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(124,58,237,.13),
-            rgba(6,182,212,.07)
-        );
-
-    border:
-        1px solid rgba(124,58,237,.22);
+position:relative;
+margin-top:2px;
+margin-bottom:20px;
+padding:17px;
+border-radius:17px;
+background:linear-gradient(135deg,rgba(124,58,237,.13),rgba(6,182,212,.07));
+border:1px solid rgba(124,58,237,.22);
 }
 
 .price-label{
-    color:#94a3b8;
-    font-size:11px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:1px;
+color:#94a3b8;
+font-size:11px;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:1px;
 }
 
 .price{
-    margin-top:5px;
-
-    font-size:29px;
-    font-weight:950;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #c4b5fd,
-            #67e8f9
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+margin-top:5px;
+font-size:29px;
+font-weight:950;
+background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
 }
 
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
 .message{
-    display:none;
-
-    margin-bottom:16px;
-
-    padding:12px 14px;
-
-    border-radius:12px;
-
-    font-size:12px;
-    line-height:1.5;
+display:none;
+margin-bottom:16px;
+padding:12px 14px;
+border-radius:12px;
+font-size:12px;
+line-height:1.5;
 }
 
 .error{
-    background:rgba(239,68,68,.10);
-    border:1px solid rgba(239,68,68,.22);
-    color:#fca5a5;
+background:rgba(239,68,68,.10);
+border:1px solid rgba(239,68,68,.22);
+color:#fca5a5;
 }
 
 .success{
-    background:rgba(34,197,94,.10);
-    border:1px solid rgba(34,197,94,.22);
-    color:#86efac;
+background:rgba(34,197,94,.10);
+border:1px solid rgba(34,197,94,.22);
+color:#86efac;
 }
 
-
-/* =====================================================
-   PAYMENT
-===================================================== */
-
-.payment-box{
-    text-align:center;
-
-    padding:8px 0 4px;
-}
+.payment-box{text-align:center;padding:8px 0 4px}
 
 .payment-title{
-    font-size:24px;
-    font-weight:900;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #c4b5fd
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-
-    margin-bottom:8px;
+font-size:24px;
+font-weight:900;
+background:linear-gradient(90deg,#fff,#c4b5fd);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+margin-bottom:8px;
 }
 
 .payment-subtitle{
-    color:var(--muted);
-    font-size:12px;
-    margin-bottom:18px;
+color:var(--muted);
+font-size:12px;
+margin-bottom:18px;
 }
 
 .payment-amount-box{
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-
-    padding:9px 16px;
-    margin-bottom:20px;
-
-    border-radius:30px;
-
-    background:
-        rgba(34,197,94,.09);
-
-    border:
-        1px solid rgba(34,197,94,.20);
+display:inline-flex;
+align-items:center;
+gap:5px;
+padding:9px 16px;
+margin-bottom:20px;
+border-radius:30px;
+background:rgba(34,197,94,.09);
+border:1px solid rgba(34,197,94,.20);
 }
 
 .payment-amount-label{
-    color:#86efac;
-    font-size:11px;
-    font-weight:700;
+color:#86efac;
+font-size:11px;
+font-weight:700;
 }
 
 .payment-amount{
-    color:#bbf7d0;
-    font-size:17px;
-    font-weight:900;
+color:#bbf7d0;
+font-size:17px;
+font-weight:900;
 }
 
 .qr-frame{
-    width:252px;
-    max-width:100%;
-
-    padding:11px;
-
-    margin:0 auto 16px;
-
-    border-radius:20px;
-
-    background:white;
-
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.35);
+width:252px;
+max-width:100%;
+padding:11px;
+margin:0 auto 16px;
+border-radius:20px;
+background:white;
+box-shadow:0 15px 45px rgba(0,0,0,.35);
 }
 
 .payment-qr{
-    width:100%;
-    height:auto;
-
-    display:block;
-
-    border-radius:11px;
+width:100%;
+height:auto;
+display:block;
+border-radius:11px;
 }
 
 .payment-note{
-    color:#94a3b8;
-
-    font-size:11px;
-
-    line-height:1.6;
-
-    margin:0 auto 20px;
-
-    max-width:350px;
+color:#94a3b8;
+font-size:11px;
+line-height:1.6;
+margin:0 auto 20px;
+max-width:350px;
 }
 
-
-/* =====================================================
-   UPLOAD
-===================================================== */
-
 .upload-box{
-    text-align:left;
-
-    margin-top:5px;
-    margin-bottom:3px;
-
-    padding:15px;
-
-    border-radius:15px;
-
-    background:
-        rgba(30,41,59,.55);
-
-    border:
-        1px solid rgba(148,163,184,.13);
+text-align:left;
+margin-top:5px;
+margin-bottom:3px;
+padding:15px;
+border-radius:15px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
 }
 
 .upload-label{
-    margin-bottom:9px;
-
-    color:#e2e8f0;
-
-    font-size:12px;
+margin-bottom:9px;
+color:#e2e8f0;
+font-size:12px;
 }
 
 .file-input{
-    height:auto;
-
-    margin:0;
-
-    padding:11px;
-
-    background:
-        rgba(2,6,23,.55);
-
-    font-size:12px;
+height:auto;
+margin:0;
+padding:11px;
+background:rgba(2,6,23,.55);
+font-size:12px;
 }
 
 .file-input::file-selector-button{
-    border:0;
-
-    padding:8px 11px;
-
-    margin-right:8px;
-
-    border-radius:8px;
-
-    background:
-        rgba(124,58,237,.18);
-
-    color:#c4b5fd;
-
-    font-weight:700;
-
-    cursor:pointer;
+border:0;
+padding:8px 11px;
+margin-right:8px;
+border-radius:8px;
+background:rgba(124,58,237,.18);
+color:#c4b5fd;
+font-weight:700;
+cursor:pointer;
 }
 
-
-/* =====================================================
-   CONFIRM / BACK
-===================================================== */
-
 .confirm-btn{
-    margin-top:15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #16a34a,
-            #059669
-        );
-
-    box-shadow:
-        0 12px 28px rgba(22,163,74,.22);
+margin-top:15px;
+background:linear-gradient(135deg,#16a34a,#059669);
+box-shadow:0 12px 28px rgba(22,163,74,.22);
 }
 
 .confirm-btn:hover{
-    box-shadow:
-        0 16px 34px rgba(22,163,74,.30);
+box-shadow:0 16px 34px rgba(22,163,74,.30);
 }
 
 .back-btn{
-    margin-top:10px;
-
-    background:
-        rgba(100,116,139,.13);
-
-    border:
-        1px solid rgba(148,163,184,.18);
-
-    color:#cbd5e1;
-
-    box-shadow:none;
+margin-top:10px;
+background:rgba(100,116,139,.13);
+border:1px solid rgba(148,163,184,.18);
+color:#cbd5e1;
+box-shadow:none;
 }
 
 .back-btn:hover{
-    background:
-        rgba(100,116,139,.20);
-
-    box-shadow:none;
+background:rgba(100,116,139,.20);
+box-shadow:none;
 }
 
-
-/* =====================================================
-   SUCCESS
-===================================================== */
-
-.success-box{
-    text-align:center;
-
-    padding:18px 5px 5px;
-}
+.success-box{text-align:center;padding:18px 5px 5px}
 
 .success-icon{
-    width:75px;
-    height:75px;
-
-    margin:0 auto 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:24px;
-
-    background:
-        rgba(34,197,94,.10);
-
-    border:
-        1px solid rgba(34,197,94,.22);
-
-    font-size:35px;
-
-    box-shadow:
-        0 15px 40px rgba(34,197,94,.10);
+width:75px;height:75px;
+margin:0 auto 18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:24px;
+background:rgba(34,197,94,.10);
+border:1px solid rgba(34,197,94,.22);
+font-size:35px;
+box-shadow:0 15px 40px rgba(34,197,94,.10);
 }
 
 .success-title{
-    font-size:22px;
-    font-weight:900;
-
-    color:#86efac;
-
-    margin-bottom:10px;
+font-size:22px;
+font-weight:900;
+color:#86efac;
+margin-bottom:10px;
 }
 
 .success-text{
-    color:#94a3b8;
-
-    font-size:12px;
-
-    line-height:1.7;
+color:#94a3b8;
+font-size:12px;
+line-height:1.7;
 }
 
 .order-id{
-    margin-top:18px;
-
-    padding:14px;
-
-    border-radius:13px;
-
-    background:
-        rgba(30,41,59,.65);
-
-    border:
-        1px solid rgba(148,163,184,.14);
-
-    color:#cbd5e1;
-
-    font-size:12px;
-    font-weight:700;
+margin-top:18px;
+padding:14px;
+border-radius:13px;
+background:rgba(30,41,59,.65);
+border:1px solid rgba(148,163,184,.14);
+color:#cbd5e1;
+font-size:12px;
+font-weight:700;
 }
 
-#successOrderId{
-    color:#c4b5fd;
-}
+#successOrderId{color:#c4b5fd}
 
-
-/* =====================================================
-   HIDDEN
-===================================================== */
-
-.hidden{
-    display:none !important;
-}
-
-
-/* =====================================================
-   SMALL FOOTER
-===================================================== */
+.hidden{display:none!important}
 
 .footer{
-    text-align:center;
-
-    margin-top:17px;
-
-    color:#475569;
-
-    font-size:10px;
-
-    letter-spacing:.7px;
+text-align:center;
+margin-top:17px;
+color:#475569;
+font-size:10px;
+letter-spacing:.7px;
 }
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
 
 @media(max-width:520px){
-
-    .container{
-        padding:14px 12px 35px;
-    }
-
-    .card{
-        padding:20px 17px;
-
-        border-radius:22px;
-    }
-
-    .brand-name{
-        font-size:25px;
-    }
-
-    h2{
-        font-size:20px;
-    }
-
-    .payment-title{
-        font-size:22px;
-    }
-
-    .qr-frame{
-        width:235px;
-    }
-
+.container{padding:14px 12px 35px}
+.card{padding:20px 17px;border-radius:22px}
+.brand-name{font-size:25px}
+h2{font-size:20px}
+.payment-title{font-size:22px}
+.qr-frame{width:235px}
 }
-
-
-/* =====================================================
-   VERY SMALL SCREEN
-===================================================== */
 
 @media(max-width:350px){
-
-    .container{
-        padding-left:8px;
-        padding-right:8px;
-    }
-
-    .card{
-        padding:17px 13px;
-    }
-
-    .user-box{
-        gap:8px;
-    }
-
-    .avatar{
-        width:42px;
-        height:42px;
-    }
-
-    .logout{
-        padding:8px 9px;
-    }
-
+.container{padding-left:8px;padding-right:8px}
+.card{padding:17px 13px}
+.user-box{gap:8px}
+.avatar{width:42px;height:42px}
+.logout{padding:8px 9px}
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
-
-
-<!-- ===================================================
-     SIGN UP PAGE
-=================================================== -->
 
 <div id="signupPage" class="card hidden">
 
-    <div class="brand">
+<div class="brand">
+<div class="brand-icon">G</div>
+<div class="brand-name">GROWX</div>
+<div class="brand-subtitle">PREMIUM ORDER PANEL</div>
+</div>
 
-        <div class="brand-icon">
-            G
-        </div>
+<h2>Create Account</h2>
 
-        <div class="brand-name">
-            GROWX
-        </div>
+<div id="signupMessage" class="message"></div>
 
-        <div class="brand-subtitle">
-            PREMIUM ORDER PANEL
-        </div>
+<label>Name</label>
+<input type="text" id="signupName" placeholder="Enter your name">
 
-    </div>
+<label>Email</label>
+<input type="email" id="signupEmail" placeholder="Enter your email">
 
+<label>Password</label>
+<input type="password" id="signupPassword" placeholder="Create a password">
 
-    <h2>
-        Create Account
-    </h2>
+<button onclick="signUp()">Create Account</button>
 
-
-    <div
-        id="signupMessage"
-        class="message">
-    </div>
-
-
-    <label>
-        Name
-    </label>
-
-    <input
-        type="text"
-        id="signupName"
-        placeholder="Enter your name"
-    >
-
-
-    <label>
-        Email
-    </label>
-
-    <input
-        type="email"
-        id="signupEmail"
-        placeholder="Enter your email"
-    >
-
-
-    <label>
-        Password
-    </label>
-
-    <input
-        type="password"
-        id="signupPassword"
-        placeholder="Create a password"
-    >
-
-
-    <button onclick="signUp()">
-        Create Account
-    </button>
-
-
-    <p
-        style="
-        text-align:center;
-        margin-top:18px;
-        color:#64748b;
-        font-size:12px;
-        "
-    >
-
-        Already have an account?
-
-        <span
-            onclick="showSignin()"
-            style="
-            color:#a78bfa;
-            cursor:pointer;
-            font-weight:800;
-            "
-        >
-            Sign In
-        </span>
-
-    </p>
+<p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
+Already have an account?
+<span onclick="showSignin()" style="color:#a78bfa;cursor:pointer;font-weight:800">
+Sign In
+</span>
+</p>
 
 </div>
 
-
-<!-- ===================================================
-     SIGN IN PAGE
-=================================================== -->
 
 <div id="signinPage" class="card hidden">
 
-    <div class="brand">
+<div class="brand">
+<div class="brand-icon">G</div>
+<div class="brand-name">GROWX</div>
+<div class="brand-subtitle">PREMIUM ORDER PANEL</div>
+</div>
 
-        <div class="brand-icon">
-            G
-        </div>
+<h2>Welcome Back</h2>
 
-        <div class="brand-name">
-            GROWX
-        </div>
+<div id="signinMessage" class="message"></div>
 
-        <div class="brand-subtitle">
-            PREMIUM ORDER PANEL
-        </div>
+<label>Email</label>
+<input type="email" id="signinEmail" placeholder="Enter your email">
 
-    </div>
+<label>Password</label>
+<input type="password" id="signinPassword" placeholder="Enter your password">
 
+<button onclick="signIn()">Sign In</button>
 
-    <h2>
-        Welcome Back
-    </h2>
-
-
-    <div
-        id="signinMessage"
-        class="message">
-    </div>
-
-
-    <label>
-        Email
-    </label>
-
-    <input
-        type="email"
-        id="signinEmail"
-        placeholder="Enter your email"
-    >
-
-
-    <label>
-        Password
-    </label>
-
-    <input
-        type="password"
-        id="signinPassword"
-        placeholder="Enter your password"
-    >
-
-
-    <button onclick="signIn()">
-        Sign In
-    </button>
-
-
-    <p
-        style="
-        text-align:center;
-        margin-top:18px;
-        color:#64748b;
-        font-size:12px;
-        "
-    >
-
-        Don't have an account?
-
-        <span
-            onclick="showSignup()"
-            style="
-            color:#a78bfa;
-            cursor:pointer;
-            font-weight:800;
-            "
-        >
-            Create Account
-        </span>
-
-    </p>
+<p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
+Don't have an account?
+<span onclick="showSignup()" style="color:#a78bfa;cursor:pointer;font-weight:800">
+Create Account
+</span>
+</p>
 
 </div>
 
-
-<!-- ===================================================
-     ORDER PAGE
-=================================================== -->
 
 <div id="orderPage" class="card hidden">
 
+<div class="user-box">
 
-    <!-- CUSTOMER HEADER -->
+<div id="avatar" class="avatar">G</div>
 
-    <div class="user-box">
+<div class="user-info">
+<div class="user-name" id="customerName">Customer</div>
+<div class="user-label">GROWX CUSTOMER</div>
+</div>
 
-        <div
-            id="avatar"
-            class="avatar"
-        >
-            G
-        </div>
-
-
-        <div class="user-info">
-
-            <div
-                class="user-name"
-                id="customerName"
-            >
-                Customer
-            </div>
-
-            <div class="user-label">
-                GROWX CUSTOMER
-            </div>
-
-        </div>
-
-
-        <button
-            class="logout"
-            onclick="logout()"
-        >
-            Logout
-        </button>
-
-    </div>
-
-
-    <!-- =================================================
-         ORDER FORM
-    ================================================= -->
-
-    <div id="orderForm">
-
-
-        <div
-            style="
-            color:#64748b;
-            font-size:11px;
-            font-weight:700;
-            letter-spacing:1px;
-            margin-bottom:7px;
-            "
-        >
-            ORDER SERVICE
-        </div>
-
-
-        <h2>
-            Place Your Order
-        </h2>
-
-
-        <div
-            id="orderMessage"
-            class="message">
-        </div>
-
-
-        <!-- SERVICE -->
-
-        <label>
-            Choose Service
-        </label>
-
-        <select id="service">
-
-            <option value="">
-                Choose Service
-            </option>
-
-
-            <option
-                value="Instagram Views"
-                data-min="501"
-                data-max="2000000"
-            >
-                Instagram Views
-            </option>
-
-
-            <option
-                value="Instagram Likes"
-                data-min="50"
-                data-max="500000"
-            >
-                Instagram Likes
-            </option>
-
-
-            <option
-                value="Instagram Followers"
-                data-rate="400"
-                data-min="100"
-                data-max="20000"
-            >
-                Instagram Followers — ₹400 / 1000
-            </option>
-
-
-            <option
-                value="Instagram Shares"
-                data-rate="5"
-                data-min="200"
-                data-max="100000"
-            >
-                Instagram Shares — ₹5 / 1000
-            </option>
-
-
-            <option
-                value="Instagram Repost"
-                data-rate="10"
-                data-min="100"
-                data-max="50000"
-            >
-                Instagram Repost — ₹10 / 1000
-            </option>
-
-
-            <option
-                value="Instagram Save"
-                data-rate="10"
-                data-min="100"
-                data-max="50000"
-            >
-                Instagram Save — ₹10 / 1000
-            </option>
-
-        </select>
-
-
-        <!-- QUANTITY -->
-
-        <label>
-            Quantity
-        </label>
-
-        <input
-            type="number"
-            id="quantity"
-            placeholder="Enter quantity"
-            oninput="calculatePrice()"
-        >
-
-
-        <!-- LINK -->
-
-        <label>
-            Post / Reel Link
-        </label>
-
-        <input
-            type="url"
-            id="link"
-            placeholder="Paste your post or reel link"
-        >
-
-
-        <!-- PRICE -->
-
-        <div class="price-box">
-
-            <div class="price-label">
-                Total Order Cost
-            </div>
-
-            <div
-                class="price"
-                id="price"
-            >
-                ₹0.00
-            </div>
-
-        </div>
-
-
-        <button onclick="startPayment()">
-            Continue to Payment
-        </button>
-
-
-    </div>
-
-
-    <!-- =================================================
-         PAYMENT PAGE
-    ================================================= -->
-
-    <div
-        id="paymentPage"
-        class="hidden"
-    >
-
-        <div class="payment-box">
-
-
-            <div class="payment-title">
-                Scan & Pay
-            </div>
-
-
-            <div class="payment-subtitle">
-                Complete your payment to continue
-            </div>
-
-
-            <div class="payment-amount-box">
-
-                <span class="payment-amount-label">
-                    PAY
-                </span>
-
-                <span
-                    class="payment-amount"
-                    id="paymentAmount"
-                >
-                    ₹0.00
-                </span>
-
-            </div>
-
-
-            <!-- QR -->
-
-            <div class="qr-frame">
-
-                <img
-                    src="IMG-20260923-WA0004~2.jpg"
-                    alt="GROWX Payment QR"
-                    class="payment-qr"
-                >
-
-            </div>
-
-
-            <div class="payment-note">
-
-                Scan the QR code using your UPI app
-                and complete the payment.
-                Then upload your payment screenshot below.
-
-            </div>
-
-
-            <!-- UPLOAD -->
-
-            <div class="upload-box">
-
-                <label class="upload-label">
-                    Payment Screenshot
-                </label>
-
-                <input
-                    type="file"
-                    id="paymentScreenshot"
-                    class="file-input"
-                    accept="image/*"
-                >
-
-            </div>
-
-
-            <!-- CONFIRM -->
-
-            <button
-                class="confirm-btn"
-                onclick="confirmPayment()"
-            >
-                Confirm Payment
-            </button>
-
-
-            <!-- BACK -->
-
-            <button
-                class="back-btn"
-                onclick="backToOrder()"
-            >
-                Back to Order
-            </button>
-
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         SUCCESS PAGE
-    ================================================= -->
-
-    <div
-        id="successPage"
-        class="hidden"
-    >
-
-        <div class="success-box">
-
-
-            <div class="success-icon">
-                ✓
-            </div>
-
-
-            <div class="success-title">
-                Order Successfully Submitted
-            </div>
-
-
-            <div class="success-text">
-
-                Your order has been submitted successfully.
-
-                <br>
-
-                Please keep your Order ID for reference.
-
-            </div>
-
-
-            <div class="order-id">
-
-                Order ID:
-
-                <span id="successOrderId">
-                    -
-                </span>
-
-            </div>
-
-
-            <button
-                style="margin-top:20px;"
-                onclick="newOrder()"
-            >
-                Place New Order
-            </button>
-
-
-        </div>
-
-    </div>
-
+<button class="logout" onclick="logout()">Logout</button>
 
 </div>
 
+
+<div id="orderForm">
+
+<div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
+ORDER SERVICE
+</div>
+
+<h2>Place Your Order</h2>
+
+<div id="orderMessage" class="message"></div>
+
+<label>Choose Service</label>
+
+<select id="service">
+
+<option value="">Choose Service</option>
+
+<option value="Instagram Views" data-min="501" data-max="2000000">
+Instagram Views
+</option>
+
+<option value="Instagram Likes" data-min="50" data-max="500000">
+Instagram Likes
+</option>
+
+<option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
+Instagram Followers — ₹400 / 1000
+</option>
+
+<option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
+Instagram Shares — ₹5 / 1000
+</option>
+
+<option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
+Instagram Repost — ₹10 / 1000
+</option>
+
+<option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
+Instagram Save — ₹10 / 1000
+</option>
+
+</select>
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="quantity"
+placeholder="Enter quantity"
+oninput="calculatePrice"
+>
+
+<label>Post / Reel Link</label>
+
+<input
+type="url"
+id="link"
+placeholder="Paste your post or reel link"
+>
+
+<div class="price-box">
+
+<div class="price-label">Total Order Cost</div>
+
+<div class="price" id="price">₹0.00</div>
+
+</div>
+
+<button onclick="startPayment()">
+Continue to Payment
+</button>
+
+</div>
+
+
+<div id="paymentPage" class="hidden">
+
+<div class="payment-box">
+
+<div class="payment-title">Scan & Pay</div>
+
+<div class="payment-subtitle">
+Complete your payment to continue
+</div>
+
+<div class="payment-amount-box">
+
+<span class="payment-amount-label">PAY</span>
+
+<span class="payment-amount" id="paymentAmount">
+₹0.00
+</span>
+
+</div>
+
+<div class="qr-frame">
+
+<img
+src="IMG-20260923-WA0004~2.jpg"
+alt="GROWX Payment QR"
+class="payment-qr"
+>
+
+</div>
+
+<div class="payment-note">
+Scan the QR code using your UPI app
+and complete the payment.
+Then upload your payment screenshot below.
+</div>
+
+<div class="upload-box">
+
+<label class="upload-label">
+Payment Screenshot
+</label>
+
+<input
+type="file"
+id="paymentScreenshot"
+class="file-input"
+accept="image/*"
+>
+
+</div>
+
+<button
+class="confirm-btn"
+onclick="confirmPayment()"
+>
+Confirm Payment
+</button>
+
+<button
+class="back-btn"
+onclick="backToOrder()"
+>
+Back to Order
+</button>
+
+</div>
+
+</div>
+
+
+<div id="successPage" class="hidden">
+
+<div class="success-box">
+
+<div class="success-icon">✓</div>
+
+<div class="success-title">
+Order Successfully Submitted
+</div>
+
+<div class="success-text">
+Your order has been submitted successfully.
+<br>
+Please keep your Order ID for reference.
+</div>
+
+<div class="order-id">
+Order ID:
+<span id="successOrderId">-</span>
+</div>
+
+<button style="margin-top:20px" onclick="newOrder()">
+Place New Order
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <div class="footer">
-    GROWX • PREMIUM ORDER SYSTEM
+GROWX • PREMIUM ORDER SYSTEM
 </div>
-
 
 </div>
 
 
 <script>
 
-
-/* =====================================================
-   SUPABASE
-===================================================== */
-
 const SUPABASE_URL =
 "https://rxfffsibplxmhgxmbkvi.supabase.co";
-
 
 const SUPABASE_KEY =
 "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
 
-
 const supabaseClient =
 supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-/* =====================================================
+/* =========================
    PAGE FUNCTIONS
-===================================================== */
+========================= */
 
 function showSignup(){
 
-    document
-        .getElementById("signupPage")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("signinPage")
-        .classList.add("hidden");
-
-    document
-        .getElementById("orderPage")
-        .classList.add("hidden");
+document.getElementById("signupPage").classList.remove("hidden");
+document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("orderPage").classList.add("hidden");
 
 }
-
 
 function showSignin(){
 
-    document
-        .getElementById("signinPage")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("signupPage")
-        .classList.add("hidden");
-
-    document
-        .getElementById("orderPage")
-        .classList.add("hidden");
+document.getElementById("signinPage").classList.remove("hidden");
+document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("orderPage").classList.add("hidden");
 
 }
-
 
 function showOrder(){
 
-    document
-        .getElementById("orderPage")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("signupPage")
-        .classList.add("hidden");
-
-    document
-        .getElementById("signinPage")
-        .classList.add("hidden");
+document.getElementById("orderPage").classList.remove("hidden");
+document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("signinPage").classList.add("hidden");
 
 }
 
 
-/* =====================================================
+/* =========================
    MESSAGE
-===================================================== */
+========================= */
 
-function showMessage(
-    elementId,
-    message,
-    type
-){
+function showMessage(elementId,message,type){
 
-    const element =
-        document.getElementById(elementId);
+const element=document.getElementById(elementId);
 
-    element.textContent =
-        message;
-
-    element.className =
-        "message " + type;
-
-    element.style.display =
-        "block";
+element.textContent=message;
+element.className="message "+type;
+element.style.display="block";
 
 }
 
 
-/* =====================================================
+/* =========================
    SIGN UP
-===================================================== */
+========================= */
 
 async function signUp(){
 
-    const name =
-        document
-            .getElementById("signupName")
-            .value
-            .trim();
+const name=document.getElementById("signupName").value.trim();
+const email=document.getElementById("signupEmail").value.trim();
+const password=document.getElementById("signupPassword").value;
 
+if(!name||!email||!password){
 
-    const email =
-        document
-            .getElementById("signupEmail")
-            .value
-            .trim();
+showMessage(
+"signupMessage",
+"Please fill all fields.",
+"error"
+);
 
+return;
 
-    const password =
-        document
-            .getElementById("signupPassword")
-            .value;
+}
 
+const {error}=await supabaseClient.auth.signUp({
 
-    if(
-        !name ||
-        !email ||
-        !password
-    ){
+email:email,
+password:password,
 
-        showMessage(
-            "signupMessage",
-            "Please fill all fields.",
-            "error"
-        );
+options:{
+data:{
+name:name
+}
+}
 
-        return;
+});
 
-    }
+if(error){
 
+showMessage(
+"signupMessage",
+error.message,
+"error"
+);
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient.auth.signUp({
+return;
 
-        email:email,
+}
 
-        password:password,
-
-        options:{
-            data:{
-                name:name
-            }
-        }
-
-    });
-
-
-    if(error){
-
-        showMessage(
-            "signupMessage",
-            error.message,
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    showMessage(
-        "signupMessage",
-        "Account created successfully. Please sign in.",
-        "success"
-    );
+showMessage(
+"signupMessage",
+"Account created successfully. Please sign in.",
+"success"
+);
 
 }
 
 
-/* =====================================================
+/* =========================
    SIGN IN
-===================================================== */
+========================= */
 
 async function signIn(){
 
-    const email =
-        document
-            .getElementById("signinEmail")
-            .value
-            .trim();
+const email=document.getElementById("signinEmail").value.trim();
+const password=document.getElementById("signinPassword").value;
 
+if(!email||!password){
 
-    const password =
-        document
-            .getElementById("signinPassword")
-            .value;
+showMessage(
+"signinMessage",
+"Please enter email and password.",
+"error"
+);
 
+return;
 
-    if(
-        !email ||
-        !password
-    ){
+}
 
-        showMessage(
-            "signinMessage",
-            "Please enter email and password.",
-            "error"
-        );
+const {error}=await supabaseClient.auth.signInWithPassword({
 
-        return;
+email:email,
+password:password
 
-    }
+});
 
+if(error){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient.auth.signInWithPassword({
+showMessage(
+"signinMessage",
+error.message,
+"error"
+);
 
-        email:email,
+return;
 
-        password:password
+}
 
-    });
-
-
-    if(error){
-
-        showMessage(
-            "signinMessage",
-            error.message,
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    loadCustomer();
+loadCustomer();
 
 }
 
 
-/* =====================================================
+/* =========================
    CUSTOMER
-===================================================== */
+========================= */
 
 async function loadCustomer(){
 
-    const {
-        data:{
-            user
-        }
-    } =
-    await supabaseClient.auth.getUser();
+const {
+data:{user}
+}=await supabaseClient.auth.getUser();
 
+if(!user){
 
-    if(!user){
+showSignin();
+return;
 
-        showSignin();
+}
 
-        return;
+const name=
+user.user_metadata?.name||
+user.email?.split("@")[0]||
+"Customer";
 
-    }
+document.getElementById("customerName").textContent=name;
 
+document.getElementById("avatar").textContent=
+name.charAt(0).toUpperCase();
 
-    const name =
-        user.user_metadata?.name ||
-        user.email?.split("@")[0] ||
-        "Customer";
-
-
-    document
-        .getElementById("customerName")
-        .textContent =
-            name;
-
-
-    document
-        .getElementById("avatar")
-        .textContent =
-            name
-                .charAt(0)
-                .toUpperCase();
-
-
-    showOrder();
+showOrder();
 
 }
 
 
-/* =====================================================
+/* =========================
    LOGOUT
-===================================================== */
+========================= */
 
 async function logout(){
 
-    await supabaseClient.auth.signOut();
+await supabaseClient.auth.signOut();
 
-    showSignin();
+showSignin();
 
 }
 
 
-/* =====================================================
+/* =========================
    SERVICE CHANGE
-===================================================== */
+========================= */
 
 document
-    .getElementById("service")
-    .addEventListener(
-        "change",
-        calculatePrice
-    );
+.getElementById("service")
+.addEventListener(
+"change",
+calculatePrice
+);
 
 
-/* =====================================================
+/* =========================
    VIEWS RATE
-===================================================== */
+========================= */
 
 function getViewsRate(quantity){
 
-    if(
-        quantity >= 501 &&
-        quantity <= 9999
-    ){
+if(quantity>=501&&quantity<=9999)return 2;
+if(quantity>=10000&&quantity<=19999)return 1.8;
+if(quantity>=20000&&quantity<=29999)return 1.5;
+if(quantity>=30000&&quantity<=49999)return 1;
+if(quantity>=50000&&quantity<=79999)return .8;
+if(quantity>=80000&&quantity<=99999)return .7;
+if(quantity>=100000)return .6;
 
-        return 2;
-
-    }
-
-
-    if(
-        quantity >= 10000 &&
-        quantity <= 19999
-    ){
-
-        return 1.8;
-
-    }
-
-
-    if(
-        quantity >= 20000 &&
-        quantity <= 29999
-    ){
-
-        return 1.5;
-
-    }
-
-
-    if(
-        quantity >= 30000 &&
-        quantity <= 49999
-    ){
-
-        return 1;
-
-    }
-
-
-    if(
-        quantity >= 50000 &&
-        quantity <= 79999
-    ){
-
-        return 0.8;
-
-    }
-
-
-    if(
-        quantity >= 80000 &&
-        quantity <= 99999
-    ){
-
-        return 0.7;
-
-    }
-
-
-    if(quantity >= 100000){
-
-        return 0.6;
-
-    }
-
-
-    return 0;
+return 0;
 
 }
 
 
-/* =====================================================
+/* =========================
    LIKES RATE
-===================================================== */
+========================= */
 
 function getLikesRate(quantity){
 
-    if(
-        quantity >= 50 &&
-        quantity <= 999
-    ){
+if(quantity>=50&&quantity<=999)return 20;
+if(quantity>=1000&&quantity<=2999)return 18;
+if(quantity>=3000&&quantity<=4999)return 15;
+if(quantity>=5000&&quantity<=9999)return 12;
+if(quantity>=10000)return 10;
 
-        return 20;
-
-    }
-
-
-    if(
-        quantity >= 1000 &&
-        quantity <= 2999
-    ){
-
-        return 18;
-
-    }
-
-
-    if(
-        quantity >= 3000 &&
-        quantity <= 4999
-    ){
-
-        return 15;
-
-    }
-
-
-    if(
-        quantity >= 5000 &&
-        quantity <= 9999
-    ){
-
-        return 12;
-
-    }
-
-
-    if(quantity >= 10000){
-
-        return 10;
-
-    }
-
-
-    return 0;
+return 0;
 
 }
 
 
-/* =====================================================
+/* =========================
    CURRENT RATE
-===================================================== */
+========================= */
 
-function getCurrentRate(
-    service,
-    quantity
-){
+function getCurrentRate(service,quantity){
 
-    if(
-        service ===
-        "Instagram Views"
-    ){
+if(service==="Instagram Views")
+return getViewsRate(quantity);
 
-        return getViewsRate(quantity);
+if(service==="Instagram Likes")
+return getLikesRate(quantity);
 
-    }
+if(service==="Instagram Followers")
+return 400;
 
+if(service==="Instagram Shares")
+return 5;
 
-    if(
-        service ===
-        "Instagram Likes"
-    ){
+if(service==="Instagram Repost")
+return 10;
 
-        return getLikesRate(quantity);
+if(service==="Instagram Save")
+return 10;
 
-    }
-
-
-    if(
-        service ===
-        "Instagram Followers"
-    ){
-
-        return 400;
-
-    }
-
-
-    if(
-        service ===
-        "Instagram Shares"
-    ){
-
-        return 5;
-
-    }
-
-
-    if(
-        service ===
-        "Instagram Repost"
-    ){
-
-        return 10;
-
-    }
-
-
-    if(
-        service ===
-        "Instagram Save"
-    ){
-
-        return 10;
-
-    }
-
-
-    return 0;
+return 0;
 
 }
 
 
-/* =====================================================
+/* =========================
    CALCULATE PRICE
-===================================================== */
+========================= */
 
 function calculatePrice(){
 
-    const service =
-        document
-            .getElementById("service");
+const service=document.getElementById("service");
 
+const selected=
+service.options[service.selectedIndex];
 
-    const selected =
-        service.options[
-            service.selectedIndex
-        ];
+const quantity=
+Number(document.getElementById("quantity").value);
 
+if(!selected||!selected.value||!quantity){
 
-    const quantity =
-        Number(
-            document
-                .getElementById("quantity")
-                .value
-        );
+document.getElementById("price").textContent="₹0.00";
 
+return;
 
-    if(
-        !selected ||
-        !selected.value ||
-        !quantity
-    ){
+}
 
-        document
-            .getElementById("price")
-            .textContent =
-                "₹0.00";
+const rate=
+getCurrentRate(
+selected.value,
+quantity
+);
 
-        return;
+if(rate===0){
 
-    }
+document.getElementById("price").textContent="₹0.00";
 
+return;
 
-    const rate =
-        getCurrentRate(
-            selected.value,
-            quantity
-        );
+}
 
+const total=(quantity/1000)*rate;
 
-    if(rate === 0){
-
-        document
-            .getElementById("price")
-            .textContent =
-                "₹0.00";
-
-        return;
-
-    }
-
-
-    const total =
-        (quantity / 1000) * rate;
-
-
-    document
-        .getElementById("price")
-        .textContent =
-            "₹" +
-            total.toFixed(2);
+document.getElementById("price").textContent=
+"₹"+total.toFixed(2);
 
 }
 
 
-/* =====================================================
+/* =========================
    START PAYMENT
-===================================================== */
+========================= */
 
 function startPayment(){
 
-    const service =
-        document
-            .getElementById("service");
+const service=document.getElementById("service");
 
+const selected=
+service.options[service.selectedIndex];
 
-    const selected =
-        service.options[
-            service.selectedIndex
-        ];
+const quantity=
+Number(document.getElementById("quantity").value);
 
+const link=
+document.getElementById("link").value.trim();
 
-    const quantity =
-        Number(
-            document
-                .getElementById("quantity")
-                .value
-        );
+if(!selected||!selected.value){
 
+showMessage(
+"orderMessage",
+"Please choose a service.",
+"error"
+);
 
-    const link =
-        document
-            .getElementById("link")
-            .value
-            .trim();
+return;
 
+}
 
-    if(
-        !selected ||
-        !selected.value
-    ){
+const min=Number(selected.dataset.min);
+const max=Number(selected.dataset.max);
 
-        showMessage(
-            "orderMessage",
-            "Please choose a service.",
-            "error"
-        );
+if(!quantity||quantity<min||quantity>max){
 
-        return;
+showMessage(
+"orderMessage",
+"Quantity must be between "+
+min.toLocaleString()+
+" and "+
+max.toLocaleString()+".",
+"error"
+);
 
-    }
+return;
 
+}
 
-    const min =
-        Number(
-            selected.dataset.min
-        );
+const rate=
+getCurrentRate(
+selected.value,
+quantity
+);
 
+if(rate===0){
 
-    const max =
-        Number(
-            selected.dataset.max
-        );
+showMessage(
+"orderMessage",
+"Please enter a valid quantity.",
+"error"
+);
 
+return;
 
-    if(
-        !quantity ||
-        quantity < min ||
-        quantity > max
-    ){
+}
 
-        showMessage(
-            "orderMessage",
+if(!link){
 
-            "Quantity must be between " +
-            min.toLocaleString() +
-            " and " +
-            max.toLocaleString() +
-            ".",
+showMessage(
+"orderMessage",
+"Please enter Post / Reel link.",
+"error"
+);
 
-            "error"
-        );
+return;
 
-        return;
+}
 
-    }
+const total=(quantity/1000)*rate;
 
+document.getElementById("paymentAmount").textContent=
+"₹"+total.toFixed(2);
 
-    const rate =
-        getCurrentRate(
-            selected.value,
-            quantity
-        );
+window.currentOrder={
 
+service:selected.value,
+quantity:quantity,
+link:link,
+price:total,
+rate:rate
 
-    if(rate === 0){
+};
 
-        showMessage(
-            "orderMessage",
-            "Please enter a valid quantity.",
-            "error"
-        );
+document.getElementById("orderForm").classList.add("hidden");
+document.getElementById("paymentPage").classList.remove("hidden");
 
-        return;
-
-    }
-
-
-    if(!link){
-
-        showMessage(
-            "orderMessage",
-            "Please enter Post / Reel link.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const total =
-        (quantity / 1000) * rate;
-
-
-    document
-        .getElementById("paymentAmount")
-        .textContent =
-            "₹" +
-            total.toFixed(2);
-
-
-    window.currentOrder = {
-
-        service:
-            selected.value,
-
-        quantity:
-            quantity,
-
-        link:
-            link,
-
-        price:
-            total,
-
-        rate:
-            rate
-
-    };
-
-
-    document
-        .getElementById("orderForm")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("paymentPage")
-        .classList.remove("hidden");
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 }
 
 
-/* =====================================================
+/* =========================
    BACK
-===================================================== */
+========================= */
 
 function backToOrder(){
 
-    document
-        .getElementById("paymentPage")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("orderForm")
-        .classList.remove("hidden");
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("orderForm").classList.remove("hidden");
 
 }
 
 
-/* =====================================================
+/* =========================
    CONFIRM PAYMENT
-===================================================== */
+   UPLOAD SCREENSHOT
+========================= */
 
 async function confirmPayment(){
 
-    const fileInput =
-        document
-            .getElementById(
-                "paymentScreenshot"
-            );
+const fileInput=
+document.getElementById("paymentScreenshot");
 
+const file=fileInput.files[0];
 
-    const file =
-        fileInput.files[0];
+if(!file){
 
+alert(
+"Please upload your payment screenshot first."
+);
 
-    if(!file){
+return;
 
-        alert(
-            "Please upload your payment screenshot first."
-        );
+}
 
-        return;
+if(!file.type.startsWith("image/")){
 
-    }
+alert(
+"Please upload an image file."
+);
 
+return;
 
-    if(
-        !file.type.startsWith("image/")
-    ){
+}
 
-        alert(
-            "Please upload an image file."
-        );
+if(!window.currentOrder){
 
-        return;
+alert(
+"Order information not found. Please start again."
+);
 
-    }
-
-
-    if(!window.currentOrder){
-
-        alert(
-            "Order information not found. Please start again."
-        );
-
-        return;
-
-    }
-
-
-    const {
-        data:{
-            user
-        }
-    } =
-    await supabaseClient.auth.getUser();
-
-
-    if(!user){
-
-        alert(
-            "Please sign in again."
-        );
-
-        showSignin();
-
-        return;
-
-    }
-
-
-    /* ================================================
-       INSERT ORDER
-    ================================================ */
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .from("Orders")
-        .insert({
-
-            service:
-                window.currentOrder.service,
-
-            quantity:
-                window.currentOrder.quantity,
-
-            link:
-                window.currentOrder.link,
-
-            price:
-                window.currentOrder.price,
-
-            status:
-                "Payment Submitted",
-
-            user_id:
-                user.id
-
-        })
-        .select("order_id")
-        .single();
-
-
-    if(error){
-
-        console.error(error);
-
-        alert(
-            "Order submit nahi hua: " +
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    /* ================================================
-       SUCCESS
-    ================================================ */
-
-    document
-        .getElementById("paymentPage")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("successPage")
-        .classList.remove("hidden");
-
-
-    document
-        .getElementById("successOrderId")
-        .textContent =
-            data.order_id;
-
-
-    fileInput.value = "";
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+return;
 
 }
 
 
-/* =====================================================
+/* =========================
+   GET USER
+========================= */
+
+const {
+data:{user}
+}=await supabaseClient.auth.getUser();
+
+if(!user){
+
+alert("Please sign in again.");
+
+showSignin();
+
+return;
+
+}
+
+
+/* =========================
+   FILE SIZE CHECK
+========================= */
+
+const maxFileSize=5*1024*1024;
+
+if(file.size>maxFileSize){
+
+alert(
+"Screenshot size must be less than 5 MB."
+);
+
+return;
+
+}
+
+
+/* =========================
+   FILE PATH
+========================= */
+
+const extension=
+file.name.split(".").pop().toLowerCase();
+
+const safeExtension=
+["jpg","jpeg","png","webp"].includes(extension)
+?extension
+:"jpg";
+
+const filePath=
+user.id+
+"/"+
+Date.now()+
+"-payment."+
+safeExtension;
+
+
+/* =========================
+   UPLOAD SCREENSHOT
+========================= */
+
+const {
+error:uploadError
+}=
+await supabaseClient
+.storage
+.from("payment-screenshots")
+.upload(
+filePath,
+file,
+{
+contentType:file.type,
+upsert:false
+}
+);
+
+
+if(uploadError){
+
+console.error(uploadError);
+
+alert(
+"Payment screenshot upload nahi hua: "+
+uploadError.message
+);
+
+return;
+
+}
+
+
+/* =========================
+   INSERT ORDER
+========================= */
+
+const {
+data,
+error
+}=
+await supabaseClient
+.from("Orders")
+.insert({
+
+service:
+window.currentOrder.service,
+
+quantity:
+window.currentOrder.quantity,
+
+link:
+window.currentOrder.link,
+
+price:
+window.currentOrder.price,
+
+status:
+"Payment Submitted",
+
+user_id:
+user.id,
+
+payment_screenshot_path:
+filePath
+
+})
+.select("order_id")
+.single();
+
+
+/* =========================
+   IF ORDER FAILS
+========================= */
+
+if(error){
+
+console.error(error);
+
+
+/* Remove uploaded screenshot
+   if order creation fails */
+
+await supabaseClient
+.storage
+.from("payment-screenshots")
+.remove([filePath]);
+
+
+alert(
+"Order submit nahi hua: "+
+error.message
+);
+
+return;
+
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+document
+.getElementById("paymentPage")
+.classList.add("hidden");
+
+document
+.getElementById("successPage")
+.classList.remove("hidden");
+
+document
+.getElementById("successOrderId")
+.textContent=
+data.order_id;
+
+fileInput.value="";
+
+window.currentOrder=null;
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =========================
    NEW ORDER
-===================================================== */
+========================= */
 
 function newOrder(){
 
-    window.currentOrder =
-        null;
+window.currentOrder=null;
 
+document
+.getElementById("successPage")
+.classList.add("hidden");
 
-    document
-        .getElementById("successPage")
-        .classList.add("hidden");
+document
+.getElementById("paymentPage")
+.classList.add("hidden");
 
+document
+.getElementById("orderForm")
+.classList.remove("hidden");
 
-    document
-        .getElementById("paymentPage")
-        .classList.add("hidden");
+document
+.getElementById("service")
+.value="";
 
+document
+.getElementById("quantity")
+.value="";
 
-    document
-        .getElementById("orderForm")
-        .classList.remove("hidden");
+document
+.getElementById("link")
+.value="";
 
+document
+.getElementById("price")
+.textContent="₹0.00";
 
-    document
-        .getElementById("service")
-        .value =
-            "";
+document
+.getElementById("paymentScreenshot")
+.value="";
 
-
-    document
-        .getElementById("quantity")
-        .value =
-            "";
-
-
-    document
-        .getElementById("link")
-        .value =
-            "";
-
-
-    document
-        .getElementById("price")
-        .textContent =
-            "₹0.00";
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 }
 
 
-/* =====================================================
+/* =========================
    SESSION CHECK
-===================================================== */
+========================= */
 
 async function checkSession(){
 
-    const {
-        data:{
-            session
-        }
-    } =
-    await supabaseClient
-        .auth
-        .getSession();
+const {
+data:{session}
+}=
+await supabaseClient
+.auth
+.getSession();
 
+if(session){
 
-    if(session){
+loadCustomer();
 
-        loadCustomer();
+}else{
 
-    }else{
+showSignin();
 
-        showSignin();
-
-    }
+}
 
 }
 
 
-/* =====================================================
+/* =========================
    AUTH LISTENER
-===================================================== */
+========================= */
 
 supabaseClient
-    .auth
-    .onAuthStateChange(
-        (event,session)=>{
+.auth
+.onAuthStateChange(
+(event,session)=>{
 
-            if(session){
+if(session){
 
-                loadCustomer();
+loadCustomer();
 
-            }
+}
 
-        }
-    );
+}
+);
 
 
-/* =====================================================
+/* =========================
    START
-===================================================== */
+========================= */
 
 checkSession();
-
 
 </script>
 
