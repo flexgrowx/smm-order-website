@@ -539,6 +539,7 @@ letter-spacing:.7px;
 }
 
 @media(max-width:520px){
+
 .container{
 padding:14px 12px 35px;
 }
@@ -563,9 +564,11 @@ font-size:22px;
 .qr-frame{
 width:235px;
 }
+
 }
 
 @media(max-width:350px){
+
 .container{
 padding-left:8px;
 padding-right:8px;
@@ -587,6 +590,7 @@ height:42px;
 .logout{
 padding:8px 9px;
 }
+
 }
 </style>
 </head>
@@ -594,6 +598,7 @@ padding:8px 9px;
 <body>
 
 <div class="container">
+
 
 <!-- =========================
      SIGNUP
@@ -612,21 +617,44 @@ padding:8px 9px;
 <div id="signupMessage" class="message"></div>
 
 <label>Name</label>
-<input type="text" id="signupName" placeholder="Enter your name">
+
+<input
+type="text"
+id="signupName"
+placeholder="Enter your name"
+>
 
 <label>Email</label>
-<input type="email" id="signupEmail" placeholder="Enter your email">
+
+<input
+type="email"
+id="signupEmail"
+placeholder="Enter your email"
+>
 
 <label>Password</label>
-<input type="password" id="signupPassword" placeholder="Create a password">
 
-<button onclick="signUp()">Create Account</button>
+<input
+type="password"
+id="signupPassword"
+placeholder="Create a password"
+>
+
+<button onclick="signUp()">
+Create Account
+</button>
 
 <p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
+
 Already have an account?
-<span onclick="showSignin()" style="color:#a78bfa;cursor:pointer;font-weight:800">
+
+<span
+onclick="showSignin()"
+style="color:#a78bfa;cursor:pointer;font-weight:800"
+>
 Sign In
 </span>
+
 </p>
 
 </div>
@@ -639,9 +667,15 @@ Sign In
 <div id="signinPage" class="card hidden">
 
 <div class="brand">
+
 <div class="brand-icon">G</div>
+
 <div class="brand-name">GROWX</div>
-<div class="brand-subtitle">PREMIUM ORDER PANEL</div>
+
+<div class="brand-subtitle">
+PREMIUM ORDER PANEL
+</div>
+
 </div>
 
 <h2>Welcome Back</h2>
@@ -649,18 +683,36 @@ Sign In
 <div id="signinMessage" class="message"></div>
 
 <label>Email</label>
-<input type="email" id="signinEmail" placeholder="Enter your email">
+
+<input
+type="email"
+id="signinEmail"
+placeholder="Enter your email"
+>
 
 <label>Password</label>
-<input type="password" id="signinPassword" placeholder="Enter your password">
 
-<button onclick="signIn()">Sign In</button>
+<input
+type="password"
+id="signinPassword"
+placeholder="Enter your password"
+>
+
+<button onclick="signIn()">
+Sign In
+</button>
 
 <p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
+
 Don't have an account?
-<span onclick="showSignup()" style="color:#a78bfa;cursor:pointer;font-weight:800">
+
+<span
+onclick="showSignup()"
+style="color:#a78bfa;cursor:pointer;font-weight:800"
+>
 Create Account
 </span>
+
 </p>
 
 </div>
@@ -674,19 +726,38 @@ Create Account
 
 <div class="user-box">
 
-<div id="avatar" class="avatar">G</div>
+<div id="avatar" class="avatar">
+G
+</div>
 
 <div class="user-info">
-<div class="user-name" id="customerName">Customer</div>
-<div class="user-label">GROWX CUSTOMER</div>
+
+<div
+class="user-name"
+id="customerName"
+>
+Customer
 </div>
 
-<button class="logout" onclick="logout()">Logout</button>
+<div class="user-label">
+GROWX CUSTOMER
+</div>
+
+</div>
+
+<button
+class="logout"
+onclick="logout()"
+>
+Logout
+</button>
 
 </div>
 
 
-<!-- ORDER FORM -->
+<!-- =========================
+     ORDER FORM
+========================= -->
 
 <div id="orderForm">
 
@@ -694,54 +765,95 @@ Create Account
 ORDER SERVICE
 </div>
 
-<h2>Place Your Order</h2>
+<h2>
+Place Your Order
+</h2>
 
-<div id="orderMessage" class="message"></div>
+<div
+id="orderMessage"
+class="message"
+></div>
 
-<label>Choose Service</label>
+<label>
+Choose Service
+</label>
 
 <select id="service">
 
-<option value="">Choose Service</option>
+<option value="">
+Choose Service
+</option>
 
-<option value="Instagram Views" data-min="501" data-max="2000000">
+<option
+value="Instagram Views"
+data-min="501"
+data-max="2000000"
+>
 Instagram Views
 </option>
 
-<option value="Instagram Likes" data-min="50" data-max="500000">
+<option
+value="Instagram Likes"
+data-min="50"
+data-max="500000"
+>
 Instagram Likes
 </option>
 
-<option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
+<option
+value="Instagram Followers"
+data-rate="400"
+data-min="100"
+data-max="20000"
+>
 Instagram Followers — ₹400 / 1000
 </option>
 
-<option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
+<option
+value="Instagram Shares"
+data-rate="5"
+data-min="200"
+data-max="100000"
+>
 Instagram Shares — ₹5 / 1000
 </option>
 
-<option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
+<option
+value="Instagram Repost"
+data-rate="10"
+data-min="100"
+data-max="50000"
+>
 Instagram Repost — ₹10 / 1000
 </option>
 
-<option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
+<option
+value="Instagram Save"
+data-rate="10"
+data-min="100"
+data-max="50000"
+>
 Instagram Save — ₹10 / 1000
 </option>
 
 </select>
 
 
-<label>Quantity</label>
+<label>
+Quantity
+</label>
 
 <input
 type="number"
 id="quantity"
 placeholder="Enter quantity"
-oninput="calculatePrice"
+oninput="calculatePrice()"
 >
 
 
-<label>Post / Reel Link</label>
+<label>
+Post / Reel Link
+</label>
 
 <input
 type="url"
@@ -756,7 +868,10 @@ placeholder="Paste your post or reel link"
 Total Order Cost
 </div>
 
-<div class="price" id="price">
+<div
+class="price"
+id="price"
+>
 ₹0.00
 </div>
 
@@ -786,7 +901,10 @@ Please wait 10–15 seconds...
      PAYMENT PAGE
 ========================= -->
 
-<div id="paymentPage" class="hidden">
+<div
+id="paymentPage"
+class="hidden"
+>
 
 <div class="payment-box">
 
@@ -799,22 +917,21 @@ Complete your payment to continue
 </div>
 
 
-<!-- AMOUNT -->
-
 <div class="payment-amount-box">
 
 <span class="payment-amount-label">
 PAY
 </span>
 
-<span class="payment-amount" id="paymentAmount">
+<span
+class="payment-amount"
+id="paymentAmount"
+>
 ₹0.00
 </span>
 
 </div>
 
-
-<!-- QR -->
 
 <div class="qr-frame">
 
@@ -827,15 +944,13 @@ class="payment-qr"
 </div>
 
 
-<!-- NOTE -->
-
 <div class="payment-note">
+
 Scan the QR code using your UPI app and complete the payment.
 Then upload your payment screenshot below.
+
 </div>
 
-
-<!-- UPLOAD SCREENSHOT -->
 
 <div class="upload-box">
 
@@ -853,8 +968,6 @@ accept="image/*"
 </div>
 
 
-<!-- PAYMENT COMPLETE -->
-
 <button
 class="confirm-btn"
 id="confirmPaymentBtn"
@@ -863,8 +976,6 @@ onclick="confirmPayment()"
 Payment Complete
 </button>
 
-
-<!-- BACK -->
 
 <button
 class="back-btn"
@@ -882,7 +993,10 @@ Back to Order
      SUCCESS PAGE
 ========================= -->
 
-<div id="successPage" class="hidden">
+<div
+id="successPage"
+class="hidden"
+>
 
 <div class="success-box">
 
@@ -895,14 +1009,23 @@ Order Successfully Submitted
 </div>
 
 <div class="success-text">
+
 Your order has been submitted successfully.
+
 <br>
+
 Please keep your Order ID for reference.
+
 </div>
 
 <div class="order-id">
+
 Order ID:
-<span id="successOrderId">-</span>
+
+<span id="successOrderId">
+-
+</span>
+
 </div>
 
 <button
@@ -923,7 +1046,10 @@ Place New Order
      ADMIN PANEL
 ========================= -->
 
-<div id="adminPage" class="card hidden">
+<div
+id="adminPage"
+class="card hidden"
+>
 
 <div class="brand">
 
@@ -941,9 +1067,14 @@ ORDER MANAGEMENT PANEL
 
 </div>
 
-<div id="adminMessage" class="message"></div>
+<div
+id="adminMessage"
+class="message"
+></div>
 
-<h2>Orders</h2>
+<h2>
+Orders
+</h2>
 
 <div id="adminOrders">
 Loading orders...
@@ -995,52 +1126,68 @@ let currentOrder = null;
 
 function showSignup(){
 
-document.getElementById("signupPage").classList.remove("hidden");
+document.getElementById("signupPage")
+.classList.remove("hidden");
 
-document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("signinPage")
+.classList.add("hidden");
 
-document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("orderPage")
+.classList.add("hidden");
 
-document.getElementById("adminPage").classList.add("hidden");
+document.getElementById("adminPage")
+.classList.add("hidden");
 
 }
 
 
 function showSignin(){
 
-document.getElementById("signinPage").classList.remove("hidden");
+document.getElementById("signinPage")
+.classList.remove("hidden");
 
-document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("signupPage")
+.classList.add("hidden");
 
-document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("orderPage")
+.classList.add("hidden");
 
-document.getElementById("adminPage").classList.add("hidden");
+document.getElementById("adminPage")
+.classList.add("hidden");
 
 }
 
 
 function showOrder(){
 
-document.getElementById("orderPage").classList.remove("hidden");
+document.getElementById("orderPage")
+.classList.remove("hidden");
 
-document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("signupPage")
+.classList.add("hidden");
 
-document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("signinPage")
+.classList.add("hidden");
 
-document.getElementById("adminPage").classList.add("hidden");
+document.getElementById("adminPage")
+.classList.add("hidden");
 
 }
 
 
 function showAdmin(){
 
-document.getElementById("adminPage").classList.remove("hidden");
+document.getElementById("adminPage")
+.classList.remove("hidden");
 
-document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("signupPage")
+.classList.add("hidden");
 
-document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("signinPage")
+.classList.add("hidden");
 
-document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("orderPage")
+.classList.add("hidden");
 
 }
 
@@ -1049,17 +1196,23 @@ document.getElementById("orderPage").classList.add("hidden");
    MESSAGE
 ========================= */
 
-function showMessage(elementId,message,type){
+function showMessage(
+elementId,
+message,
+type
+){
 
 const element =
 document.getElementById(elementId);
 
-element.textContent = message;
+element.textContent =
+message;
 
 element.className =
 "message " + type;
 
-element.style.display = "block";
+element.style.display =
+"block";
 
 }
 
@@ -1071,13 +1224,18 @@ element.style.display = "block";
 async function signUp(){
 
 const name =
-document.getElementById("signupName").value.trim();
+document.getElementById("signupName")
+.value
+.trim();
 
 const email =
-document.getElementById("signupEmail").value.trim();
+document.getElementById("signupEmail")
+.value
+.trim();
 
 const password =
-document.getElementById("signupPassword").value;
+document.getElementById("signupPassword")
+.value;
 
 
 if(!name || !email || !password){
@@ -1138,10 +1296,13 @@ showMessage(
 async function signIn(){
 
 const email =
-document.getElementById("signinEmail").value.trim();
+document.getElementById("signinEmail")
+.value
+.trim();
 
 const password =
-document.getElementById("signinPassword").value;
+document.getElementById("signinPassword")
+.value;
 
 
 if(!email || !password){
@@ -1158,7 +1319,8 @@ return;
 
 
 const {error} =
-await supabaseClient.auth.signInWithPassword({
+await supabaseClient.auth
+.signInWithPassword({
 
 email:email,
 
@@ -1214,13 +1376,16 @@ user.email?.split("@")[0] ||
 
 document.getElementById(
 "customerName"
-).textContent = name;
+).textContent =
+name;
 
 
 document.getElementById(
 "avatar"
 ).textContent =
-name.charAt(0).toUpperCase();
+name
+.charAt(0)
+.toUpperCase();
 
 
 showOrder();
@@ -1268,22 +1433,22 @@ calculatePrice
 
 function getViewsRate(quantity){
 
-if(quantity>=501&&quantity<=9999)
+if(quantity>=501 && quantity<=9999)
 return 2;
 
-if(quantity>=10000&&quantity<=19999)
+if(quantity>=10000 && quantity<=19999)
 return 1.8;
 
-if(quantity>=20000&&quantity<=29999)
+if(quantity>=20000 && quantity<=29999)
 return 1.5;
 
-if(quantity>=30000&&quantity<=49999)
+if(quantity>=30000 && quantity<=49999)
 return 1;
 
-if(quantity>=50000&&quantity<=79999)
+if(quantity>=50000 && quantity<=79999)
 return .8;
 
-if(quantity>=80000&&quantity<=99999)
+if(quantity>=80000 && quantity<=99999)
 return .7;
 
 if(quantity>=100000)
@@ -1300,16 +1465,16 @@ return 0;
 
 function getLikesRate(quantity){
 
-if(quantity>=50&&quantity<=999)
+if(quantity>=50 && quantity<=999)
 return 20;
 
-if(quantity>=1000&&quantity<=2999)
+if(quantity>=1000 && quantity<=2999)
 return 18;
 
-if(quantity>=3000&&quantity<=4999)
+if(quantity>=3000 && quantity<=4999)
 return 15;
 
-if(quantity>=5000&&quantity<=9999)
+if(quantity>=5000 && quantity<=9999)
 return 12;
 
 if(quantity>=10000)
@@ -1324,7 +1489,10 @@ return 0;
    CURRENT RATE
 ========================= */
 
-function getCurrentRate(service,quantity){
+function getCurrentRate(
+service,
+quantity
+){
 
 if(service==="Instagram Views")
 return getViewsRate(quantity);
@@ -1359,17 +1527,26 @@ const service =
 document.getElementById("service");
 
 const selected =
-service.options[service.selectedIndex];
+service.options[
+service.selectedIndex
+];
 
 const quantity =
 Number(
-document.getElementById("quantity").value
+document.getElementById("quantity")
+.value
 );
 
 
-if(!selected || !selected.value || !quantity){
+if(
+!selected ||
+!selected.value ||
+!quantity
+){
 
-document.getElementById("price").textContent =
+document.getElementById(
+"price"
+).textContent =
 "₹0.00";
 
 return;
@@ -1384,9 +1561,11 @@ quantity
 );
 
 
-if(rate===0){
+if(rate<=0){
 
-document.getElementById("price").textContent =
+document.getElementById(
+"price"
+).textContent =
 "₹0.00";
 
 return;
@@ -1395,11 +1574,14 @@ return;
 
 
 const total =
-(quantity/1000)*rate;
+(quantity / 1000) * rate;
 
 
-document.getElementById("price").textContent =
-"₹"+total.toFixed(2);
+document.getElementById(
+"price"
+).textContent =
+"₹" +
+total.toFixed(2);
 
 }
 
@@ -1414,44 +1596,62 @@ const service =
 document.getElementById("service");
 
 const selected =
-service.options[service.selectedIndex];
+service.options[
+service.selectedIndex
+];
 
 const quantity =
 Number(
-document.getElementById("quantity").value
+document.getElementById("quantity")
+.value
 );
 
 const link =
-document.getElementById("link").value.trim();
+document.getElementById("link")
+.value
+.trim();
 
 
-if(!selected || !selected.value){
+/* SERVICE CHECK */
 
-alert("Please select a service.");
+if(
+!selected ||
+!selected.value
+){
+
+alert(
+"Please select a service."
+);
 
 return;
 
 }
 
 
+/* QUANTITY RANGE */
+
 const min =
-Number(selected.dataset.min);
+Number(
+selected.dataset.min
+);
 
 const max =
-Number(selected.dataset.max);
+Number(
+selected.dataset.max
+);
 
 
 if(
 !quantity ||
-quantity<min ||
-quantity>max
+quantity < min ||
+quantity > max
 ){
 
 alert(
-"Quantity must be between "+
-min+
-" and "+
-max+
+"Quantity must be between " +
+min +
+" and " +
+max +
 "."
 );
 
@@ -1460,6 +1660,8 @@ return;
 }
 
 
+/* RATE */
+
 const rate =
 getCurrentRate(
 selected.value,
@@ -1467,7 +1669,7 @@ quantity
 );
 
 
-if(rate===0){
+if(rate<=0){
 
 alert(
 "Please enter a valid quantity."
@@ -1477,6 +1679,8 @@ return;
 
 }
 
+
+/* LINK */
 
 if(!link){
 
@@ -1489,28 +1693,34 @@ return;
 }
 
 
-const total =
-(quantity/1000)*rate;
+/* TOTAL */
 
+const total =
+(quantity / 1000) * rate;
+
+
+/* SAVE ORDER */
 
 currentOrder = {
 
-service:selected.value,
+service:
+selected.value,
 
-quantity:quantity,
+quantity:
+quantity,
 
-link:link,
+link:
+link,
 
-price:Number(
+price:
+Number(
 total.toFixed(2)
 )
 
 };
 
 
-/* =========================
-   SHOW SUBMITTING
-========================= */
+/* BUTTON */
 
 const button =
 document.getElementById(
@@ -1528,50 +1738,46 @@ button.disabled = true;
 button.textContent =
 "Submitting...";
 
-
 waitText.style.display =
 "block";
 
 
-/* =========================
-   SET PAYMENT AMOUNT
-========================= */
+/* PAYMENT AMOUNT */
 
 document.getElementById(
 "paymentAmount"
 ).textContent =
-"₹"+total.toFixed(2);
+"₹" +
+total.toFixed(2);
 
+
+/* CLEAR OLD SCREENSHOT */
 
 document.getElementById(
 "paymentScreenshot"
-).value = "";
+).value =
+"";
 
 
-/* =========================
-   OPEN PAYMENT PAGE
-========================= */
+/*
+   SHOW WAIT MESSAGE FOR
+   10 SECONDS BEFORE PAYMENT PAGE
+*/
+
+setTimeout(()=>{
 
 document.getElementById(
 "orderForm"
 ).classList.add("hidden");
 
-
 document.getElementById(
 "paymentPage"
 ).classList.remove("hidden");
-
 
 document.getElementById(
 "successPage"
 ).classList.add("hidden");
 
-
-/* =========================
-   RESET BUTTON
-========================= */
-
-setTimeout(()=>{
 
 button.disabled = false;
 
@@ -1581,7 +1787,7 @@ button.textContent =
 waitText.style.display =
 "none";
 
-},500);
+},10000);
 
 }
 
@@ -1641,7 +1847,9 @@ return;
 }
 
 
-if(!file.type.startsWith("image/")){
+if(
+!file.type.startsWith("image/")
+){
 
 alert(
 "Please upload an image file."
@@ -1652,7 +1860,9 @@ return;
 }
 
 
-if(file.size > 10 * 1024 * 1024){
+if(
+file.size > 10 * 1024 * 1024
+){
 
 alert(
 "Image size must be less than 10 MB."
@@ -1677,9 +1887,7 @@ button.textContent =
 
 try{
 
-/* =========================
-   GET USER
-========================= */
+/* GET USER */
 
 const {
 data:{user},
@@ -1688,7 +1896,10 @@ error:userError
 await supabaseClient.auth.getUser();
 
 
-if(userError || !user){
+if(
+userError ||
+!user
+){
 
 throw new Error(
 "Please sign in again."
@@ -1697,9 +1908,7 @@ throw new Error(
 }
 
 
-/* =========================
-   FILE PATH
-========================= */
+/* FILE EXTENSION */
 
 const extension =
 file.name
@@ -1709,16 +1918,14 @@ file.name
 
 
 const filePath =
-user.id+
-"/"+
-Date.now()+
-"-payment."+
+user.id +
+"/" +
+Date.now() +
+"-payment." +
 extension;
 
 
-/* =========================
-   UPLOAD SCREENSHOT
-========================= */
+/* UPLOAD */
 
 const {
 error:uploadError
@@ -1742,9 +1949,7 @@ throw uploadError;
 }
 
 
-/* =========================
-   INSERT ORDER
-========================= */
+/* INSERT ORDER */
 
 const {
 data:orderData,
@@ -1780,9 +1985,7 @@ filePath
 .single();
 
 
-/* =========================
-   DELETE FILE IF ORDER FAILS
-========================= */
+/* DELETE FILE IF ORDER FAILS */
 
 if(orderError){
 
@@ -1797,9 +2000,7 @@ throw orderError;
 }
 
 
-/* =========================
-   SUCCESS
-========================= */
+/* SUCCESS */
 
 document.getElementById(
 "successOrderId"
@@ -1812,16 +2013,13 @@ document.getElementById(
 "paymentPage"
 ).classList.add("hidden");
 
-
 document.getElementById(
 "orderForm"
 ).classList.add("hidden");
 
-
 document.getElementById(
 "successPage"
 ).classList.remove("hidden");
-
 
 }
 catch(error){
@@ -1829,9 +2027,11 @@ catch(error){
 console.error(error);
 
 alert(
-"Order submit failed: "+
-(error.message ||
-"Please try again.")
+"Order submit failed: " +
+(
+error.message ||
+"Please try again."
+)
 );
 
 }
@@ -1858,17 +2058,20 @@ currentOrder = null;
 
 document.getElementById(
 "service"
-).value = "";
+).value =
+"";
 
 
 document.getElementById(
 "quantity"
-).value = "";
+).value =
+"";
 
 
 document.getElementById(
 "link"
-).value = "";
+).value =
+"";
 
 
 document.getElementById(
@@ -1879,7 +2082,8 @@ document.getElementById(
 
 document.getElementById(
 "paymentScreenshot"
-).value = "";
+).value =
+"";
 
 
 document.getElementById(
