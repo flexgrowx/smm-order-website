@@ -492,13 +492,13 @@
         type="number"
         id="quantity"
         placeholder="Enter quantity"
-        min="500"
+        min="501"
         max="2000000"
         oninput="calculatePrice()"
       >
 
       <div class="limits" id="limits">
-        Minimum: 500 · Maximum: 2,000,000
+        Minimum: 501 · Maximum: 2,000,000
       </div>
 
 
@@ -568,7 +568,7 @@
         name: "Instagram Views",
         rate: 2 / 1000,
         displayRate: "₹2 / 1,000",
-        min: 500,
+        min: 501,
         max: 2000000
       },
 
@@ -1121,7 +1121,7 @@
     }
 
 
-    // PLACE / SUBMIT ORDER
+    // SUBMIT ORDER
 
     async function placeOrder() {
 
@@ -1148,6 +1148,8 @@
       message.innerText = "";
 
 
+      // CHECK SERVICE
+
       if (!settings) {
 
         message.innerText =
@@ -1156,6 +1158,8 @@
         return;
       }
 
+
+      // CHECK QUANTITY
 
       if (!quantity) {
 
@@ -1182,6 +1186,8 @@
       }
 
 
+      // CHECK LINK
+
       if (!link) {
 
         message.innerText =
@@ -1204,32 +1210,128 @@
       }
 
 
+      // GET CURRENT USER
+
+      const {
+        data: sessionData,
+        error: sessionError
+      } =
+        await supabaseClient.auth.getSession();
+
+
+      if (
+        sessionError ||
+        !sessionData.session ||
+        !sessionData.session.user
+      ) {
+
+        message.innerText =
+          "Please sign in again.";
+
+        return;
+      }
+
+
+      const user =
+        sessionData.session.user;
+
+
+      // CALCULATE PRICE
+
       const price =
         quantity * settings.rate;
 
 
-      const orderId =
-        "GX" +
-        Date.now().toString().slice(-8) +
-        Math.floor(100 + Math.random() * 900);
-
+      // SHOW SUBMITTING MESSAGE
 
       message.innerText =
-        "Order created successfully! Order ID: " +
-        orderId +
-        " | Total: ₹" +
-        price.toFixed(2);
+        "Submitting order...";
 
 
-      document.getElementById("quantity")
-        .value = "";
+      try {
 
-      document.getElementById("link")
-        .value = "";
+        // INSERT ORDER INTO SUPABASE
 
-      document.getElementById("price")
-        .innerText =
-        "₹0.00";
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("Orders")
+            .insert({
+
+              service: settings.name,
+
+              quantity: quantity,
+
+              link: link,
+
+              price: price,
+
+              status: "Pending",
+
+              user_id: user.id
+
+            })
+            .select("order_id")
+            .single();
+
+
+        // CHECK DATABASE ERROR
+
+        if (error) {
+
+          console.error(
+            "ORDER INSERT ERROR:",
+            error
+          );
+
+          message.innerText =
+            "Order failed: " +
+            error.message;
+
+          return;
+        }
+
+
+        // DATABASE GENERATED ORDER ID
+
+        const orderId =
+          data.order_id;
+
+
+        // SUCCESS MESSAGE
+
+        message.innerText =
+          "Order created successfully! Order ID: " +
+          orderId +
+          " | Total: ₹" +
+          price.toFixed(2);
+
+
+        // CLEAR FORM
+
+        document.getElementById("quantity")
+          .value = "";
+
+        document.getElementById("link")
+          .value = "";
+
+        document.getElementById("price")
+          .innerText = "₹0.00";
+
+
+      } catch (err) {
+
+        console.error(
+          "ORDER ERROR:",
+          err
+        );
+
+        message.innerText =
+          "Something went wrong. Please try again.";
+
+      }
 
     }
 
