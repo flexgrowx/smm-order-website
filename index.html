@@ -1,9 +1,13 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GROWX ORDER</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 :root{
@@ -34,8 +38,10 @@ overflow-x:hidden;
 body:before{
 content:"";
 position:fixed;
-width:300px;height:300px;
-left:-140px;top:35%;
+width:300px;
+height:300px;
+left:-140px;
+top:35%;
 background:rgba(124,58,237,.15);
 filter:blur(90px);
 border-radius:50%;
@@ -45,8 +51,10 @@ pointer-events:none;
 body:after{
 content:"";
 position:fixed;
-width:280px;height:280px;
-right:-130px;top:55%;
+width:280px;
+height:280px;
+right:-130px;
+top:55%;
 background:rgba(6,182,212,.12);
 filter:blur(90px);
 border-radius:50%;
@@ -77,16 +85,22 @@ overflow:hidden;
 .card:before{
 content:"";
 position:absolute;
-width:170px;height:170px;
-top:-100px;right:-80px;
+width:170px;
+height:170px;
+top:-100px;
+right:-80px;
 background:radial-gradient(circle,rgba(124,58,237,.28),transparent 70%);
 pointer-events:none;
 }
 
-.brand{text-align:center;margin-bottom:28px}
+.brand{
+text-align:center;
+margin-bottom:28px;
+}
 
 .brand-icon{
-width:58px;height:58px;
+width:58px;
+height:58px;
 margin:0 auto 13px;
 display:flex;
 align-items:center;
@@ -136,7 +150,8 @@ border:1px solid rgba(148,163,184,.13);
 }
 
 .avatar{
-width:46px;height:46px;
+width:46px;
+height:46px;
 flex-shrink:0;
 display:flex;
 align-items:center;
@@ -149,7 +164,10 @@ font-size:17px;
 font-weight:900;
 }
 
-.user-info{flex:1;min-width:0}
+.user-info{
+flex:1;
+min-width:0;
+}
 
 .user-name{
 font-size:14px;
@@ -188,9 +206,13 @@ font-size:14px;
 transition:border .2s,box-shadow .2s,background .2s;
 }
 
-input::placeholder{color:#64748b}
+input::placeholder{
+color:#64748b;
+}
 
-select{cursor:pointer}
+select{
+cursor:pointer;
+}
 
 select option{
 background:#0f172a;
@@ -222,7 +244,15 @@ transform:translateY(-1px);
 box-shadow:0 16px 34px rgba(79,70,229,.34);
 }
 
-button:active{transform:translateY(0)}
+button:active{
+transform:translateY(0);
+}
+
+button:disabled{
+opacity:.6;
+cursor:not-allowed;
+transform:none;
+}
 
 .logout{
 width:auto;
@@ -290,7 +320,10 @@ border:1px solid rgba(34,197,94,.22);
 color:#86efac;
 }
 
-.payment-box{text-align:center;padding:8px 0 4px}
+.payment-box{
+text-align:center;
+padding:8px 0 4px;
+}
 
 .payment-title{
 font-size:24px;
@@ -414,10 +447,14 @@ background:rgba(100,116,139,.20);
 box-shadow:none;
 }
 
-.success-box{text-align:center;padding:18px 5px 5px}
+.success-box{
+text-align:center;
+padding:18px 5px 5px;
+}
 
 .success-icon{
-width:75px;height:75px;
+width:75px;
+height:75px;
 margin:0 auto 18px;
 display:flex;
 align-items:center;
@@ -453,9 +490,33 @@ font-size:12px;
 font-weight:700;
 }
 
-#successOrderId{color:#c4b5fd}
+#successOrderId{
+color:#c4b5fd;
+}
 
-.hidden{display:none!important}
+.admin-order{
+padding:15px;
+margin-bottom:12px;
+border-radius:15px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.admin-order-title{
+font-size:14px;
+font-weight:850;
+margin-bottom:8px;
+}
+
+.admin-order-info{
+font-size:12px;
+color:#94a3b8;
+line-height:1.7;
+}
+
+.hidden{
+display:none!important;
+}
 
 .footer{
 text-align:center;
@@ -466,26 +527,79 @@ letter-spacing:.7px;
 }
 
 @media(max-width:520px){
-.container{padding:14px 12px 35px}
-.card{padding:20px 17px;border-radius:22px}
-.brand-name{font-size:25px}
-h2{font-size:20px}
-.payment-title{font-size:22px}
-.qr-frame{width:235px}
+.container{
+padding:14px 12px 35px;
+}
+
+.card{
+padding:20px 17px;
+border-radius:22px;
+}
+
+.brand-name{
+font-size:25px;
+}
+
+h2{
+font-size:20px;
+}
+
+.payment-title{
+font-size:22px;
+}
+
+.qr-frame{
+width:235px;
+}
 }
 
 @media(max-width:350px){
-.container{padding-left:8px;padding-right:8px}
-.card{padding:17px 13px}
-.user-box{gap:8px}
-.avatar{width:42px;height:42px}
-.logout{padding:8px 9px}
+.container{
+padding-left:8px;
+padding-right:8px;
 }
-</style></head><body><div class="container"><div id="signupPage" class="card hidden"><div class="brand">
+
+.card{
+padding:17px 13px;
+}
+
+.user-box{
+gap:8px;
+}
+
+.avatar{
+width:42px;
+height:42px;
+}
+
+.logout{
+padding:8px 9px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =========================
+     SIGNUP
+========================= -->
+
+<div id="signupPage" class="card hidden">
+
+<div class="brand">
 <div class="brand-icon">G</div>
 <div class="brand-name">GROWX</div>
 <div class="brand-subtitle">PREMIUM ORDER PANEL</div>
-</div><h2>Create Account</h2><div id="signupMessage" class="message"></div><label>Name</label>
+</div>
+
+<h2>Create Account</h2>
+
+<div id="signupMessage" class="message"></div>
+
+<label>Name</label>
 <input type="text" id="signupName" placeholder="Enter your name">
 
 <label>Email</label>
@@ -501,11 +615,28 @@ Already have an account?
 <span onclick="showSignin()" style="color:#a78bfa;cursor:pointer;font-weight:800">
 Sign In
 </span>
-</p></div><div id="signinPage" class="card hidden"><div class="brand">
+</p>
+
+</div>
+
+
+<!-- =========================
+     SIGNIN
+========================= -->
+
+<div id="signinPage" class="card hidden">
+
+<div class="brand">
 <div class="brand-icon">G</div>
 <div class="brand-name">GROWX</div>
 <div class="brand-subtitle">PREMIUM ORDER PANEL</div>
-</div><h2>Welcome Back</h2><div id="signinMessage" class="message"></div><label>Email</label>
+</div>
+
+<h2>Welcome Back</h2>
+
+<div id="signinMessage" class="message"></div>
+
+<label>Email</label>
 <input type="email" id="signinEmail" placeholder="Enter your email">
 
 <label>Password</label>
@@ -518,36 +649,85 @@ Don't have an account?
 <span onclick="showSignup()" style="color:#a78bfa;cursor:pointer;font-weight:800">
 Create Account
 </span>
-</p></div><div id="orderPage" class="card hidden"><div class="user-box"><div id="avatar" class="avatar">G</div><div class="user-info">
+</p>
+
+</div>
+
+
+<!-- =========================
+     CUSTOMER ORDER PAGE
+========================= -->
+
+<div id="orderPage" class="card hidden">
+
+<div class="user-box">
+
+<div id="avatar" class="avatar">G</div>
+
+<div class="user-info">
 <div class="user-name" id="customerName">Customer</div>
 <div class="user-label">GROWX CUSTOMER</div>
-</div><button class="logout" onclick="logout()">Logout</button>
+</div>
 
-</div><div id="orderForm"><div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
+<button class="logout" onclick="logout()">Logout</button>
+
+</div>
+
+
+<!-- ORDER FORM -->
+
+<div id="orderForm">
+
+<div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
 ORDER SERVICE
-</div><h2>Place Your Order</h2><div id="orderMessage" class="message"></div><label>Choose Service</label>
+</div>
 
-<select id="service"><option value="">Choose Service</option><option value="Instagram Views" data-min="501" data-max="2000000">
+<h2>Place Your Order</h2>
+
+<div id="orderMessage" class="message"></div>
+
+<label>Choose Service</label>
+
+<select id="service">
+
+<option value="">Choose Service</option>
+
+<option value="Instagram Views" data-min="501" data-max="2000000">
 Instagram Views
-</option><option value="Instagram Likes" data-min="50" data-max="500000">
+</option>
+
+<option value="Instagram Likes" data-min="50" data-max="500000">
 Instagram Likes
-</option><option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
+</option>
+
+<option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
 Instagram Followers — ₹400 / 1000
-</option><option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
+</option>
+
+<option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
 Instagram Shares — ₹5 / 1000
-</option><option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
+</option>
+
+<option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
 Instagram Repost — ₹10 / 1000
-</option><option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
+</option>
+
+<option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
 Instagram Save — ₹10 / 1000
-</option></select><label>Quantity</label>
+</option>
+
+</select>
+
+
+<label>Quantity</label>
 
 <input
 type="number"
 id="quantity"
 placeholder="Enter quantity"
 oninput="calculatePrice()"
+>
 
-«»
 
 <label>Post / Reel Link</label>
 
@@ -555,88 +735,211 @@ oninput="calculatePrice()"
 type="url"
 id="link"
 placeholder="Paste your post or reel link"
+>
 
-«»
 
-<div class="price-box"><div class="price-label">Total Order Cost</div><div class="price" id="price">₹0.00</div></div><button onclick="startPayment()">
+<div class="price-box">
+
+<div class="price-label">
+Total Order Cost
+</div>
+
+<div class="price" id="price">
+₹0.00
+</div>
+
+</div>
+
+<button onclick="startPayment()">
 Continue to Payment
-</button></div><div id="paymentPage" class="hidden"><div class="payment-box"><div class="payment-title">Scan & Pay</div><div class="payment-subtitle">
+</button>
+
+</div>
+
+
+<!-- =========================
+     PAYMENT PAGE
+========================= -->
+
+<div id="paymentPage" class="hidden">
+
+<div class="payment-box">
+
+<div class="payment-title">
+Scan & Pay
+</div>
+
+<div class="payment-subtitle">
 Complete your payment to continue
-</div><div class="payment-amount-box"><span class="payment-amount-label">PAY</span>
+</div>
+
+
+<!-- AMOUNT -->
+
+<div class="payment-amount-box">
+
+<span class="payment-amount-label">
+PAY
+</span>
 
 <span class="payment-amount" id="paymentAmount">
 ₹0.00
-</span></div><div class="qr-frame"><img
+</span>
+
+</div>
+
+
+<!-- QR -->
+
+<div class="qr-frame">
+
+<img
 src="IMG-20260923-WA0004~2.jpg"
 alt="GROWX Payment QR"
 class="payment-qr"
+>
 
-«»
+</div>
 
-</div><div class="payment-note">
-Scan the QR code using your UPI app
-and complete the payment.
+
+<!-- NOTE -->
+
+<div class="payment-note">
+Scan the QR code using your UPI app and complete the payment.
 Then upload your payment screenshot below.
-</div><div class="upload-box"><label class="upload-label">
+</div>
+
+
+<!-- UPLOAD SCREENSHOT -->
+
+<div class="upload-box">
+
+<label class="upload-label">
 Payment Screenshot
-</label><input
+</label>
+
+<input
 type="file"
 id="paymentScreenshot"
 class="file-input"
 accept="image/*"
+>
 
-«»
+</div>
 
-</div><button
+
+<!-- PAYMENT COMPLETE -->
+
+<button
 class="confirm-btn"
+id="confirmPaymentBtn"
 onclick="confirmPayment()"
-
-«»
-
-Confirm Payment
+>
+Payment Complete
 </button>
+
+
+<!-- BACK -->
 
 <button
 class="back-btn"
 onclick="backToOrder()"
-
-«»
-
+>
 Back to Order
 </button>
 
-</div></div><div id="successPage" class="hidden"><div class="success-box"><div class="success-icon">✓</div><div class="success-title">
+</div>
+
+</div>
+
+
+<!-- =========================
+     SUCCESS PAGE
+========================= -->
+
+<div id="successPage" class="hidden">
+
+<div class="success-box">
+
+<div class="success-icon">
+✓
+</div>
+
+<div class="success-title">
 Order Successfully Submitted
-</div><div class="success-text">
+</div>
+
+<div class="success-text">
 Your order has been submitted successfully.
 <br>
 Please keep your Order ID for reference.
-</div><div class="order-id">
+</div>
+
+<div class="order-id">
 Order ID:
 <span id="successOrderId">-</span>
-</div><button style="margin-top:20px" onclick="newOrder()">
+</div>
+
+<button style="margin-top:20px" onclick="newOrder()">
 Place New Order
-</button></div></div></div><!-- =========================
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
      ADMIN PANEL
-========================= --><div id="adminPage" class="card hidden"><div class="brand">
-<div class="brand-icon">A</div>
-<div class="brand-name">GROWX ADMIN</div>
-<div class="brand-subtitle">ORDER MANAGEMENT PANEL</div>
-</div><div id="adminMessage" class="message"></div><h2>Orders</h2><div id="adminOrders">
+========================= -->
+
+<div id="adminPage" class="card hidden">
+
+<div class="brand">
+
+<div class="brand-icon">
+A
+</div>
+
+<div class="brand-name">
+GROWX ADMIN
+</div>
+
+<div class="brand-subtitle">
+ORDER MANAGEMENT PANEL
+</div>
+
+</div>
+
+<div id="adminMessage" class="message"></div>
+
+<h2>Orders</h2>
+
+<div id="adminOrders">
 Loading orders...
-</div><button
+</div>
+
+<button
 class="back-btn"
 onclick="logoutAdmin()"
 style="margin-top:20px"
-
-«»
-
+>
 Logout Admin
 </button>
 
-</div><div class="footer">
+</div>
+
+
+<div class="footer">
 GROWX • PREMIUM ORDER SYSTEM
-</div></div><script>
+</div>
+
+</div>
+
+
+<script>
 
 const SUPABASE_URL =
 "https://rxfffsibplxmhgxmbkvi.supabase.co";
@@ -652,33 +955,64 @@ SUPABASE_KEY
 
 
 /* =========================
+   CURRENT ORDER
+========================= */
+
+let currentOrder = null;
+
+
+/* =========================
    PAGE FUNCTIONS
 ========================= */
 
 function showSignup(){
 
 document.getElementById("signupPage").classList.remove("hidden");
+
 document.getElementById("signinPage").classList.add("hidden");
+
 document.getElementById("orderPage").classList.add("hidden");
+
 document.getElementById("adminPage").classList.add("hidden");
 
 }
+
 
 function showSignin(){
 
 document.getElementById("signinPage").classList.remove("hidden");
+
 document.getElementById("signupPage").classList.add("hidden");
+
 document.getElementById("orderPage").classList.add("hidden");
+
 document.getElementById("adminPage").classList.add("hidden");
 
 }
 
+
 function showOrder(){
 
 document.getElementById("orderPage").classList.remove("hidden");
+
 document.getElementById("signupPage").classList.add("hidden");
+
 document.getElementById("signinPage").classList.add("hidden");
+
 document.getElementById("adminPage").classList.add("hidden");
+
+}
+
+
+function showAdmin(){
+
+document.getElementById("adminPage").classList.remove("hidden");
+
+document.getElementById("signupPage").classList.add("hidden");
+
+document.getElementById("signinPage").classList.add("hidden");
+
+document.getElementById("orderPage").classList.add("hidden");
 
 }
 
@@ -689,11 +1023,15 @@ document.getElementById("adminPage").classList.add("hidden");
 
 function showMessage(elementId,message,type){
 
-const element=document.getElementById(elementId);
+const element =
+document.getElementById(elementId);
 
-element.textContent=message;
-element.className="message "+type;
-element.style.display="block";
+element.textContent = message;
+
+element.className =
+"message " + type;
+
+element.style.display = "block";
 
 }
 
@@ -704,11 +1042,17 @@ element.style.display="block";
 
 async function signUp(){
 
-const name=document.getElementById("signupName").value.trim();
-const email=document.getElementById("signupEmail").value.trim();
-const password=document.getElementById("signupPassword").value;
+const name =
+document.getElementById("signupName").value.trim();
 
-if(!name||!email||!password){
+const email =
+document.getElementById("signupEmail").value.trim();
+
+const password =
+document.getElementById("signupPassword").value;
+
+
+if(!name || !email || !password){
 
 showMessage(
 "signupMessage",
@@ -720,9 +1064,12 @@ return;
 
 }
 
-const {error}=await supabaseClient.auth.signUp({
+
+const {error} =
+await supabaseClient.auth.signUp({
 
 email:email,
+
 password:password,
 
 options:{
@@ -732,6 +1079,7 @@ name:name
 }
 
 });
+
 
 if(error){
 
@@ -744,6 +1092,7 @@ error.message,
 return;
 
 }
+
 
 showMessage(
 "signupMessage",
@@ -760,10 +1109,14 @@ showMessage(
 
 async function signIn(){
 
-const email=document.getElementById("signinEmail").value.trim();
-const password=document.getElementById("signinPassword").value;
+const email =
+document.getElementById("signinEmail").value.trim();
 
-if(!email||!password){
+const password =
+document.getElementById("signinPassword").value;
+
+
+if(!email || !password){
 
 showMessage(
 "signinMessage",
@@ -775,12 +1128,16 @@ return;
 
 }
 
-const {error}=await supabaseClient.auth.signInWithPassword({
+
+const {error} =
+await supabaseClient.auth.signInWithPassword({
 
 email:email,
+
 password:password
 
 });
+
 
 if(error){
 
@@ -793,6 +1150,7 @@ error.message,
 return;
 
 }
+
 
 loadCustomer();
 
@@ -807,24 +1165,35 @@ async function loadCustomer(){
 
 const {
 data:{user}
-}=await supabaseClient.auth.getUser();
+} =
+await supabaseClient.auth.getUser();
+
 
 if(!user){
 
 showSignin();
+
 return;
 
 }
 
-const name=
-user.user_metadata?.name||
-user.email?.split("@")[0]||
+
+const name =
+user.user_metadata?.name ||
+user.email?.split("@")[0] ||
 "Customer";
 
-document.getElementById("customerName").textContent=name;
 
-document.getElementById("avatar").textContent=
+document.getElementById(
+"customerName"
+).textContent = name;
+
+
+document.getElementById(
+"avatar"
+).textContent =
 name.charAt(0).toUpperCase();
+
 
 showOrder();
 
@@ -836,6 +1205,15 @@ showOrder();
 ========================= */
 
 async function logout(){
+
+await supabaseClient.auth.signOut();
+
+showSignin();
+
+}
+
+
+async function logoutAdmin(){
 
 await supabaseClient.auth.signOut();
 
@@ -862,13 +1240,26 @@ calculatePrice
 
 function getViewsRate(quantity){
 
-if(quantity>=501&&quantity<=9999)return 2;
-if(quantity>=10000&&quantity<=19999)return 1.8;
-if(quantity>=20000&&quantity<=29999)return 1.5;
-if(quantity>=30000&&quantity<=49999)return 1;
-if(quantity>=50000&&quantity<=79999)return .8;
-if(quantity>=80000&&quantity<=99999)return .7;
-if(quantity>=100000)return .6;
+if(quantity>=501&&quantity<=9999)
+return 2;
+
+if(quantity>=10000&&quantity<=19999)
+return 1.8;
+
+if(quantity>=20000&&quantity<=29999)
+return 1.5;
+
+if(quantity>=30000&&quantity<=49999)
+return 1;
+
+if(quantity>=50000&&quantity<=79999)
+return .8;
+
+if(quantity>=80000&&quantity<=99999)
+return .7;
+
+if(quantity>=100000)
+return .6;
 
 return 0;
 
@@ -881,11 +1272,20 @@ return 0;
 
 function getLikesRate(quantity){
 
-if(quantity>=50&&quantity<=999)return 20;
-if(quantity>=1000&&quantity<=2999)return 18;
-if(quantity>=3000&&quantity<=4999)return 15;
-if(quantity>=5000&&quantity<=9999)return 12;
-if(quantity>=10000)return 10;
+if(quantity>=50&&quantity<=999)
+return 20;
+
+if(quantity>=1000&&quantity<=2999)
+return 18;
+
+if(quantity>=3000&&quantity<=4999)
+return 15;
+
+if(quantity>=5000&&quantity<=9999)
+return 12;
+
+if(quantity>=10000)
+return 10;
 
 return 0;
 
@@ -927,40 +1327,55 @@ return 0;
 
 function calculatePrice(){
 
-const service=document.getElementById("service");
+const service =
+document.getElementById("service");
 
-const selected=
+const selected =
 service.options[service.selectedIndex];
 
-const quantity=
-Number(document.getElementById("quantity").value);
+const quantity =
+Number(
+document.getElementById("quantity").value
+);
 
-if(!selected||!selected.value||!quantity){
 
-document.getElementById("price").textContent="₹0.00";
+if(!selected || !selected.value || !quantity){
+
+document.getElementById(
+"price"
+).textContent = "₹0.00";
 
 return;
 
 }
 
-const rate=
+
+const rate =
 getCurrentRate(
 selected.value,
 quantity
 );
 
+
 if(rate===0){
 
-document.getElementById("price").textContent="₹0.00";
+document.getElementById(
+"price"
+).textContent = "₹0.00";
 
 return;
 
 }
 
-const total=(quantity/1000)*rate;
 
-document.getElementById("price").textContent=
-"₹"+total.toFixed(2);
+const total =
+(quantity / 1000) * rate;
+
+
+document.getElementById(
+"price"
+).textContent =
+"₹" + total.toFixed(2);
 
 }
 
@@ -971,18 +1386,22 @@ document.getElementById("price").textContent=
 
 function startPayment(){
 
-const service=document.getElementById("service");
+const service =
+document.getElementById("service");
 
-const selected=
+const selected =
 service.options[service.selectedIndex];
 
-const quantity=
-Number(document.getElementById("quantity").value);
+const quantity =
+Number(
+document.getElementById("quantity").value
+);
 
-const link=
+const link =
 document.getElementById("link").value.trim();
 
-if(!selected||!selected.value){
+
+if(!selected || !selected.value){
 
 showMessage(
 "orderMessage",
@@ -994,17 +1413,23 @@ return;
 
 }
 
-const min=Number(selected.dataset.min);
-const max=Number(selected.dataset.max);
 
-if(!quantity||quantity<min||quantity>max){
+const min =
+Number(selected.dataset.min);
+
+const max =
+Number(selected.dataset.max);
+
+
+if(!quantity || quantity<min || quantity>max){
 
 showMessage(
 "orderMessage",
-"Quantity must be between "+
-min.toLocaleString()+
-" and "+
-max.toLocaleString()+".",
+"Quantity must be between " +
+min.toLocaleString() +
+" and " +
+max.toLocaleString() +
+".",
 "error"
 );
 
@@ -1012,11 +1437,13 @@ return;
 
 }
 
-const rate=
+
+const rate =
 getCurrentRate(
 selected.value,
 quantity
 );
+
 
 if(rate===0){
 
@@ -1030,6 +1457,7 @@ return;
 
 }
 
+
 if(!link){
 
 showMessage(
@@ -1042,55 +1470,115 @@ return;
 
 }
 
-const total=(quantity/1000)*rate;
 
-document.getElementById("paymentAmount").textContent=
-"₹"+total.toFixed(2);
+const total =
+(quantity / 1000) * rate;
 
-window.currentOrder={
+
+/*
+Save order information temporarily.
+Order is actually submitted only after
+Payment Complete is pressed.
+*/
+
+currentOrder = {
 
 service:selected.value,
+
 quantity:quantity,
+
 link:link,
-price:total,
-rate:rate
+
+price:Number(total.toFixed(2))
 
 };
 
-document.getElementById("orderForm").classList.add("hidden");
-document.getElementById("paymentPage").classList.remove("hidden");
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+/*
+Show amount on payment page.
+*/
+
+document.getElementById(
+"paymentAmount"
+).textContent =
+"₹" + total.toFixed(2);
+
+
+/*
+Clear old screenshot.
+*/
+
+document.getElementById(
+"paymentScreenshot"
+).value = "";
+
+
+/*
+Show payment page.
+*/
+
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.remove("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
 
 }
 
 
 /* =========================
-   BACK
+   BACK TO ORDER
 ========================= */
 
 function backToOrder(){
 
-document.getElementById("paymentPage").classList.add("hidden");
-document.getElementById("orderForm").classList.remove("hidden");
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
 
 }
 
 
 /* =========================
    CONFIRM PAYMENT
-   UPLOAD SCREENSHOT
 ========================= */
 
 async function confirmPayment(){
 
-const fileInput=
-document.getElementById("paymentScreenshot");
+if(!currentOrder){
 
-const file=fileInput.files[0];
+showMessage(
+"orderMessage",
+"Order information is missing. Please try again.",
+"error"
+);
+
+backToOrder();
+
+return;
+
+}
+
+
+const file =
+document.getElementById(
+"paymentScreenshot"
+).files[0];
+
 
 if(!file){
 
@@ -1102,6 +1590,11 @@ return;
 
 }
 
+
+/*
+Only image files are accepted.
+*/
+
 if(!file.type.startsWith("image/")){
 
 alert(
@@ -1112,10 +1605,15 @@ return;
 
 }
 
-if(!window.currentOrder){
+
+/*
+Limit screenshot size to 10 MB.
+*/
+
+if(file.size > 10 * 1024 * 1024){
 
 alert(
-"Order information not found. Please start again."
+"Image size must be less than 10 MB."
 );
 
 return;
@@ -1123,182 +1621,169 @@ return;
 }
 
 
-/* =========================
-   GET USER
-========================= */
+const button =
+document.getElementById(
+"confirmPaymentBtn"
+);
+
+button.disabled = true;
+
+button.textContent =
+"Submitting...";
+
+
+try{
+
+/*
+Get logged-in user.
+*/
 
 const {
-data:{user}
-}=await supabaseClient.auth.getUser();
-
-if(!user){
-
-alert("Please sign in again.");
-
-showSignin();
-
-return;
-
-}
+data:{user},
+error:userError
+} =
+await supabaseClient.auth.getUser();
 
 
-/* =========================
-   FILE SIZE CHECK
-========================= */
+if(userError || !user){
 
-const maxFileSize=5*1024*1024;
-
-if(file.size>maxFileSize){
-
-alert(
-"Screenshot size must be less than 5 MB."
+throw new Error(
+"Please sign in again."
 );
 
-return;
-
 }
 
 
-/* =========================
-   FILE PATH
-========================= */
+/*
+Create unique screenshot path.
+*/
 
-const extension=
+const extension =
 file.name.split(".").pop().toLowerCase();
 
-const safeExtension=
-["jpg","jpeg","png","webp"].includes(extension)
-?extension
-:"jpg";
-
-const filePath=
-user.id+
-"/"+
-Date.now()+
-"-payment."+
-safeExtension;
+const filePath =
+user.id +
+"/" +
+Date.now() +
+"-payment." +
+extension;
 
 
-/* =========================
-   UPLOAD SCREENSHOT
-========================= */
+/*
+Upload screenshot to existing bucket.
+*/
 
 const {
 error:uploadError
-}=
-await supabaseClient
-.storage
+} =
+await supabaseClient.storage
 .from("payment-screenshots")
 .upload(
 filePath,
 file,
 {
-contentType:file.type,
-upsert:false
+upsert:false,
+contentType:file.type
 }
 );
 
 
 if(uploadError){
 
-console.error(uploadError);
-
-alert(
-"Payment screenshot upload nahi hua: "+
-uploadError.message
-);
-
-return;
+throw uploadError;
 
 }
 
 
-/* =========================
-   INSERT ORDER
-========================= */
+/*
+Create order in Orders table.
+*/
 
 const {
-data,
-error
-}=
+data:orderData,
+error:orderError
+} =
 await supabaseClient
 .from("Orders")
-.insert({
+.insert([{
 
-service:
-window.currentOrder.service,
+service:currentOrder.service,
 
-quantity:
-window.currentOrder.quantity,
+quantity:currentOrder.quantity,
 
-link:
-window.currentOrder.link,
+link:currentOrder.link,
 
-price:
-window.currentOrder.price,
+price:currentOrder.price,
 
-status:
-"Payment Submitted",
+status:"Payment Submitted",
 
-user_id:
-user.id,
+user_id:user.id,
 
-payment_screenshot_path:
-filePath
+payment_screenshot_path:filePath
 
-})
+}])
 .select("order_id")
 .single();
 
 
-/* =========================
-   IF ORDER FAILS
-========================= */
+if(orderError){
 
-if(error){
+/*
+If order insert fails, remove uploaded
+screenshot so unused files are not left.
+*/
 
-console.error(error);
-
-await supabaseClient
-.storage
+await supabaseClient.storage
 .from("payment-screenshots")
 .remove([filePath]);
 
-alert(
-"Order submit nahi hua: "+
-error.message
-);
-
-return;
+throw orderError;
 
 }
 
 
-/* =========================
-   SUCCESS
-========================= */
+/*
+Show success page.
+*/
 
-document
-.getElementById("paymentPage")
-.classList.add("hidden");
+document.getElementById(
+"successOrderId"
+).textContent =
+orderData?.order_id || "Submitted";
 
-document
-.getElementById("successPage")
-.classList.remove("hidden");
 
-document
-.getElementById("successOrderId")
-.textContent=
-data.order_id;
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
 
-fileInput.value="";
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
 
-window.currentOrder=null;
+document.getElementById(
+"successPage"
+).classList.remove("hidden");
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"Order submit failed: " +
+(error.message || "Please try again.")
+);
+
+}
+finally{
+
+button.disabled = false;
+
+button.textContent =
+"Payment Complete";
+
+}
 
 }
 
@@ -1309,44 +1794,49 @@ behavior:"smooth"
 
 function newOrder(){
 
-window.currentOrder=null;
+currentOrder = null;
 
-document
-.getElementById("successPage")
-.classList.add("hidden");
 
-document
-.getElementById("paymentPage")
-.classList.add("hidden");
+/*
+Reset order fields.
+*/
 
-document
-.getElementById("orderForm")
-.classList.remove("hidden");
+document.getElementById(
+"service"
+).value = "";
 
-document
-.getElementById("service")
-.value="";
+document.getElementById(
+"quantity"
+).value = "";
 
-document
-.getElementById("quantity")
-.value="";
+document.getElementById(
+"link"
+).value = "";
 
-document
-.getElementById("link")
-.value="";
+document.getElementById(
+"paymentScreenshot"
+).value = "";
 
-document
-.getElementById("price")
-.textContent="₹0.00";
+document.getElementById(
+"price"
+).textContent = "₹0.00";
 
-document
-.getElementById("paymentScreenshot")
-.value="";
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+/*
+Show order form.
+*/
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
 
 }
 
@@ -1359,10 +1849,9 @@ async function checkSession(){
 
 const {
 data:{session}
-}=
-await supabaseClient
-.auth
-.getSession();
+} =
+await supabaseClient.auth.getSession();
+
 
 if(session){
 
@@ -1378,17 +1867,19 @@ showSignin();
 
 
 /* =========================
-   AUTH LISTENER
+   AUTH STATE
 ========================= */
 
-supabaseClient
-.auth
-.onAuthStateChange(
+supabaseClient.auth.onAuthStateChange(
 (event,session)=>{
 
 if(session){
 
 loadCustomer();
+
+}else{
+
+showSignin();
 
 }
 
@@ -1402,5 +1893,7 @@ loadCustomer();
 
 checkSession();
 
-</script></body>
+</script>
+
+</body>
 </html>
