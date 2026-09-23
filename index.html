@@ -1194,7 +1194,7 @@ let currentOrder = null;
 
 /* =========================
    ADMIN CHECK
-   EMAIL BASED
+   FIXED FOR Email COLUMN
 ========================= */
 
 async function checkAdmin(user){
@@ -1209,10 +1209,9 @@ error
 } =
 await supabaseClient
 .from("admins")
-.select("id,email")
-.eq("email",user.email)
+.select("*")
+.eq("Email", user.email)
 .maybeSingle();
-
 
 if(error){
 
@@ -1224,7 +1223,6 @@ error
 return false;
 
 }
-
 
 return !!admin;
 
@@ -1488,7 +1486,7 @@ user.email || "-";
 
 showAdmin();
 
-loadAdminOrders();
+await loadAdminOrders();
 
 return;
 
@@ -2067,9 +2065,7 @@ throw uploadError;
 }
 
 
-/*
-SAVE ORDER
-*/
+/* SAVE ORDER */
 
 const {
 data:orderData,
@@ -2712,7 +2708,7 @@ user.email || "-";
 
 showAdmin();
 
-loadAdminOrders();
+await loadAdminOrders();
 
 return;
 
