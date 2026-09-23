@@ -30,11 +30,11 @@
       width: 100%;
       max-width: 520px;
       margin: 35px auto;
-      background: rgba(255,255,255,0.94);
-      border: 1px solid rgba(255,255,255,0.8);
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: 24px;
       padding: 30px;
-      box-shadow: 0 20px 60px rgba(15,23,42,0.12);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
       backdrop-filter: blur(15px);
     }
 
@@ -94,7 +94,7 @@
     select:focus {
       border-color: #2563eb;
       background: white;
-      box-shadow: 0 0 0 4px rgba(37,99,235,0.10);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
     }
 
     button {
@@ -108,13 +108,13 @@
       font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(37,99,235,0.20);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.20);
       transition: 0.2s;
     }
 
     button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 25px rgba(37,99,235,0.25);
+      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
     }
 
     .secondary {
@@ -335,7 +335,7 @@
       autocomplete="new-password"
     >
 
-    <button onclick="signUp()">
+    <button type="button" onclick="signUp()">
       Create Account
     </button>
 
@@ -384,7 +384,7 @@
       autocomplete="current-password"
     >
 
-    <button onclick="signIn()">
+    <button type="button" onclick="signIn()">
       Sign In
     </button>
 
@@ -422,7 +422,11 @@
 
       </div>
 
-      <button class="secondary" onclick="signOut()">
+      <button
+        type="button"
+        class="secondary"
+        onclick="signOut()"
+      >
         Logout
       </button>
 
@@ -525,7 +529,10 @@
       </div>
 
 
-      <button onclick="placeOrder()">
+      <button
+        type="button"
+        onclick="placeOrder()"
+      >
         Place Order
       </button>
 
@@ -721,7 +728,7 @@
       }
 
 
-      const { error } =
+      const { data, error } =
         await supabaseClient.auth.signUp({
 
           email: email,
@@ -748,8 +755,22 @@
       }
 
 
-      message.innerText =
-        "Account created successfully. Please sign in.";
+      /*
+        If Supabase email confirmation is enabled,
+        the user may need to verify their email.
+      */
+
+      if (data.user && !data.session) {
+
+        message.innerText =
+          "Account created. Please verify your email, then Sign In.";
+
+      } else {
+
+        message.innerText =
+          "Account created successfully.";
+
+      }
 
 
       document
@@ -769,7 +790,7 @@
 
         showLogin();
 
-      }, 1500);
+      }, 1800);
 
     }
 
@@ -826,9 +847,16 @@
       }
 
 
-      const user = data.user;
+      if (!data.user) {
 
-      setCustomerName(user);
+        message.innerText =
+          "Login failed. Please try again.";
+
+        return;
+      }
+
+
+      setCustomerName(data.user);
 
 
       document
@@ -868,7 +896,8 @@
 
       document
         .getElementById("avatar")
-        .innerText = firstLetter;
+        .innerText =
+        firstLetter || "C";
 
     }
 
@@ -1142,8 +1171,31 @@
 
       if (!link) {
 
-        message.innerTe
-// ==========================================
+        message.innerText =
+          "Please enter post/reel link.";
+
+        return;
+      }
+
+
+      const price =
+        quantity * settings.rate;
+
+
+      const orderId =
+        generateOrderId();
+
+
+      message.innerText =
+        "Order " +
+        orderId +
+        " created. Total: ₹" +
+        price.toFixed(2);
+
+    }
+
+
+    // ==========================================
     // AUTH STATE LISTENER
     // ==========================================
 
@@ -1151,12 +1203,16 @@
       (event, session) => {
 
         if (session && session.user) {
+
           setCustomerName(session.user);
+
           showOrderPage();
+
         }
 
       }
     );
+
 
     // ==========================================
     // START WEBSITE
