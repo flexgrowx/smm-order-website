@@ -1143,3 +1143,28 @@
       if (!link) {
 
         message.innerTe
+// ==========================================
+    // AUTH STATE LISTENER
+    // ==========================================
+
+    supabaseClient.auth.onAuthStateChange(
+      (event, session) => {
+
+        if (session && session.user) {
+          setCustomerName(session.user);
+          showOrderPage();
+        }
+
+      }
+    );
+
+    // ==========================================
+    // START WEBSITE
+    // ==========================================
+
+    checkUser();
+
+  </script>
+
+</body>
+</html>
