@@ -1,1407 +1,1589 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>GROWX ORDER</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>GROWX ORDER</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, #dbeafe 0, transparent 35%),
-        radial-gradient(circle at bottom right, #e0e7ff 0, transparent 35%),
-        #f8fafc;
-      color: #111827;
-      padding: 20px;
-    }
+<style>
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      margin: 35px auto;
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
-      backdrop-filter: blur(15px);
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-    .brand {
-      text-align: center;
-      margin-bottom: 28px;
-    }
+body{
+  background:#f1f5f9;
+  color:#111827;
+}
 
-    .brand-logo {
-      display: inline-block;
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      color: #111827;
-    }
+.container{
+  width:100%;
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+}
 
-    .brand-logo span {
-      color: #2563eb;
-    }
+.card{
+  background:white;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
 
-    .tagline {
-      margin-top: 7px;
-      color: #64748b;
-      font-size: 14px;
-      font-weight: 600;
-    }
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 25px;
-      margin: 0 0 22px;
-    }
+h2{
+  margin-bottom:18px;
+}
 
-    label {
-      display: block;
-      margin-top: 17px;
-      margin-bottom: 7px;
-      font-size: 13px;
-      font-weight: 800;
-      color: #334155;
-    }
+input,
+select{
+  width:100%;
+  padding:13px;
+  margin-top:8px;
+  margin-bottom:15px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  font-size:14px;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 14px 15px;
-      border: 1px solid #dbe2ea;
-      border-radius: 12px;
-      background: #f8fafc;
-      color: #111827;
-      font-size: 15px;
-      outline: none;
-      transition: 0.2s;
-    }
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#111827;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    input:focus,
-    select:focus {
-      border-color: #2563eb;
-      background: white;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
-    }
+button:hover{
+  opacity:.9;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 22px;
-      background: linear-gradient(135deg, #111827, #2563eb);
-      color: white;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.20);
-      transition: 0.2s;
-    }
+.back-btn{
+  background:#64748b;
+  margin-top:10px;
+}
 
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
-    }
+.hidden{
+  display:none !important;
+}
 
-    .secondary {
-      width: auto;
-      margin: 0;
-      padding: 9px 15px;
-      background: #f1f5f9;
-      color: #334155;
-      box-shadow: none;
-    }
+.price-box{
+  margin-top:5px;
+  margin-bottom:20px;
+  padding:15px;
+  border-radius:12px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+}
 
-    .secondary:hover {
-      background: #e2e8f0;
-      box-shadow: none;
-    }
+.price-label{
+  color:#64748b;
+  font-size:13px;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.price{
+  font-size:25px;
+  font-weight:900;
+  margin-top:5px;
+}
 
-    .message {
-      min-height: 20px;
-      margin-top: 15px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.5;
-    }
+.user-box{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
 
-    .customer-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
+.user-info{
+  flex:1;
+}
 
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #111827, #2563eb);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-    }
+.user-name{
+  font-weight:bold;
+}
 
-    #customerName {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 230px;
-    }
+.logout{
+  width:auto;
+  padding:9px 13px;
+  font-size:12px;
+  background:#ef4444;
+}
 
-    .hero {
-      text-align: center;
-      padding: 18px 10px 12px;
-    }
+.payment-box{
+  margin-top:10px;
+  padding:20px;
+  border-radius:15px;
+  background:white;
+  border:1px solid #e2e8f0;
+  text-align:center;
+}
 
-    .hero h1 {
-      margin-bottom: 8px;
-      font-size: 28px;
-      letter-spacing: 1px;
-    }
+.payment-title{
+  font-size:20px;
+  font-weight:900;
+  color:#111827;
+  margin-bottom:15px;
+}
 
-    .hero p {
-      margin: 0;
-      color: #64748b;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+.payment-amount{
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:18px;
+}
 
-    .order-card {
-      margin-top: 22px;
-      padding: 20px;
-      border-radius: 18px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-    }
+.payment-qr{
+  width:220px;
+  max-width:100%;
+  height:auto;
+  display:block;
+  margin:0 auto;
+  border-radius:12px;
+  border:1px solid #e2e8f0;
+}
 
-    .service-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: white;
-      border: 1px solid #e2e8f0;
-      font-size: 12px;
-      color: #64748b;
-    }
+.payment-note{
+  margin-top:12px;
+  font-size:12px;
+  color:#64748b;
+  line-height:1.5;
+}
 
-    .service-rate {
-      color: #2563eb;
-      font-weight: 800;
-    }
+.upload-box{
+  margin-top:20px;
+  text-align:left;
+}
 
-    .price-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #eff6ff, #eef2ff);
-      border: 1px solid #dbeafe;
-      text-align: center;
-    }
+.upload-label{
+  display:block;
+  font-weight:bold;
+  font-size:14px;
+  margin-bottom:8px;
+}
 
-    .price-label {
-      font-size: 12px;
-      color: #64748b;
-      font-weight: 700;
-    }
+.file-input{
+  width:100%;
+  padding:12px;
+  background:#f8fafc;
+}
 
-    #price {
-      margin-top: 4px;
-      font-size: 27px;
-      font-weight: 900;
-      color: #111827;
-    }
+.confirm-btn{
+  margin-top:15px;
+  background:#16a34a;
+}
 
-    /* PAYMENT QR */
+.success-box{
+  text-align:center;
+  padding:25px 15px;
+}
 
-    .payment-box {
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 15px;
-      background: white;
-      border: 1px solid #e2e8f0;
-      text-align: center;
-    }
+.success-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
 
-    .payment-title {
-      font-size: 16px;
-      font-weight: 900;
-      color: #111827;
-      margin-bottom: 12px;
-    }
+.success-title{
+  font-size:24px;
+  font-weight:900;
+  color:#16a34a;
+  margin-bottom:10px;
+}
 
-    .payment-qr {
-      width: 220px;
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-    }
+.success-text{
+  color:#64748b;
+  font-size:14px;
+  line-height:1.5;
+}
 
-    .payment-note {
-      margin-top: 12px;
-      font-size: 12px;
-      color: #64748b;
-      line-height: 1.5;
-    }
+.order-id{
+  margin-top:15px;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  font-weight:bold;
+}
 
-    .limits {
-      text-align: center;
-      margin-top: 10px;
-      color: #64748b;
-      font-size: 12px;
-    }
+.message{
+  margin-bottom:15px;
+  padding:12px;
+  border-radius:10px;
+  font-size:13px;
+  display:none;
+}
 
-    .switch {
-      text-align: center;
-      margin-top: 20px;
-      color: #64748b;
-      font-size: 14px;
-    }
+.error{
+  background:#fee2e2;
+  color:#991b1b;
+}
 
-    .switch span {
-      color: #2563eb;
-      cursor: pointer;
-      font-weight: 800;
-    }
+.success{
+  background:#dcfce7;
+  color:#166534;
+}
 
-    .footer-note {
-      text-align: center;
-      margin-top: 22px;
-      color: #94a3b8;
-      font-size: 11px;
-    }
+@media(max-width:500px){
 
-    @media (max-width: 520px) {
-      body {
-        padding: 10px;
-      }
+  .container{
+    padding:14px;
+  }
 
-      .container {
-        margin: 15px auto;
-        padding: 22px 18px;
-        border-radius: 20px;
-      }
+  .card{
+    padding:18px;
+  }
 
-      .brand-logo {
-        font-size: 26px;
-      }
+  .payment-qr{
+    width:200px;
+  }
 
-      .hero h1 {
-        font-size: 25px;
-      }
+}
 
-      .payment-qr {
-        width: 200px;
-      }
-    }
-  </style>
+</style>
+
 </head>
 
 <body>
 
-  <!-- SIGN UP -->
+<div class="container">
 
-  <div class="container" id="signupPage">
 
-    <div class="brand">
-      <div class="brand-logo">GROW<span>X</span></div>
-      <div class="tagline">Grow fast with GROWX</div>
-    </div>
+<!-- =========================
+     SIGN UP
+========================= -->
 
-    <h1>Create Account</h1>
+<div id="signupPage" class="card hidden">
 
-    <label>Name</label>
+<h1>GROWX ORDER</h1>
 
-    <input
-      type="text"
-      id="signupName"
-      placeholder="Enter your name"
-      autocomplete="name"
-    >
+<h2>Create Account</h2>
 
-    <label>Email</label>
+<div id="signupMessage" class="message"></div>
 
-    <input
-      type="email"
-      id="signupEmail"
-      placeholder="Enter email"
-      autocomplete="email"
-    >
+<label>Name</label>
 
-    <label>Password</label>
+<input
+type="text"
+id="signupName"
+placeholder="Enter your name"
+>
 
-    <input
-      type="password"
-      id="signupPassword"
-      placeholder="Create password"
-      autocomplete="new-password"
-    >
+<label>Email</label>
 
-    <button type="button" onclick="signUp()">
-      Create Account
-    </button>
+<input
+type="email"
+id="signupEmail"
+placeholder="Enter your email"
+>
 
-    <div id="signupMessage" class="message"></div>
+<label>Password</label>
 
-    <div class="switch">
-      Already have an account?
-      <span onclick="showLogin()">Sign In</span>
-    </div>
+<input
+type="password"
+id="signupPassword"
+placeholder="Enter password"
+>
 
-    <div class="footer-note">
-      Simple. Fast. Built to Grow.
-    </div>
+<button onclick="signUp()">
+Create Account
+</button>
 
-  </div>
+<p style="text-align:center;margin-top:15px;font-size:13px;">
 
+Already have an account?
 
-  <!-- SIGN IN -->
+<span
+onclick="showSignin()"
+style="color:#2563eb;cursor:pointer;font-weight:bold;"
+>
+Sign In
+</span>
 
-  <div class="container hidden" id="loginPage">
+</p>
 
-    <div class="brand">
-      <div class="brand-logo">GROW<span>X</span></div>
-      <div class="tagline">Grow fast with GROWX</div>
-    </div>
+</div>
 
-    <h1>Welcome Back</h1>
 
-    <label>Email</label>
+<!-- =========================
+     SIGN IN
+========================= -->
 
-    <input
-      type="email"
-      id="loginEmail"
-      placeholder="Enter email"
-      autocomplete="email"
-    >
+<div id="signinPage" class="card hidden">
 
-    <label>Password</label>
+<h1>GROWX ORDER</h1>
 
-    <input
-      type="password"
-      id="loginPassword"
-      placeholder="Enter password"
-      autocomplete="current-password"
-    >
+<h2>Sign In</h2>
 
-    <button type="button" onclick="signIn()">
-      Sign In
-    </button>
+<div id="signinMessage" class="message"></div>
 
-    <div id="loginMessage" class="message"></div>
+<label>Email</label>
 
-    <div class="switch">
-      Don't have an account?
-      <span onclick="showSignup()">Create Account</span>
-    </div>
+<input
+type="email"
+id="signinEmail"
+placeholder="Enter your email"
+>
 
-    <div class="footer-note">
-      Simple. Fast. Built to Grow.
-    </div>
+<label>Password</label>
 
-  </div>
+<input
+type="password"
+id="signinPassword"
+placeholder="Enter password"
+>
 
+<button onclick="signIn()">
+Sign In
+</button>
 
-  <!-- ORDER PAGE -->
+<p style="text-align:center;margin-top:15px;font-size:13px;">
 
-  <div class="container hidden" id="orderPage">
+Don't have an account?
 
-    <div class="topbar">
+<span
+onclick="showSignup()"
+style="color:#2563eb;cursor:pointer;font-weight:bold;"
+>
+Create Account
+</span>
 
-      <div class="customer-box">
+</p>
 
-        <div class="avatar" id="avatar">
-          C
-        </div>
+</div>
 
-        <strong id="customerName">
-          Customer
-        </strong>
 
-      </div>
+<!-- =========================
+     ORDER PAGE
+========================= -->
 
-      <button
-        type="button"
-        class="secondary"
-        onclick="signOut()"
-      >
-        Logout
-      </button>
+<div id="orderPage" class="card hidden">
 
-    </div>
+<div class="user-box">
+
+<div id="avatar" class="avatar">
+G
+</div>
 
+<div class="user-info">
 
-    <div class="hero">
+<div
+class="user-name"
+id="customerName"
+>
+Customer
+</div>
 
-      <h1>GROWX ORDER</h1>
+<div style="font-size:12px;color:#64748b;">
+GROWX ORDER
+</div>
 
-      <p>
-        Grow fast with GROWX.<br>
-        Simple. Fast. Built to Grow.
-      </p>
+</div>
 
-    </div>
+<button
+class="logout"
+onclick="logout()"
+>
+Logout
+</button>
 
+</div>
 
-    <div class="order-card">
 
-      <label>Choose Service</label>
+<!-- =========================
+     ORDER FORM
+========================= -->
 
-      <select id="service" onchange="updateService()">
+<div id="orderForm">
 
-        <option value="views">
-          Instagram Views
-        </option>
+<h2>Place Order</h2>
 
-        <option value="likes">
-          Instagram Likes
-        </option>
+<div id="orderMessage" class="message"></div>
 
-        <option value="followers">
-          Instagram Followers
-        </option>
 
-        <option value="shares">
-          Instagram Shares
-        </option>
+<label>Choose Service</label>
 
-        <option value="repost">
-          Instagram Repost
-        </option>
+<select id="service">
 
-        <option value="save">
-          Instagram Save
-        </option>
+<option value="">
+Choose Service
+</option>
 
-      </select>
+<option
+value="Instagram Views"
+data-min="501"
+data-max="2000000"
+>
+Instagram Views
+</option>
 
+<option
+value="Instagram Likes"
+data-min="50"
+data-max="500000"
+>
+Instagram Likes
+</option>
 
-      <div class="service-info">
+<option
+value="Instagram Followers"
+data-rate="400"
+data-min="100"
+data-max="20000"
+>
+Instagram Followers - ₹400 / 1000
+</option>
 
-        <span id="rateText">
-          ₹2 / 1,000
-        </span>
+<option
+value="Instagram Shares"
+data-rate="5"
+data-min="200"
+data-max="100000"
+>
+Instagram Shares - ₹5 / 1000
+</option>
 
-        <span class="service-rate">
-          GROWX
-        </span>
+<option
+value="Instagram Repost"
+data-rate="10"
+data-min="100"
+data-max="50000"
+>
+Instagram Repost - ₹10 / 1000
+</option>
 
-      </div>
+<option
+value="Instagram Save"
+data-rate="10"
+data-min="100"
+data-max="50000"
+>
+Instagram Save - ₹10 / 1000
+</option>
 
+</select>
 
-      <label>Quantity</label>
 
-      <input
-        type="number"
-        id="quantity"
-        placeholder="Enter quantity"
-        min="500"
-        max="2159899"
-        oninput="calculatePrice()"
-      >
+<label>Quantity</label>
 
-      <div class="limits" id="limits">
-        Minimum: 500 · Maximum: 2,159,899
-      </div>
+<input
+type="number"
+id="quantity"
+placeholder="Enter quantity"
+oninput="calculatePrice()"
+>
 
 
-      <label>Post / Reel Link</label>
+<label>Post / Reel Link</label>
 
-      <input
-        type="url"
-        id="link"
-        placeholder="https://instagram.com/..."
-      >
+<input
+type="url"
+id="link"
+placeholder="Paste post or reel link"
+>
 
 
-      <div class="price-box">
+<div class="price-box">
 
-        <div class="price-label">
-          TOTAL PRICE
-        </div>
+<div class="price-label">
+Total Cost
+</div>
 
-        <div id="price">
-          ₹0.00
-        </div>
+<div
+class="price"
+id="price"
+>
+₹0.00
+</div>
 
-      </div>
+</div>
 
 
-      <!-- PAYMENT QR -->
+<button onclick="startPayment()">
+Submit Order
+</button>
 
-      <div class="payment-box">
+</div>
 
-        <div class="payment-title">
-          Scan & Pay
-        </div>
 
-        <img
-          src="IMG-20260923-WA0004~2.jpg"
-          alt="GROWX Payment QR"
-          class="payment-qr"
-        >
+<!-- =========================
+     PAYMENT PAGE
+========================= -->
 
-        <div class="payment-note">
-          Scan the QR code to make payment.
-        </div>
+<div id="paymentPage" class="hidden">
 
-      </div>
+<div class="payment-box">
 
+<div class="payment-title">
+Scan & Pay
+</div>
 
-      <button
-        type="button"
-        onclick="placeOrder()"
-      >
-        Submit Order
-      </button>
+<div class="payment-amount">
 
-      <div id="orderMessage" class="message"></div>
+₹<span id="paymentAmount">
+0.00
+</span>
 
-    </div>
+</div>
 
 
-    <div class="footer-note">
-      Grow fast with GROWX • Simple. Fast. Built to Grow.
-    </div>
+<img
+src="IMG-20260923-WA0004~2.jpg"
+alt="GROWX Payment QR"
+class="payment-qr"
+>
 
-  </div>
 
+<div class="payment-note">
 
-  <script>
+Scan the QR code and complete the payment.
 
-    // SUPABASE CONNECTION
+<br>
 
-    const SUPABASE_URL =
-      "https://rxfffsibplxmhgxmbkvi.supabase.co";
+After payment, upload the payment screenshot below.
 
-    const SUPABASE_ANON_KEY =
-      "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
+</div>
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
 
+<div class="upload-box">
 
-    // SERVICE SETTINGS
+<label class="upload-label">
+Upload Payment Screenshot
+</label>
 
-    const SERVICES = {
+<input
+type="file"
+id="paymentScreenshot"
+class="file-input"
+accept="image/*"
+>
 
-      views: {
-        name: "Instagram Views",
-        rate: 2 / 1000,
-        displayRate: "₹2 / 1,000",
-        min: 500,
-        max: 2159899
-      },
+</div>
 
-      likes: {
-        name: "Instagram Likes",
-        rate: 20 / 1000,
-        displayRate: "₹20 / 1,000",
-        min: 50,
-        max: 500000
-      },
 
-      followers: {
-        name: "Instagram Followers",
-        rate: 400 / 1000,
-        displayRate: "₹400 / 1,000",
-        min: 100,
-        max: 20000
-      },
+<button
+class="confirm-btn"
+onclick="confirmPayment()"
+>
+Confirm Payment
+</button>
 
-      shares: {
-        name: "Instagram Shares",
-        rate: 5 / 1000,
-        displayRate: "₹5 / 1,000",
-        min: 200,
-        max: 100000
-      },
 
-      repost: {
-        name: "Instagram Repost",
-        rate: 10 / 1000,
-        displayRate: "₹10 / 1,000",
-        min: 100,
-        max: 50000
-      },
+<button
+class="back-btn"
+onclick="backToOrder()"
+>
+Back
+</button>
 
-      save: {
-        name: "Instagram Save",
-        rate: 10 / 1000,
-        displayRate: "₹10 / 1,000",
-        min: 100,
-        max: 50000
-      }
+</div>
 
-    };
+</div>
 
 
-    // PAGE SWITCHING
+<!-- =========================
+     SUCCESS PAGE
+========================= -->
 
-    function showSignup() {
+<div id="successPage" class="hidden">
 
-      document.getElementById("signupPage")
-        .classList.remove("hidden");
+<div class="success-box">
 
-      document.getElementById("loginPage")
-        .classList.add("hidden");
+<div class="success-icon">
+✅
+</div>
 
-      document.getElementById("orderPage")
-        .classList.add("hidden");
+<div class="success-title">
+Order Successfully Submitted
+</div>
 
-      document.getElementById("signupMessage")
-        .innerText = "";
+<div class="success-text">
 
-    }
+Your order has been submitted successfully.
 
+<br>
 
-    function showLogin() {
+Please keep your Order ID for reference.
 
-      document.getElementById("signupPage")
-        .classList.add("hidden");
+</div>
 
-      document.getElementById("loginPage")
-        .classList.remove("hidden");
 
-      document.getElementById("orderPage")
-        .classList.add("hidden");
+<div class="order-id">
 
-      document.getElementById("loginMessage")
-        .innerText = "";
+Order ID:
 
-    }
+<span id="successOrderId">
+-
+</span>
 
+</div>
 
-    function showOrderPage() {
 
-      document.getElementById("signupPage")
-        .classList.add("hidden");
+<button
+style="margin-top:20px;"
+onclick="newOrder()"
+>
+New Order
+</button>
 
-      document.getElementById("loginPage")
-        .classList.add("hidden");
+</div>
 
-      document.getElementById("orderPage")
-        .classList.remove("hidden");
+</div>
 
-      updateService();
+</div>
 
-    }
+</div>
 
 
-    // SIGN UP
+<script>
 
-    async function signUp() {
+/* =========================
+   SUPABASE
+========================= */
 
-      const name =
-        document.getElementById("signupName")
-          .value.trim();
+const SUPABASE_URL =
+"https://rxfffsibplxmhgxmbkvi.supabase.co";
 
-      const email =
-        document.getElementById("signupEmail")
-          .value.trim()
-          .toLowerCase();
+const SUPABASE_KEY =
+"sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
 
-      const password =
-        document.getElementById("signupPassword")
-          .value;
+const supabaseClient =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
-      const message =
-        document.getElementById("signupMessage");
 
-      message.innerText = "";
+/* =========================
+   PAGE FUNCTIONS
+========================= */
 
+function showSignup(){
 
-      if (!name || !email || !password) {
+document
+.getElementById("signupPage")
+.classList.remove("hidden");
 
-        message.innerText =
-          "Please fill all details.";
+document
+.getElementById("signinPage")
+.classList.add("hidden");
 
-        return;
-      }
+document
+.getElementById("orderPage")
+.classList.add("hidden");
 
+}
 
-      if (password.length < 6) {
 
-        message.innerText =
-          "Password must be at least 6 characters.";
+function showSignin(){
 
-        return;
-      }
+document
+.getElementById("signinPage")
+.classList.remove("hidden");
 
+document
+.getElementById("signupPage")
+.classList.add("hidden");
 
-      try {
+document
+.getElementById("orderPage")
+.classList.add("hidden");
 
-        const { data, error } =
-          await supabaseClient.auth.signUp({
+}
 
-            email: email,
 
-            password: password,
+function showOrder(){
 
-            options: {
+document
+.getElementById("orderPage")
+.classList.remove("hidden");
 
-              data: {
-                name: name
-              }
+document
+.getElementById("signupPage")
+.classList.add("hidden");
 
-            }
+document
+.getElementById("signinPage")
+.classList.add("hidden");
 
-          });
+}
 
 
-        if (error) {
+/* =========================
+   MESSAGE
+========================= */
 
-          const errorText =
-            error.message.toLowerCase();
+function showMessage(
+elementId,
+message,
+type
+){
 
+const element =
+document.getElementById(elementId);
 
-          if (
-            errorText.includes("already") ||
-            errorText.includes("registered") ||
-            errorText.includes("exists") ||
-            errorText.includes("user already")
-          ) {
+element.textContent = message;
 
-            message.innerText =
-              "This email is already registered. Please Sign In.";
+element.className =
+"message " + type;
 
-          } else {
+element.style.display =
+"block";
 
-            message.innerText =
-              error.message;
+}
 
-          }
 
-          return;
-        }
+/* =========================
+   SIGN UP
+========================= */
 
+async function signUp(){
 
-        if (data.user && !data.session) {
+const name =
+document
+.getElementById("signupName")
+.value
+.trim();
 
-          message.innerText =
-            "Account created! Gmail me confirmation email open karein, 'Confirm Email' par click karein, phir yahan Sign In karein.";
+const email =
+document
+.getElementById("signupEmail")
+.value
+.trim();
 
-        } else {
+const password =
+document
+.getElementById("signupPassword")
+.value;
 
-          message.innerText =
-            "Account created successfully.";
 
-        }
+if(!name || !email || !password){
 
+showMessage(
+"signupMessage",
+"Please fill all fields.",
+"error"
+);
 
-        document.getElementById("signupName").value = "";
-        document.getElementById("signupEmail").value = "";
-        document.getElementById("signupPassword").value = "";
+return;
 
+}
 
-        setTimeout(() => {
 
-          showLogin();
+const {
+data,
+error
+} =
+await supabaseClient.auth.signUp({
 
-        }, 4000);
+email:email,
 
+password:password,
 
-      } catch (err) {
+options:{
+data:{
+name:name
+}
+}
 
-        console.error("SIGNUP ERROR:", err);
+});
 
-        message.innerText =
-          "Something went wrong. Please try again.";
 
-      }
+if(error){
 
-    }
+showMessage(
+"signupMessage",
+error.message,
+"error"
+);
 
+return;
 
-    // SIGN IN
+}
 
-    async function signIn() {
 
-      const email =
-        document.getElementById("loginEmail")
-          .value.trim()
-          .toLowerCase();
+showMessage(
+"signupMessage",
+"Account created successfully. Please sign in.",
+"success"
+);
 
-      const password =
-        document.getElementById("loginPassword")
-          .value;
+}
 
-      const message =
-        document.getElementById("loginMessage");
 
-      message.innerText = "";
+/* =========================
+   SIGN IN
+========================= */
 
+async function signIn(){
 
-      if (!email || !password) {
+const email =
+document
+.getElementById("signinEmail")
+.value
+.trim();
 
-        message.innerText =
-          "Please enter email and password.";
+const password =
+document
+.getElementById("signinPassword")
+.value;
 
-        return;
-      }
 
+if(!email || !password){
 
-      try {
+showMessage(
+"signinMessage",
+"Please enter email and password.",
+"error"
+);
 
-        const { data, error } =
-          await supabaseClient.auth
-            .signInWithPassword({
+return;
 
-              email: email,
+}
 
-              password: password
 
-            });
+const {
+data,
+error
+} =
+await supabaseClient.auth.signInWithPassword({
 
+email:email,
 
-        if (error) {
+password:password
 
-          const errorText =
-            error.message.toLowerCase();
+});
 
 
-          if (
-            errorText.includes("email not confirmed")
-          ) {
+if(error){
 
-            message.innerText =
-              "Email confirm nahi hai. Gmail me confirmation email open karein aur 'Confirm Email' par click karein, phir yahan Sign In karein.";
+showMessage(
+"signinMessage",
+error.message,
+"error"
+);
 
-          } else if (
-            errorText.includes("invalid login") ||
-            errorText.includes("invalid credentials") ||
-            errorText.includes("invalid email or password")
-          ) {
+return;
 
-            message.innerText =
-              "Invalid email or password.";
+}
 
-          } else {
 
-            message.innerText =
-              error.message;
+loadCustomer();
 
-          }
+}
 
-          return;
-        }
 
+/* =========================
+   CUSTOMER
+========================= */
 
-        if (!data || !data.user) {
+async function loadCustomer(){
 
-          message.innerText =
-            "Login failed. Please try again.";
+const {
+data:{
+user
+}
+} =
+await supabaseClient.auth.getUser();
 
-          return;
-        }
 
+if(!user){
 
-        setCustomerName(data.user);
+showSignin();
 
+return;
 
-        document.getElementById("loginEmail").value = "";
-        document.getElementById("loginPassword").value = "";
+}
 
 
-        showOrderPage();
+const name =
+user.user_metadata?.name ||
+user.email?.split("@")[0] ||
+"Customer";
 
 
-      } catch (err) {
+document
+.getElementById("customerName")
+.textContent = name;
 
-        console.error("LOGIN ERROR:", err);
 
-        message.innerText =
-          "Something went wrong. Please try again.";
+document
+.getElementById("avatar")
+.textContent =
+name.charAt(0).toUpperCase();
 
-      }
 
-    }
+showOrder();
 
+}
 
-    // CUSTOMER NAME
 
-    function setCustomerName(user) {
+/* =========================
+   LOGOUT
+========================= */
 
-      const name =
-        user.user_metadata?.name ||
-        user.email ||
-        "Customer";
+async function logout(){
 
+await supabaseClient.auth.signOut();
 
-      document.getElementById("customerName")
-        .innerText = name;
+showSignin();
 
+}
 
-      const firstLetter =
-        name.charAt(0).toUpperCase();
 
+/* =========================
+   SERVICE CHANGE
+========================= */
 
-      document.getElementById("avatar")
-        .innerText =
-        firstLetter || "C";
+document
+.getElementById("service")
+.addEventListener(
+"change",
+calculatePrice
+);
 
-    }
 
+/* =========================
+   GET VIEWS RATE
+========================= */
 
-    // LOGOUT
+function getViewsRate(quantity){
 
-    async function signOut() {
+if(quantity >= 501 && quantity <= 9999){
 
-      try {
+return 2;
 
-        const { error } =
-          await supabaseClient.auth.signOut();
+}
 
+if(quantity >= 10000 && quantity <= 19999){
 
-        if (error) {
+return 1.8;
 
-          alert(error.message);
+}
 
-          return;
-        }
+if(quantity >= 20000 && quantity <= 29999){
 
+return 1.5;
 
-        document.getElementById("quantity")
-          .value = "";
+}
 
-        document.getElementById("link")
-          .value = "";
+if(quantity >= 30000 && quantity <= 49999){
 
-        document.getElementById("orderMessage")
-          .innerText = "";
+return 1;
 
-        document.getElementById("price")
-          .innerText = "₹0.00";
+}
 
+if(quantity >= 50000 && quantity <= 79999){
 
-        showLogin();
+return 0.8;
 
-      } catch (err) {
+}
 
-        console.error("LOGOUT ERROR:", err);
+if(quantity >= 80000 && quantity <= 99999){
 
-        alert("Logout failed. Please try again.");
+return 0.7;
 
-      }
+}
 
-    }
+if(quantity >= 100000){
 
+return 0.6;
 
-    // CHECK LOGIN WHEN WEBSITE OPENS
+}
 
-    async function checkUser() {
+return 0;
 
-      try {
+}
 
-        const { data, error } =
-          await supabaseClient.auth.getSession();
 
+/* =========================
+   GET LIKES RATE
+========================= */
 
-        if (error) {
+function getLikesRate(quantity){
 
-          showLogin();
+if(quantity >= 50 && quantity <= 999){
 
-          return;
-        }
+return 20;
 
+}
 
-        if (data.session) {
+if(quantity >= 1000 && quantity <= 2999){
 
-          const user =
-            data.session.user;
+return 18;
 
-          setCustomerName(user);
+}
 
-          showOrderPage();
+if(quantity >= 3000 && quantity <= 4999){
 
-        } else {
+return 15;
 
-          showSignup();
+}
 
-        }
+if(quantity >= 5000 && quantity <= 9999){
 
-      } catch (err) {
+return 12;
 
-        console.error("SESSION ERROR:", err);
+}
 
-        showSignup();
+if(quantity >= 10000){
 
-      }
+return 10;
 
-    }
+}
 
+return 0;
 
-    // AUTH STATE LISTENER
+}
 
-    supabaseClient.auth.onAuthStateChange(
-      (event, session) => {
 
-        if (event === "SIGNED_IN" && session) {
+/* =========================
+   GET CURRENT RATE
+========================= */
 
-          setCustomerName(session.user);
+function getCurrentRate(
+service,
+quantity
+){
 
-          showOrderPage();
+if(service === "Instagram Views"){
 
-        }
+return getViewsRate(quantity);
 
-        if (event === "SIGNED_OUT") {
+}
 
-          showLogin();
 
-        }
+if(service === "Instagram Likes"){
 
-      }
-    );
+return getLikesRate(quantity);
 
+}
 
-    // UPDATE SERVICE
 
-    function updateService() {
+/* Other services */
 
-      const service =
-        document.getElementById("service")
-          .value;
+if(service === "Instagram Followers"){
 
-      const settings =
-        SERVICES[service];
+return 400;
 
+}
 
-      if (!settings) {
-        return;
-      }
+if(service === "Instagram Shares"){
 
+return 5;
 
-      const quantity =
-        document.getElementById("quantity");
+}
 
+if(service === "Instagram Repost"){
 
-      quantity.min =
-        settings.min;
+return 10;
 
-      quantity.max =
-        settings.max;
+}
 
+if(service === "Instagram Save"){
 
-      document.getElementById("rateText")
-        .innerText =
-        settings.displayRate;
+return 10;
 
+}
 
-      document.getElementById("limits")
-        .innerText =
-        "Minimum: " +
-        settings.min.toLocaleString() +
-        " · Maximum: " +
-        settings.max.toLocaleString();
+return 0;
 
+}
 
-      quantity.value = "";
 
-      document.getElementById("price")
-        .innerText =
-        "₹0.00";
+/* =========================
+   CALCULATE PRICE
+========================= */
 
-    }
+function calculatePrice(){
 
+const service =
+document.getElementById("service");
 
-    // CALCULATE PRICE
+const selected =
+service.options[
+service.selectedIndex
+];
 
-    function calculatePrice() {
+const quantity =
+Number(
+document
+.getElementById("quantity")
+.value
+);
 
-      const service =
-        document.getElementById("service")
-          .value;
 
-      const settings =
-        SERVICES[service];
+if(
+!selected ||
+!selected.value ||
+!quantity
+){
 
-      const quantity =
-        Number(
-          document.getElementById("quantity").value
-        );
+document
+.getElementById("price")
+.textContent =
+"₹0.00";
 
+return;
 
-      if (!settings || !quantity) {
+}
 
-        document.getElementById("price")
-          .innerText =
-          "₹0.00";
 
-        return;
-      }
+const rate =
+getCurrentRate(
+selected.value,
+quantity
+);
 
 
-      const total =
-        quantity * settings.rate;
+if(rate === 0){
 
+document
+.getElementById("price")
+.textContent =
+"₹0.00";
 
-      document.getElementById("price")
-        .innerText =
-        "₹" + total.toFixed(2);
+return;
 
-    }
+}
 
 
-    // SUBMIT ORDER
+const total =
+(quantity / 1000) * rate;
 
-    async function placeOrder() {
 
-      const service =
-        document.getElementById("service")
-          .value;
+document
+.getElementById("price")
+.textContent =
+"₹" + total.toFixed(2);
 
-      const settings =
-        SERVICES[service];
+}
 
-      const quantity =
-        Number(
-          document.getElementById("quantity").value
-        );
 
-      const link =
-        document.getElementById("link")
-          .value.trim();
+/* =========================
+   START PAYMENT
+========================= */
 
-      const message =
-        document.getElementById("orderMessage");
+function startPayment(){
 
+const service =
+document.getElementById("service");
 
-      message.innerText = "";
+const selected =
+service.options[
+service.selectedIndex
+];
 
+const quantity =
+Number(
+document
+.getElementById("quantity")
+.value
+);
 
-      // CHECK SERVICE
+const link =
+document
+.getElementById("link")
+.value
+.trim();
 
-      if (!settings) {
 
-        message.innerText =
-          "Please select a service.";
+if(
+!selected ||
+!selected.value
+){
 
-        return;
-      }
+showMessage(
+"orderMessage",
+"Please choose a service.",
+"error"
+);
 
+return;
 
-      // CHECK QUANTITY
+}
 
-      if (!quantity) {
 
-        message.innerText =
-          "Please enter quantity.";
+const min =
+Number(selected.dataset.min);
 
-        return;
-      }
+const max =
+Number(selected.dataset.max);
 
 
-      if (
-        quantity < settings.min ||
-        quantity > settings.max
-      ) {
+if(
+!quantity ||
+quantity < min ||
+quantity > max
+){
 
-        message.innerText =
-          "Quantity must be between " +
-          settings.min.toLocaleString() +
-          " and " +
-          settings.max.toLocaleString() +
-          ".";
+showMessage(
+"orderMessage",
+"Quantity must be between " +
+min.toLocaleString() +
+" and " +
+max.toLocaleString() +
+".",
+"error"
+);
 
-        return;
-      }
+return;
 
+}
 
-      // CHECK LINK
 
-      if (!link) {
+const rate =
+getCurrentRate(
+selected.value,
+quantity
+);
 
-        message.innerText =
-          "Please enter your Post / Reel link.";
 
-        return;
-      }
+if(rate === 0){
 
+showMessage(
+"orderMessage",
+"Please enter a valid quantity.",
+"error"
+);
 
-      try {
+return;
 
-        new URL(link);
+}
 
-      } catch {
 
-        message.innerText =
-          "Please enter a valid link.";
+if(!link){
 
-        return;
-      }
+showMessage(
+"orderMessage",
+"Please enter Post / Reel link.",
+"error"
+);
 
+return;
 
-      // GET CURRENT USER
+}
 
-      const {
-        data: sessionData,
-        error: sessionError
-      } =
-        await supabaseClient.auth.getSession();
 
+const total =
+(quantity / 1000) * rate;
 
-      if (
-        sessionError ||
-        !sessionData.session ||
-        !sessionData.session.user
-      ) {
 
-        message.innerText =
-          "Please sign in again.";
+document
+.getElementById("paymentAmount")
+.textContent =
+total.toFixed(2);
 
-        return;
-      }
 
+window.currentOrder = {
 
-      const user =
-        sessionData.session.user;
+service:selected.value,
 
+quantity:quantity,
 
-      // CALCULATE PRICE
+link:link,
 
-      const price =
-        quantity * settings.rate;
+price:total,
 
+rate:rate
 
-      // SHOW SUBMITTING MESSAGE
+};
 
-      message.innerText =
-        "Submitting order...";
 
+document
+.getElementById("orderForm")
+.classList.add("hidden");
 
-      try {
 
-        // INSERT ORDER INTO SUPABASE
+document
+.getElementById("paymentPage")
+.classList.remove("hidden");
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from("Orders")
-            .insert({
+}
 
-              service: settings.name,
 
-              quantity: quantity,
+/* =========================
+   BACK TO ORDER
+========================= */
 
-              link: link,
+function backToOrder(){
 
-              price: price,
+document
+.getElementById("paymentPage")
+.classList.add("hidden");
 
-              status: "Pending",
 
-              user_id: user.id
+document
+.getElementById("orderForm")
+.classList.remove("hidden");
 
-            })
-            .select("order_id")
-            .single();
+}
 
 
-        // CHECK DATABASE ERROR
+/* =========================
+   CONFIRM PAYMENT
+========================= */
 
-        if (error) {
+async function confirmPayment(){
 
-          console.error(
-            "ORDER INSERT ERROR:",
-            error
-          );
+const fileInput =
+document.getElementById(
+"paymentScreenshot"
+);
 
-          message.innerText =
-            "Order failed: " +
-            error.message;
+const file =
+fileInput.files[0];
 
-          return;
-        }
 
+if(!file){
 
-        // DATABASE GENERATED ORDER ID
+alert(
+"Please upload your payment screenshot first."
+);
 
-        const orderId =
-          data.order_id;
+return;
 
+}
 
-        // SUCCESS MESSAGE
 
-        message.innerText =
-          "Order created successfully! Order ID: " +
-          orderId +
-          " | Total: ₹" +
-          price.toFixed(2);
+if(
+!file.type.startsWith("image/")
+){
 
+alert(
+"Please upload an image file."
+);
 
-        // CLEAR FORM
+return;
 
-        document.getElementById("quantity")
-          .value = "";
+}
 
-        document.getElementById("link")
-          .value = "";
 
-        document.getElementById("price")
-          .innerText = "₹0.00";
+if(!window.currentOrder){
 
+alert(
+"Order information not found. Please start again."
+);
 
-      } catch (err) {
+return;
 
-        console.error(
-          "ORDER ERROR:",
-          err
-        );
+}
 
-        message.innerText =
-          "Something went wrong. Please try again.";
 
-      }
+const {
+data:{
+user
+}
+} =
+await supabaseClient.auth.getUser();
 
-    }
 
+if(!user){
 
-    // START WEBSITE
+alert(
+"Please sign in again."
+);
 
-    checkUser();
+showSignin();
 
-  </script>
+return;
+
+}
+
+
+/*
+   Submit order after
+   Confirm Payment.
+*/
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("Orders")
+.insert({
+
+service:
+window.currentOrder.service,
+
+quantity:
+window.currentOrder.quantity,
+
+link:
+window.currentOrder.link,
+
+price:
+window.currentOrder.price,
+
+status:
+"Payment Submitted",
+
+user_id:
+user.id
+
+})
+.select("order_id")
+.single();
+
+
+if(error){
+
+console.error(error);
+
+alert(
+"Order submit nahi hua: " +
+error.message
+);
+
+return;
+
+}
+
+
+/* Show success */
+
+document
+.getElementById("paymentPage")
+.classList.add("hidden");
+
+
+document
+.getElementById("successPage")
+.classList.remove("hidden");
+
+
+document
+.getElementById("successOrderId")
+.textContent =
+data.order_id;
+
+
+fileInput.value = "";
+
+}
+
+
+/* =========================
+   NEW ORDER
+========================= */
+
+function newOrder(){
+
+window.currentOrder = null;
+
+
+document
+.getElementById("successPage")
+.classList.add("hidden");
+
+
+document
+.getElementById("paymentPage")
+.classList.add("hidden");
+
+
+document
+.getElementById("orderForm")
+.classList.remove("hidden");
+
+
+document
+.getElementById("service")
+.value = "";
+
+
+document
+.getElementById("quantity")
+.value = "";
+
+
+document
+.getElementById("link")
+.value = "";
+
+
+document
+.getElementById("price")
+.textContent =
+"₹0.00";
+
+}
+
+
+/* =========================
+   SESSION CHECK
+========================= */
+
+async function checkSession(){
+
+const {
+data:{
+session
+}
+} =
+await supabaseClient.auth.getSession();
+
+
+if(session){
+
+loadCustomer();
+
+}else{
+
+showSignin();
+
+}
+
+}
+
+
+/* =========================
+   AUTH LISTENER
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+(event,session)=>{
+
+if(session){
+
+loadCustomer();
+
+}
+
+});
+
+
+/* =========================
+   START
+========================= */
+
+checkSession();
+
+</script>
 
 </body>
-
 </html>
