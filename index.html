@@ -3,201 +3,516 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SMM Order Website</title>
+
+  <title>GROWX ORDER</title>
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
       margin: 0;
+      min-height: 100vh;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #dbeafe 0, transparent 35%),
+        radial-gradient(circle at bottom right, #e0e7ff 0, transparent 35%),
+        #f8fafc;
+      color: #111827;
       padding: 20px;
     }
 
     .container {
-      max-width: 500px;
-      margin: 30px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 520px;
+      margin: 35px auto;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(15,23,42,0.12);
+      backdrop-filter: blur(15px);
     }
 
-    h1, h2 {
+    .brand {
       text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-logo {
+      display: inline-block;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #111827;
+    }
+
+    .brand-logo span {
+      color: #2563eb;
+    }
+
+    .tagline {
+      margin-top: 7px;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 25px;
+      margin: 0 0 22px;
     }
 
     label {
       display: block;
-      margin-top: 15px;
-      font-weight: bold;
+      margin-top: 17px;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #334155;
     }
 
-    input, select, button {
+    input,
+    select {
       width: 100%;
-      padding: 12px;
-      margin-top: 7px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-sizing: border-box;
+      padding: 14px 15px;
+      border: 1px solid #dbe2ea;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: #111827;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #2563eb;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.10);
     }
 
     button {
-      margin-top: 20px;
-      background: #111827;
-      color: white;
+      width: 100%;
       border: none;
-      font-size: 16px;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 22px;
+      background: linear-gradient(135deg, #111827, #2563eb);
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
       cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37,99,235,0.20);
+      transition: 0.2s;
     }
 
     button:hover {
-      background: #000;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 25px rgba(37,99,235,0.25);
     }
 
     .secondary {
-      background: #e5e7eb;
-      color: #111827;
+      width: auto;
+      margin: 0;
+      padding: 9px 15px;
+      background: #f1f5f9;
+      color: #334155;
+      box-shadow: none;
     }
 
     .secondary:hover {
-      background: #d1d5db;
+      background: #e2e8f0;
+      box-shadow: none;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     .message {
+      min-height: 20px;
       margin-top: 15px;
       text-align: center;
-      font-weight: bold;
-    }
-
-    #price {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 15px;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
-    .topbar button {
-      width: auto;
-      margin-top: 0;
-      padding: 8px 14px;
+    .customer-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #111827, #2563eb);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    #customerName {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 230px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 18px 10px 12px;
+    }
+
+    .hero h1 {
+      margin-bottom: 8px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .order-card {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .service-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .service-rate {
+      color: #2563eb;
+      font-weight: 800;
+    }
+
+    .price-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #eff6ff, #eef2ff);
+      border: 1px solid #dbeafe;
+      text-align: center;
+    }
+
+    .price-label {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 700;
+    }
+
+    #price {
+      margin-top: 4px;
+      font-size: 27px;
+      font-weight: 900;
+      color: #111827;
+    }
+
+    .limits {
+      text-align: center;
+      margin-top: 10px;
+      color: #64748b;
+      font-size: 12px;
     }
 
     .switch {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 20px;
+      color: #64748b;
+      font-size: 14px;
     }
 
     .switch span {
       color: #2563eb;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 22px;
+      color: #94a3b8;
+      font-size: 11px;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        margin: 15px auto;
+        padding: 22px 18px;
+        border-radius: 20px;
+      }
+
+      .brand-logo {
+        font-size: 26px;
+      }
+
+      .hero h1 {
+        font-size: 25px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<!-- SIGN UP -->
-<div class="container" id="signupPage">
-  <h1>Create Account</h1>
+  <!-- SIGN UP -->
+  <div class="container" id="signupPage">
 
-  <label>Name</label>
-  <input type="text" id="signupName" placeholder="Enter your name">
+    <div class="brand">
+      <div class="brand-logo">GROW<span>X</span></div>
+      <div class="tagline">Grow fast with GROWX</div>
+    </div>
 
-  <label>Email</label>
-  <input type="email" id="signupEmail" placeholder="Enter email">
+    <h1>Create Account</h1>
 
-  <label>Password</label>
-  <input type="password" id="signupPassword" placeholder="Create password">
+    <label>Name</label>
+    <input
+      type="text"
+      id="signupName"
+      placeholder="Enter your name"
+      autocomplete="name"
+    >
 
-  <button onclick="signUp()">Sign Up</button>
+    <label>Email</label>
+    <input
+      type="email"
+      id="signupEmail"
+      placeholder="Enter email"
+      autocomplete="email"
+    >
 
-  <div id="signupMessage" class="message"></div>
+    <label>Password</label>
+    <input
+      type="password"
+      id="signupPassword"
+      placeholder="Create password"
+      autocomplete="new-password"
+    >
 
-  <div class="switch">
-    Already have an account?
-    <span onclick="showLogin()">Sign In</span>
-  </div>
-</div>
+    <button onclick="signUp()">Create Account</button>
 
+    <div id="signupMessage" class="message"></div>
 
-<!-- SIGN IN -->
-<div class="container hidden" id="loginPage">
-  <h1>Customer Login</h1>
+    <div class="switch">
+      Already have an account?
+      <span onclick="showLogin()">Sign In</span>
+    </div>
 
-  <label>Email</label>
-  <input type="email" id="loginEmail" placeholder="Enter email">
+    <div class="footer-note">
+      Simple. Fast. Built to Grow.
+    </div>
 
-  <label>Password</label>
-  <input type="password" id="loginPassword" placeholder="Enter password">
-
-  <button onclick="signIn()">Sign In</button>
-
-  <div id="loginMessage" class="message"></div>
-
-  <div class="switch">
-    Don't have an account?
-    <span onclick="showSignup()">Create Account</span>
-  </div>
-</div>
-
-
-<!-- ORDER PAGE -->
-<div class="container hidden" id="orderPage">
-
-  <div class="topbar">
-    <strong id="customerName">Customer</strong>
-    <button class="secondary" onclick="signOut()">Logout</button>
   </div>
 
-  <h1>🚀 SMM Order</h1>
 
-  <label>Service</label>
-  <select id="service" onchange="calculatePrice()">
-    <option value="views">Views</option>
-    <option value="likes">Likes</option>
-    <option value="followers">Followers</option>
-    <option value="shares">Shares</option>
-  </select>
+  <!-- SIGN IN -->
+  <div class="container hidden" id="loginPage">
 
-  <label>Quantity</label>
-  <input
-    type="number"
-    id="quantity"
-    placeholder="Enter quantity"
-    oninput="calculatePrice()"
-  >
+    <div class="brand">
+      <div class="brand-logo">GROW<span>X</span></div>
+      <div class="tagline">Grow fast with GROWX</div>
+    </div>
 
-  <label>Post / Reel Link</label>
-  <input
-    type="url"
-    id="link"
-    placeholder="https://instagram.com/..."
-  >
+    <h1>Welcome Back</h1>
 
-  <div id="price">Price: ₹0.00</div>
+    <label>Email</label>
+    <input
+      type="email"
+      id="loginEmail"
+      placeholder="Enter email"
+      autocomplete="email"
+    >
 
-  <button onclick="placeOrder()">Place Order</button>
+    <label>Password</label>
+    <input
+      type="password"
+      id="loginPassword"
+      placeholder="Enter password"
+      autocomplete="current-password"
+    >
 
-  <div id="orderMessage" class="message"></div>
+    <button onclick="signIn()">Sign In</button>
 
-</div>
+    <div id="loginMessage" class="message"></div>
+
+    <div class="switch">
+      Don't have an account?
+      <span onclick="showSignup()">Create Account</span>
+    </div>
+
+    <div class="footer-note">
+      Simple. Fast. Built to Grow.
+    </div>
+
+  </div>
+
+
+  <!-- ORDER PAGE -->
+  <div class="container hidden" id="orderPage">
+
+    <div class="topbar">
+
+      <div class="customer-box">
+        <div class="avatar" id="avatar">C</div>
+        <strong id="customerName">Customer</strong>
+      </div>
+
+      <button class="secondary" onclick="signOut()">
+        Logout
+      </button>
+
+    </div>
+
+
+    <div class="hero">
+      <h1>GROWX ORDER</h1>
+      <p>
+        Grow fast with GROWX.<br>
+        Simple. Fast. Built to Grow.
+      </p>
+    </div>
+
+
+    <div class="order-card">
+
+      <label>Choose Service</label>
+
+      <select id="service" onchange="updateService()">
+
+        <option value="views">
+          Instagram Views
+        </option>
+
+        <option value="likes">
+          Instagram Likes
+        </option>
+
+        <option value="followers">
+          Instagram Followers
+        </option>
+
+        <option value="shares">
+          Instagram Shares
+        </option>
+
+        <option value="repost">
+          Instagram Repost
+        </option>
+
+        <option value="save">
+          Instagram Save
+        </option>
+
+      </select>
+
+
+      <div class="service-info">
+        <span id="rateText">
+          ₹20 / 10,000
+        </span>
+
+        <span class="service-rate">
+          GROWX
+        </span>
+      </div>
+
+
+      <label>Quantity</label>
+
+      <input
+        type="number"
+        id="quantity"
+        placeholder="Enter quantity"
+        min="501"
+        max="2000000"
+        oninput="calculatePrice()"
+      >
+
+      <div class="limits" id="limits">
+        Minimum: 501 · Maximum: 2,000,000
+      </div>
+
+
+      <label>Post / Reel Link</label>
+
+      <input
+        type="url"
+        id="link"
+        placeholder="https://instagram.com/..."
+      >
+
+
+      <div class="price-box">
+
+        <div class="price-label">
+          TOTAL PRICE
+        </div>
+
+        <div id="price">
+          ₹0.00
+        </div>
+
+      </div>
+
+
+      <button onclick="placeOrder()">
+        Place Order
+      </button>
+
+      <div id="orderMessage" class="message"></div>
+
+    </div>
+
+
+    <div class="footer-note">
+      Grow fast with GROWX • Simple. Fast. Built to Grow.
+    </div>
+
+  </div>
 
 
 <script>
+
   // ==========================================
   // SUPABASE CONNECTION
   // ==========================================
@@ -208,10 +523,68 @@
   const SUPABASE_ANON_KEY =
     "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+
+  // ==========================================
+  // SERVICE SETTINGS
+  // ==========================================
+
+  const SERVICES = {
+
+    views: {
+      name: "Instagram Views",
+      rate: 20 / 10000,
+      displayRate: "₹20 / 10,000",
+      min: 501,
+      max: 2000000
+    },
+
+    likes: {
+      name: "Instagram Likes",
+      rate: 20 / 1000,
+      displayRate: "₹20 / 1,000",
+      min: 50,
+      max: 500000
+    },
+
+    followers: {
+      name: "Instagram Followers",
+      rate: 400 / 1000,
+      displayRate: "₹400 / 1,000",
+      min: 100,
+      max: 20000
+    },
+
+    shares: {
+      name: "Instagram Shares",
+      rate: 5 / 1000,
+      displayRate: "₹5 / 1,000",
+      min: 200,
+      max: 100000
+    },
+
+    repost: {
+      name: "Instagram Repost",
+      rate: 10 / 1000,
+      displayRate: "₹10 / 1,000",
+      min: 100,
+      max: 50000
+    },
+
+    save: {
+      name: "Instagram Save",
+      rate: 10 / 1000,
+      displayRate: "₹10 / 1,000",
+      min: 100,
+      max: 50000
+    }
+
+  };
 
 
   // ==========================================
@@ -219,21 +592,54 @@
   // ==========================================
 
   function showSignup() {
-    document.getElementById("signupPage").classList.remove("hidden");
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("orderPage").classList.add("hidden");
+
+    document
+      .getElementById("signupPage")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("loginPage")
+      .classList.add("hidden");
+
+    document
+      .getElementById("orderPage")
+      .classList.add("hidden");
   }
+
 
   function showLogin() {
-    document.getElementById("signupPage").classList.add("hidden");
-    document.getElementById("loginPage").classList.remove("hidden");
-    document.getElementById("orderPage").classList.add("hidden");
+
+    document
+      .getElementById("signupPage")
+      .classList.add("hidden");
+
+    document
+      .getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("orderPage")
+      .classList.add("hidden");
   }
 
+
   function showOrderPage() {
-    document.getElementById("signupPage").classList.add("hidden");
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("orderPage").classList.remove("hidden");
+
+    document
+      .getElementById("signupPage")
+      .classList.add("hidden");
+
+    document
+      .getElementById("loginPage")
+      .classList.add("hidden");
+
+    document
+      .getElementById("orderPage")
+      .classList.remove("hidden");
+
+    // IMPORTANT:
+    // Refresh service/price every time order page opens.
+    updateService();
   }
 
 
@@ -243,49 +649,79 @@
 
   async function signUp() {
 
-    const name = document.getElementById("signupName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value;
+    const name =
+      document.getElementById("signupName")
+      .value.trim();
 
-    const message = document.getElementById("signupMessage");
+    const email =
+      document.getElementById("signupEmail")
+      .value.trim();
+
+    const password =
+      document.getElementById("signupPassword")
+      .value;
+
+    const message =
+      document.getElementById("signupMessage");
 
     message.innerText = "";
 
     if (!name || !email || !password) {
-      message.innerText = "Please fill all details.";
+
+      message.innerText =
+        "Please fill all details.";
+
       return;
     }
 
     if (password.length < 6) {
-      message.innerText = "Password must be at least 6 characters.";
+
+      message.innerText =
+        "Password must be at least 6 characters.";
+
       return;
     }
 
-    const { data, error } = await supabaseClient.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          name: name
+    const { data, error } =
+      await supabaseClient.auth.signUp({
+
+        email: email,
+
+        password: password,
+
+        options: {
+          data: {
+            name: name
+          }
         }
-      }
-    });
+
+      });
+
 
     if (error) {
-      message.innerText = error.message;
+
+      message.innerText =
+        error.message;
+
       return;
     }
+
 
     message.innerText =
       "Account created successfully. Please sign in.";
+
 
     document.getElementById("signupName").value = "";
     document.getElementById("signupEmail").value = "";
     document.getElementById("signupPassword").value = "";
 
+
     setTimeout(() => {
+
       showLogin();
+
     }, 1500);
+
   }
 
 
@@ -295,42 +731,87 @@
 
   async function signIn() {
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
+    const email =
+      document.getElementById("loginEmail")
+      .value.trim();
 
-    const message = document.getElementById("loginMessage");
+    const password =
+      document.getElementById("loginPassword")
+      .value;
+
+    const message =
+      document.getElementById("loginMessage");
 
     message.innerText = "";
 
+
     if (!email || !password) {
-      message.innerText = "Please enter email and password.";
+
+      message.innerText =
+        "Please enter email and password.";
+
       return;
     }
+
 
     const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
+      await supabaseClient.auth
+      .signInWithPassword({
+
         email: email,
+
         password: password
+
       });
 
+
     if (error) {
-      message.innerText = error.message;
+
+      message.innerText =
+        error.message;
+
       return;
     }
 
+
     const user = data.user;
+
+    setCustomerName(user);
+
+
+    document.getElementById("loginEmail").value = "";
+    document.getElementById("loginPassword").value = "";
+
+
+    // Price/service refresh happens here.
+    showOrderPage();
+
+  }
+
+
+  // ==========================================
+  // CUSTOMER NAME
+  // ==========================================
+
+  function setCustomerName(user) {
 
     const name =
       user.user_metadata?.name ||
       user.email ||
       "Customer";
 
-    document.getElementById("customerName").innerText = name;
 
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
+    document.getElementById("customerName")
+      .innerText = name;
 
-    showOrderPage();
+
+    const firstLetter =
+      name.charAt(0).toUpperCase();
+
+
+    document.getElementById("avatar")
+      .innerText = firstLetter;
+
   }
 
 
@@ -340,14 +821,29 @@
 
   async function signOut() {
 
-    const { error } = await supabaseClient.auth.signOut();
+    const { error } =
+      await supabaseClient.auth.signOut();
+
 
     if (error) {
+
       alert(error.message);
+
       return;
     }
 
+
+    document.getElementById("quantity").value = "";
+
+    document.getElementById("link").value = "";
+
+    document.getElementById("orderMessage").innerText = "";
+
+    document.getElementById("price").innerText = "₹0.00";
+
+
     showLogin();
+
   }
 
 
@@ -357,19 +853,24 @@
 
   async function checkUser() {
 
-    const { data } =
+    const { data, error } =
       await supabaseClient.auth.getSession();
+
+
+    if (error) {
+
+      showLogin();
+
+      return;
+    }
+
 
     if (data.session) {
 
-      const user = data.session.user;
+      const user =
+        data.session.user;
 
-      const name =
-        user.user_metadata?.name ||
-        user.email ||
-        "Customer";
-
-      document.getElementById("customerName").innerText = name;
+      setCustomerName(user);
 
       showOrderPage();
 
@@ -378,6 +879,58 @@
       showSignup();
 
     }
+
+  }
+
+
+  // ==========================================
+  // UPDATE SERVICE
+  // ==========================================
+
+  function updateService() {
+
+    const service =
+      document.getElementById("service").value;
+
+    const settings =
+      SERVICES[service];
+
+
+    if (!settings) {
+      return;
+    }
+
+
+    const quantity =
+      document.getElementById("quantity");
+
+
+    quantity.min =
+      settings.min;
+
+    quantity.max =
+      settings.max;
+
+
+    document.getElementById("rateText")
+      .innerText =
+      settings.displayRate;
+
+
+    document.getElementById("limits")
+      .innerText =
+      "Minimum: " +
+      settings.min.toLocaleString() +
+      " · Maximum: " +
+      settings.max.toLocaleString();
+
+
+    // Clear old quantity when service changes
+    quantity.value = "";
+
+
+    calculatePrice();
+
   }
 
 
@@ -391,30 +944,46 @@
       document.getElementById("service").value;
 
     const quantity =
-      Number(document.getElementById("quantity").value) || 0;
+      Number(
+        document.getElementById("quantity").value
+      ) || 0;
 
-    let rate = 0;
 
-    if (service === "views") {
-      rate = 20 / 10000;
+    const settings =
+      SERVICES[service];
+
+
+    if (!settings) {
+      return;
     }
 
-    if (service === "likes") {
-      rate = 20 / 1000;
-    }
 
-    if (service === "followers") {
-      rate = 400 / 1000;
-    }
+    const price =
+      quantity * settings.rate;
 
-    if (service === "shares") {
-      rate = 5 / 1000;
-    }
 
-    const price = quantity * rate;
+    document.getElementById("price")
+      .innerText =
+      "₹" + price.toFixed(2);
 
-    document.getElementById("price").innerText =
-      "Price: ₹" + price.toFixed(2);
+  }
+
+
+  // ==========================================
+  // GENERATE ORDER ID
+  // ==========================================
+
+  function generateOrderId() {
+
+    const random =
+      Math.floor(
+        1000 + Math.random() * 9000
+      );
+
+    return "GX" +
+      Date.now() +
+      random;
+
   }
 
 
@@ -428,65 +997,153 @@
       document.getElementById("service").value;
 
     const quantity =
-      Number(document.getElementById("quantity").value);
+      Number(
+        document.getElementById("quantity").value
+      );
 
     const link =
-      document.getElementById("link").value.trim();
+      document.getElementById("link")
+      .value.trim();
 
     const message =
       document.getElementById("orderMessage");
 
+
     message.innerText = "";
 
-    if (!quantity || !link) {
+
+    const settings =
+      SERVICES[service];
+
+
+    if (!settings) {
+
       message.innerText =
-        "Please fill all details.";
+        "Please select a valid service.";
+
       return;
     }
 
-    const { data } =
+
+    // Check quantity
+    if (!quantity) {
+
+      message.innerText =
+        "Please enter quantity.";
+
+      return;
+    }
+
+
+    if (quantity < settings.min) {
+
+      message.innerText =
+        "Minimum quantity is " +
+        settings.min.toLocaleString() +
+        ".";
+
+      return;
+    }
+
+
+    if (quantity > settings.max) {
+
+      message.innerText =
+        "Maximum quantity is " +
+        settings.max.toLocaleString() +
+        ".";
+
+      return;
+    }
+
+
+    if (!link) {
+
+      message.innerText =
+        "Please enter your post/reel link.";
+
+      return;
+    }
+
+
+    // Check login
+    const { data, error: sessionError } =
       await supabaseClient.auth.getSession();
 
-    if (!data.session) {
+
+    if (sessionError || !data.session) {
+
       message.innerText =
         "Please sign in first.";
+
       showLogin();
+
       return;
     }
 
-    let rate = 0;
 
-    if (service === "views") {
-      rate = 20 / 10000;
+    const user =
+      data.session.user;
+
+
+    const price =
+      quantity * settings.rate;
+
+
+    const orderId =
+      generateOrderId();
+
+
+    // Save order in Supabase
+    const { error } =
+      await supabaseClient
+      .from("Orders")
+      .insert({
+
+        order_id: orderId,
+
+        service: settings.name,
+
+        quantity: quantity,
+
+        link: link,
+
+        price: price,
+
+        status: "Pending",
+
+        user_id: user.id
+
+      });
+
+
+    if (error) {
+
+      console.error(error);
+
+      message.innerText =
+        "Order could not be placed: " +
+        error.message;
+
+      return;
     }
 
-    if (service === "likes") {
-      rate = 20 / 1000;
-    }
-
-    if (service === "followers") {
-      rate = 400 / 1000;
-    }
-
-    if (service === "shares") {
-      rate = 5 / 1000;
-    }
-
-    const price = quantity * rate;
 
     message.innerText =
-      "Order details ready. Price: ₹" +
-      price.toFixed(2);
+      "Order placed successfully! Order ID: " +
+      orderId;
+
+
+    document.getElementById("quantity")
+      .value = "";
+
+    document.getElementById("link")
+      .value = "";
+
+    document.getElementById("price")
+      .innerText = "₹0.00";
+
   }
 
 
-  // ==========================================
-  // START WEBSITE
-  // ==========================================
-
-  checkUser();
-
-</script>
-
-</body>
-</html>
+  // =================
