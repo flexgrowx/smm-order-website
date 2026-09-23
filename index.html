@@ -296,9 +296,7 @@
 
 <body>
 
-  <!-- ========================= -->
   <!-- SIGN UP -->
-  <!-- ========================= -->
 
   <div class="container" id="signupPage">
 
@@ -354,9 +352,7 @@
   </div>
 
 
-  <!-- ========================= -->
   <!-- SIGN IN -->
-  <!-- ========================= -->
 
   <div class="container hidden" id="loginPage">
 
@@ -403,9 +399,7 @@
   </div>
 
 
-  <!-- ========================= -->
   <!-- ORDER PAGE -->
-  <!-- ========================= -->
 
   <div class="container hidden" id="orderPage">
 
@@ -534,7 +528,7 @@
         type="button"
         onclick="placeOrder()"
       >
-        Place Order
+        Submit Order
       </button>
 
       <div id="orderMessage" class="message"></div>
@@ -551,9 +545,7 @@
 
   <script>
 
-    // ==========================================
     // SUPABASE CONNECTION
-    // ==========================================
 
     const SUPABASE_URL =
       "https://rxfffsibplxmhgxmbkvi.supabase.co";
@@ -568,14 +560,9 @@
       );
 
 
-    // ==========================================
     // SERVICE SETTINGS
-    // ==========================================
 
     const SERVICES = {
-
-      // UPDATED:
-      // ₹2 / 1,000 VIEWS
 
       views: {
         name: "Instagram Views",
@@ -628,9 +615,7 @@
     };
 
 
-    // ==========================================
     // PAGE SWITCHING
-    // ==========================================
 
     function showSignup() {
 
@@ -682,9 +667,7 @@
     }
 
 
-    // ==========================================
     // SIGN UP
-    // ==========================================
 
     async function signUp() {
 
@@ -772,11 +755,6 @@
         }
 
 
-        /*
-          If email confirmation is enabled
-          in Supabase, there will be no session.
-        */
-
         if (data.user && !data.session) {
 
           message.innerText =
@@ -814,9 +792,7 @@
     }
 
 
-    // ==========================================
     // SIGN IN
-    // ==========================================
 
     async function signIn() {
 
@@ -921,9 +897,7 @@
     }
 
 
-    // ==========================================
     // CUSTOMER NAME
-    // ==========================================
 
     function setCustomerName(user) {
 
@@ -948,9 +922,7 @@
     }
 
 
-    // ==========================================
     // LOGOUT
-    // ==========================================
 
     async function signOut() {
 
@@ -994,9 +966,7 @@
     }
 
 
-    // ==========================================
     // CHECK LOGIN WHEN WEBSITE OPENS
-    // ==========================================
 
     async function checkUser() {
 
@@ -1040,9 +1010,7 @@
     }
 
 
-    // ==========================================
     // AUTH STATE LISTENER
-    // ==========================================
 
     supabaseClient.auth.onAuthStateChange(
       (event, session) => {
@@ -1065,9 +1033,7 @@
     );
 
 
-    // ==========================================
     // UPDATE SERVICE
-    // ==========================================
 
     function updateService() {
 
@@ -1117,9 +1083,7 @@
     }
 
 
-    // ==========================================
     // CALCULATE PRICE
-    // ==========================================
 
     function calculatePrice() {
 
@@ -1157,9 +1121,7 @@
     }
 
 
-    // ==========================================
-    // PLACE ORDER
-    // ==========================================
+    // PLACE / SUBMIT ORDER
 
     async function placeOrder() {
 
@@ -1246,11 +1208,6 @@
         quantity * settings.rate;
 
 
-      /*
-        Order ID is generated locally for now.
-        Database order saving can be connected later.
-      */
-
       const orderId =
         "GX" +
         Date.now().toString().slice(-8) +
@@ -1277,9 +1234,7 @@
     }
 
 
-    // ==========================================
     // START WEBSITE
-    // ==========================================
 
     checkUser();
 
