@@ -320,17 +320,25 @@ border:1px solid rgba(34,197,94,.22);
 color:#86efac;
 }
 
-/* CONTINUE PAYMENT WAIT TEXT */
 
-.payment-wait-text{
+/* =========================
+   PAYMENT SUBMIT WAIT TEXT
+========================= */
+
+.payment-submit-wait{
 display:none;
 text-align:center;
-margin-top:10px;
-margin-bottom:3px;
+margin-top:9px;
+margin-bottom:2px;
 color:#94a3b8;
 font-size:12px;
 line-height:1.5;
 }
+
+
+/* =========================
+   PAYMENT PAGE
+========================= */
 
 .payment-box{
 text-align:center;
@@ -878,7 +886,7 @@ id="price"
 </div>
 
 
-<!-- CONTINUE PAYMENT -->
+<!-- CONTINUE TO PAYMENT -->
 
 <button
 id="continuePaymentBtn"
@@ -886,13 +894,6 @@ onclick="startPayment()"
 >
 Continue to Payment
 </button>
-
-<div
-id="paymentWaitText"
-class="payment-wait-text"
->
-Please wait 10–15 seconds...
-</div>
 
 </div>
 
@@ -975,6 +976,16 @@ onclick="confirmPayment()"
 >
 Payment Complete
 </button>
+
+
+<!-- PAYMENT SUBMIT WAIT -->
+
+<div
+id="paymentSubmitWait"
+class="payment-submit-wait"
+>
+Please wait 10–15 seconds...
+</div>
 
 
 <button
@@ -1720,28 +1731,6 @@ total.toFixed(2)
 };
 
 
-/* BUTTON */
-
-const button =
-document.getElementById(
-"continuePaymentBtn"
-);
-
-const waitText =
-document.getElementById(
-"paymentWaitText"
-);
-
-
-button.disabled = true;
-
-button.textContent =
-"Submitting...";
-
-waitText.style.display =
-"block";
-
-
 /* PAYMENT AMOUNT */
 
 document.getElementById(
@@ -1760,11 +1749,10 @@ document.getElementById(
 
 
 /*
-   SHOW WAIT MESSAGE FOR
-   10 SECONDS BEFORE PAYMENT PAGE
+   IMPORTANT:
+   PAYMENT PAGE OPENS IMMEDIATELY.
+   NO 10-15 SECOND DELAY.
 */
-
-setTimeout(()=>{
 
 document.getElementById(
 "orderForm"
@@ -1778,17 +1766,6 @@ document.getElementById(
 "successPage"
 ).classList.add("hidden");
 
-
-button.disabled = false;
-
-button.textContent =
-"Continue to Payment";
-
-waitText.style.display =
-"none";
-
-},10000);
-
 }
 
 
@@ -1797,6 +1774,29 @@ waitText.style.display =
 ========================= */
 
 function backToOrder(){
+
+/* HIDE PAYMENT WAIT MESSAGE */
+
+document.getElementById(
+"paymentSubmitWait"
+).style.display =
+"none";
+
+
+/* RESET PAYMENT BUTTON */
+
+const button =
+document.getElementById(
+"confirmPaymentBtn"
+);
+
+button.disabled = false;
+
+button.textContent =
+"Payment Complete";
+
+
+/* PAGE SWITCH */
 
 document.getElementById(
 "paymentPage"
@@ -1878,11 +1878,24 @@ document.getElementById(
 "confirmPaymentBtn"
 );
 
+const waitText =
+document.getElementById(
+"paymentSubmitWait"
+);
+
+
+/* SHOW SUBMITTING */
 
 button.disabled = true;
 
 button.textContent =
 "Submitting...";
+
+
+/* SHOW WAIT MESSAGE UNDER BUTTON */
+
+waitText.style.display =
+"block";
 
 
 try{
@@ -1925,7 +1938,7 @@ Date.now() +
 extension;
 
 
-/* UPLOAD */
+/* UPLOAD SCREENSHOT */
 
 const {
 error:uploadError
@@ -2021,6 +2034,7 @@ document.getElementById(
 "successPage"
 ).classList.remove("hidden");
 
+
 }
 catch(error){
 
@@ -2036,6 +2050,14 @@ error.message ||
 
 }
 finally{
+
+/* HIDE WAIT MESSAGE */
+
+waitText.style.display =
+"none";
+
+
+/* RESET BUTTON */
 
 button.disabled = false;
 
@@ -2056,29 +2078,27 @@ function newOrder(){
 currentOrder = null;
 
 
+/* RESET FORM */
+
 document.getElementById(
 "service"
 ).value =
 "";
-
 
 document.getElementById(
 "quantity"
 ).value =
 "";
 
-
 document.getElementById(
 "link"
 ).value =
 "";
 
-
 document.getElementById(
 "price"
 ).textContent =
 "₹0.00";
-
 
 document.getElementById(
 "paymentScreenshot"
@@ -2086,15 +2106,34 @@ document.getElementById(
 "";
 
 
+/* RESET PAYMENT */
+
+document.getElementById(
+"paymentSubmitWait"
+).style.display =
+"none";
+
+
+const button =
+document.getElementById(
+"confirmPaymentBtn"
+);
+
+button.disabled = false;
+
+button.textContent =
+"Payment Complete";
+
+
+/* PAGE */
+
 document.getElementById(
 "successPage"
 ).classList.add("hidden");
 
-
 document.getElementById(
 "paymentPage"
 ).classList.add("hidden");
-
 
 document.getElementById(
 "orderForm"
