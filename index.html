@@ -791,6 +791,54 @@ Create Account
 
 <div id="orderPage" class="card hidden">
 
+   <!-- CUSTOMER SIDE MENU -->
+
+<button
+id="menuButton"
+class="menu-button"
+onclick="openCustomerMenu()"
+>
+☰
+</button>
+
+<div
+id="customerMenuOverlay"
+class="customer-menu-overlay hidden"
+onclick="closeCustomerMenu()"
+></div>
+
+<div
+id="customerMenu"
+class="customer-menu"
+>
+
+<div class="menu-header">
+<div class="menu-title">GROWX</div>
+
+<div
+class="menu-user-id"
+id="menuUserId"
+>
+User ID
+</div>
+</div>
+
+<button
+class="menu-item"
+onclick="showCustomerNewOrder()"
+>
+🆕 <span>New Order</span>
+</button>
+
+<button
+class="menu-item"
+onclick="showMyOrders()"
+>
+📦 <span>My Orders</span>
+</button>
+
+</div>
+
 <div class="user-box">
 
 <div id="avatar" class="avatar">
