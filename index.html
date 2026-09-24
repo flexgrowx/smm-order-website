@@ -1346,8 +1346,10 @@ id="paymentAmount"
 
 <div class="qr-frame">
 
+<!-- QR SOURCE INTENTIONALLY NOT LOADED ON INITIAL PAGE LOAD -->
+
 <img
-src="IMG-20260923-WA0004~2.jpg"
+id="paymentQR"
 alt="GROWX Payment QR"
 class="payment-qr"
 >
@@ -2605,6 +2607,21 @@ document.getElementById(
 "";
 
 
+/* =========================
+LOAD QR ONLY WHEN PAYMENT PAGE OPENS
+========================= */
+
+const paymentQR =
+document.getElementById("paymentQR");
+
+if(paymentQR){
+
+paymentQR.src =
+"IMG-20260923-WA0004~2.jpg";
+
+}
+
+
 document.getElementById(
 "myOrdersPage"
 ).classList.add("hidden");
@@ -2645,6 +2662,18 @@ button.disabled = false;
 
 button.textContent =
 "Payment Complete";
+
+
+/* REMOVE QR SOURCE AGAIN */
+
+const paymentQR =
+document.getElementById("paymentQR");
+
+if(paymentQR){
+
+paymentQR.removeAttribute("src");
+
+}
 
 
 document.getElementById(
@@ -2908,6 +2937,18 @@ document.getElementById(
 ).classList.remove("hidden");
 
 
+/* REMOVE QR SOURCE AFTER SUCCESS */
+
+const paymentQR =
+document.getElementById("paymentQR");
+
+if(paymentQR){
+
+paymentQR.removeAttribute("src");
+
+}
+
+
 currentOrder = null;
 
 
@@ -2975,6 +3016,18 @@ document.getElementById(
 "paymentScreenshot"
 ).value =
 "";
+
+
+/* REMOVE QR SOURCE */
+
+const paymentQR =
+document.getElementById("paymentQR");
+
+if(paymentQR){
+
+paymentQR.removeAttribute("src");
+
+}
 
 
 document.getElementById(
