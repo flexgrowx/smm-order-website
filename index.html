@@ -1204,8 +1204,8 @@ Choose Service
 
 <option
 value="Instagram Views"
-data-min="501"
-data-max="2000000"
+data-min="500"
+data-max="2198765"
 >
 Instagram Views
 </option>
@@ -1213,7 +1213,7 @@ Instagram Views
 <option
 value="Instagram Likes"
 data-min="50"
-data-max="500000"
+data-max="519835"
 >
 Instagram Likes
 </option>
@@ -1222,7 +1222,7 @@ Instagram Likes
 value="Instagram Followers"
 data-rate="400"
 data-min="100"
-data-max="20000"
+data-max="21757"
 >
 Instagram Followers — ₹400 / 1000
 </option>
@@ -1231,7 +1231,7 @@ Instagram Followers — ₹400 / 1000
 value="Instagram Shares"
 data-rate="5"
 data-min="200"
-data-max="100000"
+data-max="134759"
 >
 Instagram Shares — ₹5 / 1000
 </option>
@@ -1240,7 +1240,7 @@ Instagram Shares — ₹5 / 1000
 value="Instagram Repost"
 data-rate="10"
 data-min="100"
-data-max="50000"
+data-max="59735"
 >
 Instagram Repost — ₹10 / 1000
 </option>
@@ -1249,7 +1249,7 @@ Instagram Repost — ₹10 / 1000
 value="Instagram Save"
 data-rate="10"
 data-min="100"
-data-max="50000"
+data-max="59345"
 >
 Instagram Save — ₹10 / 1000
 </option>
@@ -1402,7 +1402,7 @@ Payment Complete
 id="paymentSubmitWait"
 class="payment-submit-wait"
 >
-Please wait 10–15 seconds...
+Please wait 3–15 seconds...
 </div>
 
 <button
@@ -2318,26 +2318,26 @@ calculatePrice
 
 function getViewsRate(quantity){
 
-if(quantity>=501 && quantity<=9999)
+if(quantity>=501 && quantity<=4999)
 return 2;
 
-if(quantity>=10000 && quantity<=19999)
-return 1.8;
-
-if(quantity>=20000 && quantity<=29999)
+if(quantity>=5000 && quantity<=9999)
 return 1.5;
 
-if(quantity>=30000 && quantity<=49999)
+if(quantity>=10000 && quantity<=29999)
 return 1;
 
-if(quantity>=50000 && quantity<=79999)
+if(quantity>=30000 && quantity<=49999)
 return .8;
 
-if(quantity>=80000 && quantity<=99999)
+if(quantity>=50000 && quantity<=79999)
 return .7;
 
-if(quantity>=100000)
+if(quantity>=80000 && quantity<=99999)
 return .6;
+
+if(quantity>=100000)
+return .5;
 
 return 0;
 
@@ -2350,17 +2350,17 @@ return 0;
 
 function getLikesRate(quantity){
 
-if(quantity>=50 && quantity<=999)
+if(quantity>=50 && quantity<=499)
 return 20;
 
-if(quantity>=1000 && quantity<=2999)
-return 18;
-
-if(quantity>=3000 && quantity<=4999)
+if(quantity>=500 && quantity<=2999)
 return 15;
 
-if(quantity>=5000 && quantity<=9999)
+if(quantity>=3000 && quantity<=4999)
 return 12;
+
+if(quantity>=5000 && quantity<=9999)
+return 11;
 
 if(quantity>=10000)
 return 10;
