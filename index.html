@@ -1179,7 +1179,7 @@ Choose Service
 <option
 value="Instagram Views"
 data-min="501"
-data-max="2000000"
+data-max="2198765"
 >
 Instagram Views
 </option>
@@ -1288,7 +1288,7 @@ My Orders
 </div>
 
 <div class="avg-time">
-AVG Time: 12–24 Hours
+Avg Time: 12–24 Hours
 </div>
 
 <div id="myOrdersContainer">
@@ -1376,7 +1376,7 @@ Payment Complete
 id="paymentSubmitWait"
 class="payment-submit-wait"
 >
-Please wait 10–15 seconds...
+Please wait 3–15 seconds...
 </div>
 
 <button
@@ -2290,10 +2290,10 @@ if(quantity>=501 && quantity<=9999)
 return 2;
 
 if(quantity>=10000 && quantity<=19999)
-return 1.8;
+return 1.3;
 
 if(quantity>=20000 && quantity<=29999)
-return 1.5;
+return 1.1;
 
 if(quantity>=30000 && quantity<=49999)
 return 1;
@@ -2322,13 +2322,13 @@ if(quantity>=50 && quantity<=999)
 return 20;
 
 if(quantity>=1000 && quantity<=2999)
-return 18;
-
-if(quantity>=3000 && quantity<=4999)
 return 15;
 
-if(quantity>=5000 && quantity<=9999)
+if(quantity>=3000 && quantity<=4999)
 return 12;
+
+if(quantity>=5000 && quantity<=9999)
+return 11;
 
 if(quantity>=10000)
 return 10;
