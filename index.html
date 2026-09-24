@@ -1288,7 +1288,7 @@ My Orders
 </div>
 
 <div class="avg-time">
-Avg Time: 12–24 Hours
+avg time: 24 hours
 </div>
 
 <div id="myOrdersContainer">
@@ -2286,17 +2286,17 @@ calculatePrice
 
 function getViewsRate(quantity){
 
-if(quantity>=501 && quantity<=9999)
+if(quantity>=501 && quantity<=4999)
 return 2;
 
-if(quantity>=10000 && quantity<=19999)
-return 1.3;
+if(quantity>=5000 && quantity<=9999)
+return 1.5;
 
-if(quantity>=20000 && quantity<=29999)
-return 1.1;
+if(quantity>=10000 && quantity<=29999)
+return 1;
 
 if(quantity>=30000 && quantity<=49999)
-return 1;
+return .9;
 
 if(quantity>=50000 && quantity<=79999)
 return .8;
