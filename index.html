@@ -6,7 +6,6 @@
 <title>GROWX ORDER</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -374,8 +373,8 @@ font-weight:900;
 
 .qr-frame{
 width:252px;
+height:252px;
 max-width:100%;
-min-height:252px;
 padding:11px;
 margin:0 auto 16px;
 display:flex;
@@ -394,10 +393,10 @@ align-items:center;
 justify-content:center;
 }
 
-#paymentQR img,
-#paymentQR canvas{
-max-width:230px;
-max-height:230px;
+#paymentQR img{
+width:230px;
+height:230px;
+object-fit:contain;
 display:block;
 }
 
@@ -901,7 +900,7 @@ font-size:22px;
 
 .qr-frame{
 width:235px;
-min-height:235px;
+height:235px;
 }
 
 #paymentQR{
@@ -909,10 +908,9 @@ width:210px;
 height:210px;
 }
 
-#paymentQR img,
-#paymentQR canvas{
-max-width:210px;
-max-height:210px;
+#paymentQR img{
+width:210px;
+height:210px;
 }
 
 .customer-menu{
@@ -953,6 +951,8 @@ padding:8px 9px;
 
 <div class="container">
 
+<!-- ================= SIGNUP ================= -->
+
 <div id="signupPage" class="card hidden">
 
 <div class="brand">
@@ -985,6 +985,9 @@ Sign In
 
 </div>
 
+
+<!-- ================= SIGNIN ================= -->
+
 <div id="signinPage" class="card hidden">
 
 <div class="brand">
@@ -1014,47 +1017,88 @@ Create Account
 
 </div>
 
+
+<!-- ================= CUSTOMER PAGE ================= -->
+
 <div id="orderPage" class="card hidden">
 
-<button id="menuButton" class="customer-menu-button"
-onclick="openCustomerMenu()" aria-label="Open menu">☰</button>
+<button id="menuButton"
+class="customer-menu-button"
+onclick="openCustomerMenu()"
+aria-label="Open menu">☰</button>
 
-<div id="customerMenuOverlay" class="customer-menu-overlay hidden"
+
+<div id="customerMenuOverlay"
+class="customer-menu-overlay hidden"
 onclick="closeCustomerMenu()"></div>
+
 
 <div id="customerMenu" class="customer-menu">
 
-<button class="menu-close" onclick="closeCustomerMenu()" aria-label="Close menu">×</button>
+<button class="menu-close"
+onclick="closeCustomerMenu()"
+aria-label="Close menu">×</button>
 
 <div class="menu-user-section">
-<div class="menu-user-label">Customer User ID</div>
-<div id="menuUserId" class="menu-user-id">-</div>
+
+<div class="menu-user-label">
+Customer User ID
 </div>
 
-<button class="menu-item" onclick="showCustomerNewOrder()">
+<div id="menuUserId"
+class="menu-user-id">-</div>
+
+</div>
+
+
+<button class="menu-item"
+onclick="showCustomerNewOrder()">
+
 <span class="menu-item-icon">＋</span>
 <span>New Order</span>
+
 </button>
 
-<button class="menu-item new-order" onclick="showMyOrders()">
+
+<button class="menu-item new-order"
+onclick="showMyOrders()">
+
 <span class="menu-item-icon">▣</span>
 <span>My Orders</span>
+
 </button>
 
 </div>
+
+
+<!-- CUSTOMER USER BOX -->
 
 <div class="user-box">
 
 <div id="avatar" class="avatar">G</div>
 
 <div class="user-info">
-<div class="user-name" id="customerName">Customer</div>
-<div class="user-label">GROWX CUSTOMER</div>
+
+<div class="user-name"
+id="customerName">
+Customer
 </div>
 
-<button class="logout" onclick="logout()">Logout</button>
+<div class="user-label">
+GROWX CUSTOMER
+</div>
 
 </div>
+
+<button class="logout"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+
+<!-- ================= ORDER FORM ================= -->
 
 <div id="orderForm">
 
@@ -1064,115 +1108,189 @@ ORDER SERVICE
 
 <h2>Place Your Order</h2>
 
-<div id="orderMessage" class="message"></div>
+<div id="orderMessage"
+class="message"></div>
+
 
 <label>Choose Service</label>
 
 <select id="service">
 
-<option value="">Choose Service</option>
+<option value="">
+Choose Service
+</option>
 
-<option value="Instagram Views" data-min="501" data-max="2198765">
+<option value="Instagram Views"
+data-min="501"
+data-max="2198765">
 Instagram Views
 </option>
 
-<option value="Instagram Likes" data-min="50" data-max="500000">
+<option value="Instagram Likes"
+data-min="50"
+data-max="500000">
 Instagram Likes
 </option>
 
-<option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
+<option value="Instagram Followers"
+data-rate="400"
+data-min="100"
+data-max="20000">
 Instagram Followers — ₹400 / 1000
 </option>
 
-<option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
+<option value="Instagram Shares"
+data-rate="5"
+data-min="200"
+data-max="100000">
 Instagram Shares — ₹5 / 1000
 </option>
 
-<option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
+<option value="Instagram Repost"
+data-rate="10"
+data-min="100"
+data-max="50000">
 Instagram Repost — ₹10 / 1000
 </option>
 
-<option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
+<option value="Instagram Save"
+data-rate="10"
+data-min="100"
+data-max="50000">
 Instagram Save — ₹10 / 1000
 </option>
 
 </select>
 
+
 <label>Quantity</label>
 
-<input type="number" id="quantity"
+<input type="number"
+id="quantity"
 placeholder="Enter quantity"
 oninput="calculatePrice()">
 
+
 <label>Post / Reel Link</label>
 
-<input type="url" id="link"
+<input type="url"
+id="link"
 placeholder="Paste your post or reel link">
+
 
 <div class="price-box">
 
-<div class="price-label">Total Order Cost</div>
+<div class="price-label">
+Total Order Cost
+</div>
 
-<div class="price" id="price">₹0.00</div>
+<div class="price"
+id="price">
+₹0.00
+</div>
 
 </div>
 
-<button id="continuePaymentBtn" onclick="startPayment()">
+
+<button id="continuePaymentBtn"
+onclick="startPayment()">
 Continue to Payment
 </button>
 
 </div>
 
-<div id="myOrdersPage" class="my-orders-page hidden">
 
-<div class="my-orders-heading">My Orders</div>
+<!-- ================= MY ORDERS ================= -->
 
-<div class="avg-time">avg time: 24 hours</div>
+<div id="myOrdersPage"
+class="my-orders-page hidden">
+
+<div class="my-orders-heading">
+My Orders
+</div>
+
+<div class="avg-time">
+avg time: 24 hours
+</div>
 
 <div id="myOrdersContainer">
-<div class="my-orders-loading">Loading orders...</div>
+
+<div class="my-orders-loading">
+Loading orders...
 </div>
 
 </div>
+
+</div>
+
+
+<!-- ================= PAYMENT PAGE ================= -->
 
 <div id="paymentPage" class="hidden">
 
 <div class="payment-box">
 
-<div class="payment-title">Scan & Pay</div>
+<div class="payment-title">
+Scan & Pay
+</div>
 
 <div class="payment-subtitle">
 Complete your payment to continue
 </div>
 
+
 <div class="payment-amount-box">
 
-<span class="payment-amount-label">PAY</span>
+<span class="payment-amount-label">
+PAY
+</span>
 
-<span class="payment-amount" id="paymentAmount">
+<span class="payment-amount"
+id="paymentAmount">
 ₹0.00
 </span>
 
 </div>
 
+
+<!-- STATIC / NORMAL QR -->
+
 <div class="qr-frame">
-<div id="paymentQR"></div>
+
+<div id="paymentQR">
+
+<img
+src="YOUR_STATIC_QR_IMAGE_URL"
+alt="GROWX UPI QR">
+
 </div>
+
+</div>
+
 
 <div class="payment-note">
 Scan this QR code using your UPI app.
-The order amount is automatically added to the payment.
+Enter the payment amount shown above manually.
 </div>
 
-<a id="upiPayButton"
+
+<!-- STATIC UPI BUTTON -->
+
+<a
+id="upiPayButton"
 class="upi-pay-button"
-href="#">
-▣ Open UPI App & Pay
+href="upi://pay?pa=taydeveer94%40oksbi&pn=GROWX&cu=INR">
+
+▣ Open UPI App
 </a>
+
 
 <div class="upi-id-text">
 UPI ID: taydeveer94@oksbi
 </div>
+
+
+<!-- PAYMENT SCREENSHOT -->
 
 <div class="upload-box">
 
@@ -1180,36 +1298,55 @@ UPI ID: taydeveer94@oksbi
 Payment Screenshot
 </label>
 
-<input type="file"
+<input
+type="file"
 id="paymentScreenshot"
 class="file-input"
 accept="image/*">
 
 </div>
 
-<button class="confirm-btn"
+
+<button
+class="confirm-btn"
 id="confirmPaymentBtn"
 onclick="confirmPayment()">
+
 Payment Complete
+
 </button>
 
-<div id="paymentSubmitWait" class="payment-submit-wait">
+
+<div id="paymentSubmitWait"
+class="payment-submit-wait">
+
 Please wait 3–15 seconds...
+
 </div>
 
-<button class="back-btn" onclick="backToOrder()">
+
+<button
+class="back-btn"
+onclick="backToOrder()">
+
 Back to Order
+
 </button>
 
 </div>
 
 </div>
+
+
+<!-- ================= SUCCESS ================= -->
 
 <div id="successPage" class="hidden">
 
 <div class="success-box">
 
-<div class="success-icon">✓</div>
+<div class="success-icon">
+✓
+</div>
 
 <div class="success-title">
 Order Successfully Submitted
@@ -1226,8 +1363,12 @@ Order ID:
 <span id="successOrderId">-</span>
 </div>
 
-<button style="margin-top:20px" onclick="newOrder()">
+<button
+style="margin-top:20px"
+onclick="newOrder()">
+
 Place New Order
+
 </button>
 
 </div>
@@ -1236,13 +1377,20 @@ Place New Order
 
 </div>
 
+
+<!-- ================= ADMIN PAGE ================= -->
+
 <div id="adminPage" class="card hidden">
 
 <div class="brand">
 
-<div class="brand-icon">A</div>
+<div class="brand-icon">
+A
+</div>
 
-<div class="brand-name">GROWX ADMIN</div>
+<div class="brand-name">
+GROWX ADMIN
+</div>
 
 <div class="brand-subtitle">
 ORDER MANAGEMENT PANEL
@@ -1250,39 +1398,61 @@ ORDER MANAGEMENT PANEL
 
 </div>
 
-<div id="adminMessage" class="message"></div>
+
+<div id="adminMessage"
+class="message">
+</div>
+
 
 <div class="admin-top">
 
 <div>
 
-<div class="admin-top-title">ADMIN ACCOUNT</div>
+<div class="admin-top-title">
+ADMIN ACCOUNT
+</div>
 
-<div id="adminEmail" class="admin-top-email">-</div>
+<div id="adminEmail"
+class="admin-top-email">
+-
+</div>
 
 </div>
 
-<button class="back-btn"
+
+<button
+class="back-btn"
 onclick="logoutAdmin()"
 style="margin-top:0;width:auto;padding:9px 13px">
+
 Logout Admin
+
 </button>
 
 </div>
 
-<h2>Orders</h2>
+
+<h2>
+Orders
+</h2>
+
 
 <div id="adminOrders">
 Loading orders...
 </div>
 
-<button class="back-btn"
+
+<button
+class="back-btn"
 onclick="loadAdminOrders()"
 style="margin-top:5px">
+
 Refresh Orders
+
 </button>
 
 </div>
+
 
 <div class="footer">
 GROWX • PREMIUM ORDER SYSTEM
@@ -1290,7 +1460,12 @@ GROWX • PREMIUM ORDER SYSTEM
 
 </div>
 
+
 <script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://rxfffsibplxmhgxmbkvi.supabase.co";
@@ -1305,9 +1480,9 @@ SUPABASE_KEY
 );
 
 
-/* =========================
+/* =====================================================
    GROWX UPI SETTINGS
-========================= */
+===================================================== */
 
 const GROWX_UPI_ID =
 "taydeveer94@oksbi";
@@ -1319,9 +1494,9 @@ const GROWX_UPI_NAME =
 let currentOrder = null;
 
 
-/* =========================
+/* =====================================================
    ADMIN CHECK
-========================= */
+===================================================== */
 
 async function checkAdmin(user){
 
@@ -1355,16 +1530,23 @@ return !!admin;
 }
 
 
-/* =========================
+/* =====================================================
    PAGE FUNCTIONS
-========================= */
+===================================================== */
 
 function showSignup(){
 
-document.getElementById("signupPage").classList.remove("hidden");
-document.getElementById("signinPage").classList.add("hidden");
-document.getElementById("orderPage").classList.add("hidden");
-document.getElementById("adminPage").classList.add("hidden");
+document.getElementById("signupPage")
+.classList.remove("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
+
+document.getElementById("adminPage")
+.classList.add("hidden");
 
 }
 
@@ -1373,27 +1555,41 @@ function showSignin(){
 
 closeCustomerMenu();
 
-document.getElementById("signinPage").classList.remove("hidden");
-document.getElementById("signupPage").classList.add("hidden");
-document.getElementById("orderPage").classList.add("hidden");
-document.getElementById("adminPage").classList.add("hidden");
+document.getElementById("signinPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
+
+document.getElementById("adminPage")
+.classList.add("hidden");
 
 }
 
 
 function showOrder(){
 
-document.getElementById("orderPage").classList.remove("hidden");
-document.getElementById("signupPage").classList.add("hidden");
-document.getElementById("signinPage").classList.add("hidden");
-document.getElementById("adminPage").classList.add("hidden");
+document.getElementById("orderPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("adminPage")
+.classList.add("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    CUSTOMER MENU
-========================= */
+===================================================== */
 
 function openCustomerMenu(){
 
@@ -1408,6 +1604,7 @@ return;
 }
 
 overlay.classList.remove("hidden");
+
 menu.classList.add("open");
 
 }
@@ -1426,14 +1623,15 @@ return;
 }
 
 menu.classList.remove("open");
+
 overlay.classList.add("hidden");
 
 }
 
 
-/* =========================
-   SHOW CUSTOMER NEW ORDER
-========================= */
+/* =====================================================
+   NEW ORDER
+===================================================== */
 
 function showCustomerNewOrder(){
 
@@ -1444,27 +1642,34 @@ newOrder();
 }
 
 
-/* =========================
-   SHOW MY ORDERS
-========================= */
+/* =====================================================
+   MY ORDERS
+===================================================== */
 
 async function showMyOrders(){
 
 closeCustomerMenu();
 
-document.getElementById("orderForm").classList.add("hidden");
-document.getElementById("paymentPage").classList.add("hidden");
-document.getElementById("successPage").classList.add("hidden");
-document.getElementById("myOrdersPage").classList.remove("hidden");
+document.getElementById("orderForm")
+.classList.add("hidden");
+
+document.getElementById("paymentPage")
+.classList.add("hidden");
+
+document.getElementById("successPage")
+.classList.add("hidden");
+
+document.getElementById("myOrdersPage")
+.classList.remove("hidden");
 
 await loadMyOrders();
 
 }
 
 
-/* =========================
+/* =====================================================
    LOAD MY ORDERS
-========================= */
+===================================================== */
 
 async function loadMyOrders(){
 
@@ -1481,11 +1686,13 @@ Loading orders...
 </div>
 `;
 
+
 const {
 data:{user},
 error:userError
 } =
 await supabaseClient.auth.getUser();
+
 
 if(userError || !user){
 
@@ -1498,6 +1705,7 @@ Your session has expired. Please sign in again.
 return;
 
 }
+
 
 const {
 data:orders,
@@ -1515,6 +1723,7 @@ status
 `)
 .eq("user_id",user.id)
 .order("order_id",{ascending:false});
+
 
 if(error){
 
@@ -1534,6 +1743,7 @@ return;
 
 }
 
+
 if(!orders || orders.length===0){
 
 container.innerHTML = `
@@ -1548,7 +1758,9 @@ return;
 
 }
 
+
 container.innerHTML = "";
+
 
 orders.forEach(order=>{
 
@@ -1611,9 +1823,9 @@ container.appendChild(orderCard);
 }
 
 
-/* =========================
+/* =====================================================
    MESSAGE
-========================= */
+===================================================== */
 
 function showMessage(
 elementId,
@@ -1636,20 +1848,24 @@ element.style.display =
 }
 
 
-/* =========================
+/* =====================================================
    SIGN UP
-========================= */
+===================================================== */
 
 async function signUp(){
 
 const name =
-document.getElementById("signupName").value.trim();
+document.getElementById("signupName")
+.value.trim();
 
 const email =
-document.getElementById("signupEmail").value.trim();
+document.getElementById("signupEmail")
+.value.trim();
 
 const password =
-document.getElementById("signupPassword").value;
+document.getElementById("signupPassword")
+.value;
+
 
 if(!name || !email || !password){
 
@@ -1663,10 +1879,12 @@ return;
 
 }
 
+
 const {data,error} =
 await supabaseClient.auth.signUp({
 
 email:email,
+
 password:password,
 
 options:{
@@ -1676,6 +1894,7 @@ name:name
 }
 
 });
+
 
 if(error){
 
@@ -1689,6 +1908,7 @@ return;
 
 }
 
+
 showMessage(
 "signupMessage",
 "Account created successfully. Please sign in.",
@@ -1698,17 +1918,20 @@ showMessage(
 }
 
 
-/* =========================
+/* =====================================================
    SIGN IN
-========================= */
+===================================================== */
 
 async function signIn(){
 
 const email =
-document.getElementById("signinEmail").value.trim();
+document.getElementById("signinEmail")
+.value.trim();
 
 const password =
-document.getElementById("signinPassword").value;
+document.getElementById("signinPassword")
+.value;
+
 
 if(!email || !password){
 
@@ -1722,14 +1945,19 @@ return;
 
 }
 
+
 const {
 data,
 error
 } =
 await supabaseClient.auth.signInWithPassword({
+
 email:email,
+
 password:password
+
 });
+
 
 if(error){
 
@@ -1743,8 +1971,10 @@ return;
 
 }
 
+
 const user =
 data?.user;
+
 
 if(!user){
 
@@ -1758,12 +1988,15 @@ return;
 
 }
 
+
 const isAdmin =
 await checkAdmin(user);
 
+
 if(isAdmin){
 
-document.getElementById("adminEmail").textContent =
+document.getElementById("adminEmail")
+.textContent =
 user.email || "-";
 
 showAdmin();
@@ -1774,14 +2007,15 @@ return;
 
 }
 
+
 loadCustomer();
 
 }
 
 
-/* =========================
+/* =====================================================
    CUSTOMER
-========================= */
+===================================================== */
 
 async function loadCustomer(){
 
@@ -1789,6 +2023,7 @@ const {
 data:{user}
 } =
 await supabaseClient.auth.getUser();
+
 
 if(!user){
 
@@ -1798,49 +2033,72 @@ return;
 
 }
 
+
 const name =
 user.user_metadata?.name ||
 user.email?.split("@")[0] ||
 "Customer";
 
-document.getElementById("customerName").textContent =
+
+document.getElementById("customerName")
+.textContent =
 name;
 
-document.getElementById("avatar").textContent =
+
+document.getElementById("avatar")
+.textContent =
 name.charAt(0).toUpperCase();
 
-document.getElementById("menuUserId").textContent =
+
+document.getElementById("menuUserId")
+.textContent =
 user.id;
 
-document.getElementById("myOrdersPage").classList.add("hidden");
-document.getElementById("paymentPage").classList.add("hidden");
-document.getElementById("successPage").classList.add("hidden");
-document.getElementById("orderForm").classList.remove("hidden");
+
+document.getElementById("myOrdersPage")
+.classList.add("hidden");
+
+document.getElementById("paymentPage")
+.classList.add("hidden");
+
+document.getElementById("successPage")
+.classList.add("hidden");
+
+document.getElementById("orderForm")
+.classList.remove("hidden");
+
 
 showOrder();
 
 }
 
 
-/* =========================
+/* =====================================================
    ADMIN PAGE
-========================= */
+===================================================== */
 
 function showAdmin(){
 
 closeCustomerMenu();
 
-document.getElementById("adminPage").classList.remove("hidden");
-document.getElementById("signupPage").classList.add("hidden");
-document.getElementById("signinPage").classList.add("hidden");
-document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("adminPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
 async function logout(){
 
@@ -1862,18 +2120,21 @@ showSignin();
 }
 
 
-/* =========================
+/* =====================================================
    SERVICE CHANGE
-========================= */
+===================================================== */
 
 document
 .getElementById("service")
-.addEventListener("change",calculatePrice);
+.addEventListener(
+"change",
+calculatePrice
+);
 
 
-/* =========================
+/* =====================================================
    VIEWS RATE
-========================= */
+===================================================== */
 
 function getViewsRate(quantity){
 
@@ -1903,9 +2164,9 @@ return 0;
 }
 
 
-/* =========================
+/* =====================================================
    LIKES RATE
-========================= */
+===================================================== */
 
 function getLikesRate(quantity){
 
@@ -1929,9 +2190,9 @@ return 0;
 }
 
 
-/* =========================
+/* =====================================================
    CURRENT RATE
-========================= */
+===================================================== */
 
 function getCurrentRate(service,quantity){
 
@@ -1958,9 +2219,9 @@ return 0;
 }
 
 
-/* =========================
+/* =====================================================
    CALCULATE PRICE
-========================= */
+===================================================== */
 
 function calculatePrice(){
 
@@ -1971,7 +2232,10 @@ const selected =
 service.options[service.selectedIndex];
 
 const quantity =
-Number(document.getElementById("quantity").value);
+Number(
+document.getElementById("quantity").value
+);
+
 
 if(
 !selected ||
@@ -1979,198 +2243,48 @@ if(
 !quantity
 ){
 
-document.getElementById("price").textContent =
+document.getElementById("price")
+.textContent =
 "₹0.00";
 
 return;
 
 }
 
+
 const rate =
-getCurrentRate(selected.value,quantity);
+getCurrentRate(
+selected.value,
+quantity
+);
+
 
 if(rate<=0){
 
-document.getElementById("price").textContent =
+document.getElementById("price")
+.textContent =
 "₹0.00";
 
 return;
 
 }
+
 
 const total =
 (quantity/1000)*rate;
 
-document.getElementById("price").textContent =
+
+document.getElementById("price")
+.textContent =
 "₹"+total.toFixed(2);
 
 }
 
 
 /* =====================================================
-   DYNAMIC UPI PAYMENT URL
-===================================================== */
-
-function createUPIPaymentURL(amount){
-
-const numericAmount =
-Number(amount);
-
-if(
-!Number.isFinite(numericAmount) ||
-numericAmount<=0
-){
-
-return "";
-
-}
-
-const safeAmount =
-numericAmount.toFixed(2);
-
-return (
-"upi://pay" +
-"?pa=" + encodeURIComponent(GROWX_UPI_ID) +
-"&pn=" + encodeURIComponent(GROWX_UPI_NAME) +
-"&am=" + encodeURIComponent(safeAmount) +
-"&cu=INR"
-);
-
-}
-
-
-/* =====================================================
-   GENERATE DYNAMIC UPI QR
-===================================================== */
-
-function generatePaymentQR(){
-
-const qrContainer =
-document.getElementById("paymentQR");
-
-const upiButton =
-document.getElementById("upiPayButton");
-
-if(!qrContainer || !currentOrder){
-return;
-}
-
-const amount =
-Number(currentOrder.price);
-
-if(
-!Number.isFinite(amount) ||
-amount<=0
-){
-
-qrContainer.innerHTML = `
-<span style="
-color:#dc2626;
-font-size:12px;
-font-weight:700;
-text-align:center;
-">
-Invalid payment amount
-</span>
-`;
-
-if(upiButton){
-upiButton.href="#";
-}
-
-return;
-
-}
-
-const upiURL =
-createUPIPaymentURL(amount);
-
-if(!upiURL){
-
-qrContainer.innerHTML = `
-<span style="
-color:#dc2626;
-font-size:12px;
-font-weight:700;
-text-align:center;
-">
-Could not create UPI payment QR
-</span>
-`;
-
-if(upiButton){
-upiButton.href="#";
-}
-
-return;
-
-}
-
-
-/* CLEAR PREVIOUS QR */
-
-qrContainer.innerHTML = "";
-
-
-/* GENERATE NEW QR */
-
-try{
-
-new QRCode(
-qrContainer,
-{
-text:upiURL,
-width:230,
-height:230,
-colorDark:"#000000",
-colorLight:"#ffffff",
-correctLevel:QRCode.CorrectLevel.M
-}
-);
-
-}
-catch(error){
-
-console.error(
-"QR generation error:",
-error
-);
-
-qrContainer.innerHTML = `
-<span style="
-color:#dc2626;
-font-size:12px;
-font-weight:700;
-text-align:center;
-padding:10px;
-">
-QR generation failed
-</span>
-`;
-
-}
-
-
-/* DYNAMIC UPI BUTTON */
-
-if(upiButton){
-
-upiButton.href =
-upiURL;
-
-upiButton.setAttribute(
-"data-amount",
-amount.toFixed(2)
-);
-
-}
-
-}
-
-
-/* =========================
    START PAYMENT
-========================= */
+   STATIC QR
+===================================================== */
 
 function startPayment(){
 
@@ -2181,24 +2295,32 @@ const selected =
 service.options[service.selectedIndex];
 
 const quantity =
-Number(document.getElementById("quantity").value);
+Number(
+document.getElementById("quantity").value
+);
 
 const link =
-document.getElementById("link").value.trim();
+document.getElementById("link")
+.value.trim();
+
 
 if(!selected || !selected.value){
 
-alert("Please select a service.");
+alert(
+"Please select a service."
+);
 
 return;
 
 }
+
 
 const min =
 Number(selected.dataset.min);
 
 const max =
 Number(selected.dataset.max);
+
 
 if(
 !quantity ||
@@ -2218,8 +2340,13 @@ return;
 
 }
 
+
 const rate =
-getCurrentRate(selected.value,quantity);
+getCurrentRate(
+selected.value,
+quantity
+);
+
 
 if(rate<=0){
 
@@ -2231,6 +2358,7 @@ return;
 
 }
 
+
 if(!link){
 
 alert(
@@ -2241,18 +2369,22 @@ return;
 
 }
 
+
 const total =
 (quantity/1000)*rate;
 
 const finalAmount =
 Number(total.toFixed(2));
 
+
 if(
 !Number.isFinite(finalAmount) ||
 finalAmount<=0
 ){
 
-alert("Invalid payment amount.");
+alert(
+"Invalid payment amount."
+);
 
 return;
 
@@ -2276,56 +2408,77 @@ price:finalAmount
 
 /* SHOW AMOUNT */
 
-document.getElementById("paymentAmount").textContent =
+document.getElementById("paymentAmount")
+.textContent =
 "₹"+finalAmount.toFixed(2);
-
-
-/* GENERATE DYNAMIC QR */
-
-generatePaymentQR();
 
 
 /* RESET SCREENSHOT */
 
-document.getElementById("paymentScreenshot").value="";
+document.getElementById(
+"paymentScreenshot"
+).value="";
 
 
 /* SHOW PAYMENT PAGE */
 
-document.getElementById("myOrdersPage").classList.add("hidden");
-document.getElementById("orderForm").classList.add("hidden");
-document.getElementById("paymentPage").classList.remove("hidden");
-document.getElementById("successPage").classList.add("hidden");
+document.getElementById("myOrdersPage")
+.classList.add("hidden");
+
+document.getElementById("orderForm")
+.classList.add("hidden");
+
+document.getElementById("paymentPage")
+.classList.remove("hidden");
+
+document.getElementById("successPage")
+.classList.add("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    BACK TO ORDER
-========================= */
+===================================================== */
 
 function backToOrder(){
 
-document.getElementById("paymentSubmitWait").style.display =
+document.getElementById(
+"paymentSubmitWait"
+).style.display =
 "none";
 
+
 const button =
-document.getElementById("confirmPaymentBtn");
+document.getElementById(
+"confirmPaymentBtn"
+);
+
 
 button.disabled=false;
-button.textContent="Payment Complete";
 
-document.getElementById("paymentPage").classList.add("hidden");
-document.getElementById("successPage").classList.add("hidden");
-document.getElementById("myOrdersPage").classList.add("hidden");
-document.getElementById("orderForm").classList.remove("hidden");
+button.textContent =
+"Payment Complete";
+
+
+document.getElementById("paymentPage")
+.classList.add("hidden");
+
+document.getElementById("successPage")
+.classList.add("hidden");
+
+document.getElementById("myOrdersPage")
+.classList.add("hidden");
+
+document.getElementById("orderForm")
+.classList.remove("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    CONFIRM PAYMENT
-========================= */
+===================================================== */
 
 async function confirmPayment(){
 
@@ -2339,8 +2492,12 @@ return;
 
 }
 
+
 const file =
-document.getElementById("paymentScreenshot").files[0];
+document.getElementById(
+"paymentScreenshot"
+).files[0];
+
 
 if(!file){
 
@@ -2352,6 +2509,7 @@ return;
 
 }
 
+
 if(!file.type.startsWith("image/")){
 
 alert(
@@ -2361,6 +2519,7 @@ alert(
 return;
 
 }
+
 
 if(file.size>10*1024*1024){
 
@@ -2372,15 +2531,26 @@ return;
 
 }
 
+
 const button =
-document.getElementById("confirmPaymentBtn");
+document.getElementById(
+"confirmPaymentBtn"
+);
 
 const waitText =
-document.getElementById("paymentSubmitWait");
+document.getElementById(
+"paymentSubmitWait"
+);
+
 
 button.disabled=true;
-button.textContent="Submitting...";
-waitText.style.display="block";
+
+button.textContent =
+"Submitting...";
+
+waitText.style.display =
+"block";
+
 
 try{
 
@@ -2390,6 +2560,7 @@ error:userError
 } =
 await supabaseClient.auth.getUser();
 
+
 if(userError || !user){
 
 throw new Error(
@@ -2398,8 +2569,13 @@ throw new Error(
 
 }
 
+
 const extension =
-file.name.split(".").pop().toLowerCase();
+file.name
+.split(".")
+.pop()
+.toLowerCase();
+
 
 const filePath =
 user.id +
@@ -2407,6 +2583,7 @@ user.id +
 Date.now() +
 "-payment." +
 extension;
+
 
 const {
 error:uploadError
@@ -2421,6 +2598,7 @@ upsert:false,
 contentType:file.type
 }
 );
+
 
 if(uploadError){
 
@@ -2439,25 +2617,34 @@ await supabaseClient
 .from("Orders")
 .insert([{
 
-service:currentOrder.service,
+service:
+currentOrder.service,
 
-quantity:currentOrder.quantity,
+quantity:
+currentOrder.quantity,
 
-link:currentOrder.link,
+link:
+currentOrder.link,
 
-price:currentOrder.price,
+price:
+currentOrder.price,
 
-status:"Payment Submitted",
+status:
+"Payment Submitted",
 
-user_id:user.id,
+user_id:
+user.id,
 
-customer_email:user.email,
+customer_email:
+user.email,
 
-payment_screenshot_path:filePath
+payment_screenshot_path:
+filePath
 
 }])
 .select("order_id")
 .single();
+
 
 if(orderError){
 
@@ -2472,15 +2659,32 @@ throw orderError;
 
 /* SUCCESS */
 
-document.getElementById("successOrderId").textContent =
-orderData?.order_id || "Submitted";
+document.getElementById(
+"successOrderId"
+).textContent =
+orderData?.order_id ||
+"Submitted";
 
-document.getElementById("paymentPage").classList.add("hidden");
-document.getElementById("orderForm").classList.add("hidden");
-document.getElementById("myOrdersPage").classList.add("hidden");
-document.getElementById("successPage").classList.remove("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.remove("hidden");
 
 }
+
+
 catch(error){
 
 console.error(error);
@@ -2491,21 +2695,26 @@ alert(
 );
 
 }
+
+
 finally{
 
-waitText.style.display="none";
+waitText.style.display =
+"none";
 
 button.disabled=false;
-button.textContent="Payment Complete";
+
+button.textContent =
+"Payment Complete";
 
 }
 
 }
 
 
-/* =========================
+/* =====================================================
    NEW ORDER
-========================= */
+===================================================== */
 
 function newOrder(){
 
@@ -2513,57 +2722,70 @@ currentOrder=null;
 
 closeCustomerMenu();
 
-document.getElementById("service").value="";
-document.getElementById("quantity").value="";
-document.getElementById("link").value="";
-document.getElementById("price").textContent="₹0.00";
-document.getElementById("paymentScreenshot").value="";
+
+document.getElementById("service")
+.value="";
+
+document.getElementById("quantity")
+.value="";
+
+document.getElementById("link")
+.value="";
+
+document.getElementById("price")
+.textContent="₹0.00";
+
+document.getElementById(
+"paymentScreenshot"
+).value="";
 
 
-const qrContainer =
-document.getElementById("paymentQR");
+document.getElementById(
+"paymentSubmitWait"
+).style.display =
+"none";
 
-if(qrContainer){
-qrContainer.innerHTML="";
-}
-
-
-const upiButton =
-document.getElementById("upiPayButton");
-
-if(upiButton){
-
-upiButton.href="#";
-
-upiButton.removeAttribute("data-amount");
-
-}
-
-
-document.getElementById("paymentSubmitWait").style.display="none";
 
 const button =
-document.getElementById("confirmPaymentBtn");
+document.getElementById(
+"confirmPaymentBtn"
+);
 
 button.disabled=false;
-button.textContent="Payment Complete";
 
-document.getElementById("successPage").classList.add("hidden");
-document.getElementById("paymentPage").classList.add("hidden");
-document.getElementById("myOrdersPage").classList.add("hidden");
-document.getElementById("orderForm").classList.remove("hidden");
+button.textContent =
+"Payment Complete";
+
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    ADMIN ORDERS
-========================= */
+===================================================== */
 
 async function loadAdminOrders(){
 
 const ordersContainer =
-document.getElementById("adminOrders");
+document.getElementById(
+"adminOrders"
+);
 
 ordersContainer.innerHTML =
 "Loading orders...";
@@ -2574,6 +2796,7 @@ data:{user}
 } =
 await supabaseClient.auth.getUser();
 
+
 if(!user){
 
 showSignin();
@@ -2582,8 +2805,10 @@ return;
 
 }
 
+
 const isAdmin =
 await checkAdmin(user);
+
 
 if(!isAdmin){
 
@@ -2608,7 +2833,10 @@ user_id,
 customer_email,
 payment_screenshot_path
 `)
-.order("order_id",{ascending:false});
+.order(
+"order_id",
+{ascending:false}
+);
 
 
 if(result.error){
@@ -2616,6 +2844,7 @@ if(result.error){
 console.error(result.error);
 
 ordersContainer.innerHTML="";
+
 
 showMessage(
 "adminMessage",
@@ -2631,6 +2860,7 @@ return;
 
 const orders =
 result.data || [];
+
 
 if(orders.length===0){
 
@@ -2656,12 +2886,15 @@ document.createElement("div");
 orderBox.className =
 "admin-order";
 
+
 const email =
 order.customer_email ||
 "Email not available";
 
+
 const screenshot =
 order.payment_screenshot_path;
+
 
 let screenshotHTML="";
 
@@ -2674,6 +2907,7 @@ data:publicData
 supabaseClient.storage
 .from("payment-screenshots")
 .getPublicUrl(screenshot);
+
 
 if(publicData?.publicUrl){
 
@@ -2712,7 +2946,9 @@ String(order.user_id || "-")
 
 <div>
 <strong>Customer Email:</strong>
-${escapeHTML(String(email))}
+${escapeHTML(
+String(email)
+)}
 </div>
 
 <div>
@@ -2766,47 +3002,54 @@ String(order.order_id)
 
 <option
 value="Payment Submitted"
-${order.status==="Payment Submitted"?"selected":""}
+${order.status==="Payment Submitted"
+?"selected":""}
 >
 Payment Submitted
 </option>
 
 <option
 value="Payment Verified"
-${order.status==="Payment Verified"?"selected":""}
+${order.status==="Payment Verified"
+?"selected":""}
 >
 Payment Verified
 </option>
 
 <option
 value="Processing"
-${order.status==="Processing"?"selected":""}
+${order.status==="Processing"
+?"selected":""}
 >
 Processing
 </option>
 
 <option
 value="In Progress"
-${order.status==="In Progress"?"selected":""}
+${order.status==="In Progress"
+?"selected":""}
 >
 In Progress
 </option>
 
 <option
 value="Completed"
-${order.status==="Completed"?"selected":""}
+${order.status==="Completed"
+?"selected":""}
 >
 Completed
 </option>
 
 <option
 value="Cancelled"
-${order.status==="Cancelled"?"selected":""}
+${order.status==="Cancelled"
+?"selected":""}
 >
 Cancelled
 </option>
 
 </select>
+
 
 <button
 class="admin-action"
@@ -2821,16 +3064,18 @@ Update Status
 
 `;
 
-ordersContainer.appendChild(orderBox);
+ordersContainer.appendChild(
+orderBox
+);
 
 });
 
 }
 
 
-/* =========================
+/* =====================================================
    UPDATE ORDER STATUS
-========================= */
+===================================================== */
 
 async function updateOrderStatus(orderId){
 
@@ -2838,6 +3083,7 @@ const select =
 document.getElementById(
 "status-"+orderId
 );
+
 
 if(!select){
 
@@ -2849,6 +3095,7 @@ return;
 
 }
 
+
 const newStatus =
 select.value;
 
@@ -2857,6 +3104,7 @@ const {
 data:{user}
 } =
 await supabaseClient.auth.getUser();
+
 
 if(!user){
 
@@ -2870,8 +3118,10 @@ return;
 
 }
 
+
 const isAdmin =
 await checkAdmin(user);
+
 
 if(!isAdmin){
 
@@ -2910,18 +3160,20 @@ return;
 
 }
 
+
 alert(
 "Order status updated successfully."
 );
+
 
 loadAdminOrders();
 
 }
 
 
-/* =========================
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHTML(value){
 
@@ -2945,9 +3197,9 @@ return String(value)
 }
 
 
-/* =========================
+/* =====================================================
    PAGE LOAD
-========================= */
+===================================================== */
 
 (async function(){
 
@@ -2955,6 +3207,7 @@ const {
 data:{user}
 } =
 await supabaseClient.auth.getUser();
+
 
 if(!user){
 
@@ -2968,9 +3221,11 @@ return;
 const isAdmin =
 await checkAdmin(user);
 
+
 if(isAdmin){
 
-document.getElementById("adminEmail").textContent =
+document.getElementById("adminEmail")
+.textContent =
 user.email || "-";
 
 showAdmin();
