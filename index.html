@@ -503,7 +503,7 @@ color:#c4b5fd;
 
 
 /* =========================
-   CUSTOMER MENU
+CUSTOMER MENU
 ========================= */
 
 .customer-menu-button{
@@ -634,7 +634,7 @@ box-shadow:none;
 
 
 /* =========================
-   MY ORDERS
+MY ORDERS
 ========================= */
 
 .my-orders-page{
@@ -736,7 +736,9 @@ line-height:1.5;
 }
 
 
-/* ADMIN */
+/* =========================
+ADMIN
+========================= */
 
 .admin-top{
 display:flex;
@@ -762,8 +764,6 @@ color:#94a3b8;
 margin-top:3px;
 word-break:break-all;
 }
-
-/* ADMIN TOP ACTION BUTTONS */
 
 .admin-actions{
 display:flex;
@@ -1056,8 +1056,6 @@ Create Account
 
 <div id="orderPage" class="card hidden">
 
-<!-- HAMBURGER -->
-
 <button
 id="menuButton"
 class="customer-menu-button"
@@ -1068,16 +1066,12 @@ aria-label="Open menu"
 </button>
 
 
-<!-- CUSTOMER MENU OVERLAY -->
-
 <div
 id="customerMenuOverlay"
 class="customer-menu-overlay hidden"
 onclick="closeCustomerMenu()"
 ></div>
 
-
-<!-- CUSTOMER DRAWER -->
 
 <div
 id="customerMenu"
@@ -1142,8 +1136,6 @@ My Orders
 </div>
 
 
-<!-- CUSTOMER INFO -->
-
 <div class="user-box">
 
 <div id="avatar" class="avatar">
@@ -1174,8 +1166,6 @@ Logout
 
 </div>
 
-
-<!-- NEW ORDER -->
 
 <div id="orderForm">
 
@@ -1302,8 +1292,6 @@ Continue to Payment
 </div>
 
 
-<!-- MY ORDERS -->
-
 <div
 id="myOrdersPage"
 class="my-orders-page hidden"
@@ -1325,8 +1313,6 @@ Loading orders...
 
 </div>
 
-
-<!-- PAYMENT PAGE -->
 
 <div
 id="paymentPage"
@@ -1416,8 +1402,6 @@ Back to Order
 
 </div>
 
-
-<!-- SUCCESS PAGE -->
 
 <div
 id="successPage"
@@ -1516,8 +1500,6 @@ class="admin-top-email"
 </div>
 
 
-<!-- ADMIN BUTTONS MOVED ABOVE ORDERS -->
-
 <div class="admin-actions">
 
 <button
@@ -1557,6 +1539,10 @@ GROWX • PREMIUM ORDER SYSTEM
 
 <script>
 
+/* =========================
+SUPABASE
+========================= */
+
 const SUPABASE_URL =
 "https://rxfffsibplxmhgxmbkvi.supabase.co";
 
@@ -1571,14 +1557,14 @@ SUPABASE_KEY
 
 
 /* =========================
-   CURRENT ORDER
+CURRENT ORDER
 ========================= */
 
 let currentOrder = null;
 
 
 /* =========================
-   ADMIN CHECK
+ADMIN CHECK
 ========================= */
 
 async function checkAdmin(user){
@@ -1594,7 +1580,7 @@ error
 await supabaseClient
 .from("admins")
 .select("*")
-.eq("Email", user.email)
+.eq("Email",user.email)
 .maybeSingle();
 
 if(error){
@@ -1614,7 +1600,7 @@ return !!admin;
 
 
 /* =========================
-   PAGE FUNCTIONS
+PAGE FUNCTIONS
 ========================= */
 
 function showSignup(){
@@ -1671,7 +1657,7 @@ document.getElementById("adminPage")
 
 
 /* =========================
-   CUSTOMER MENU
+CUSTOMER MENU
 ========================= */
 
 function openCustomerMenu(){
@@ -1721,7 +1707,7 @@ overlay.classList.add("hidden");
 
 
 /* =========================
-   SHOW CUSTOMER NEW ORDER
+NEW ORDER
 ========================= */
 
 function showCustomerNewOrder(){
@@ -1734,7 +1720,7 @@ newOrder();
 
 
 /* =========================
-   SHOW MY ORDERS
+MY ORDERS
 ========================= */
 
 async function showMyOrders(){
@@ -1763,7 +1749,7 @@ await loadMyOrders();
 
 
 /* =========================
-   LOAD MY ORDERS
+LOAD MY ORDERS
 ========================= */
 
 async function loadMyOrders(){
@@ -1807,7 +1793,7 @@ return;
 }
 
 
-/* ONLY CURRENT CUSTOMER ORDERS */
+/* CURRENT USER ONLY */
 
 const {
 data:orders,
@@ -1982,7 +1968,7 @@ orderCard
 
 
 /* =========================
-   MESSAGE
+MESSAGE
 ========================= */
 
 function showMessage(
@@ -2007,7 +1993,7 @@ element.style.display =
 
 
 /* =========================
-   SIGN UP
+SIGN UP
 ========================= */
 
 async function signUp(){
@@ -2032,6 +2018,19 @@ if(!name || !email || !password){
 showMessage(
 "signupMessage",
 "Please fill all fields.",
+"error"
+);
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+showMessage(
+"signupMessage",
+"Password must be at least 6 characters.",
 "error"
 );
 
@@ -2075,11 +2074,15 @@ showMessage(
 "success"
 );
 
+document.getElementById(
+"signupPassword"
+).value = "";
+
 }
 
 
 /* =========================
-   SIGN IN
+SIGN IN
 ========================= */
 
 async function signIn(){
@@ -2151,7 +2154,7 @@ return;
 }
 
 
-/* CHECK ADMIN */
+/* ADMIN */
 
 const isAdmin =
 await checkAdmin(user);
@@ -2173,15 +2176,15 @@ return;
 }
 
 
-/* NORMAL CUSTOMER */
+/* CUSTOMER */
 
-loadCustomer();
+await loadCustomer();
 
 }
 
 
 /* =========================
-   CUSTOMER
+CUSTOMER
 ========================= */
 
 async function loadCustomer(){
@@ -2221,15 +2224,11 @@ name
 .toUpperCase();
 
 
-/* SET CUSTOMER USER ID */
-
 document.getElementById(
 "menuUserId"
 ).textContent =
 user.id;
 
-
-/* RESET TO NEW ORDER */
 
 document.getElementById(
 "myOrdersPage"
@@ -2254,7 +2253,7 @@ showOrder();
 
 
 /* =========================
-   ADMIN PAGE
+ADMIN PAGE
 ========================= */
 
 function showAdmin(){
@@ -2277,7 +2276,7 @@ document.getElementById("orderPage")
 
 
 /* =========================
-   LOGOUT
+LOGOUT
 ========================= */
 
 async function logout(){
@@ -2301,7 +2300,7 @@ showSignin();
 
 
 /* =========================
-   SERVICE CHANGE
+SERVICE
 ========================= */
 
 document
@@ -2313,7 +2312,7 @@ calculatePrice
 
 
 /* =========================
-   VIEWS RATE
+VIEWS RATE
 ========================= */
 
 function getViewsRate(quantity){
@@ -2345,7 +2344,7 @@ return 0;
 
 
 /* =========================
-   LIKES RATE
+LIKES RATE
 ========================= */
 
 function getLikesRate(quantity){
@@ -2371,7 +2370,7 @@ return 0;
 
 
 /* =========================
-   CURRENT RATE
+CURRENT RATE
 ========================= */
 
 function getCurrentRate(
@@ -2403,7 +2402,7 @@ return 0;
 
 
 /* =========================
-   CALCULATE PRICE
+CALCULATE PRICE
 ========================= */
 
 function calculatePrice(){
@@ -2472,7 +2471,7 @@ total.toFixed(2);
 
 
 /* =========================
-   START PAYMENT
+START PAYMENT
 ========================= */
 
 function startPayment(){
@@ -2626,7 +2625,7 @@ document.getElementById(
 
 
 /* =========================
-   BACK TO ORDER
+BACK TO ORDER
 ========================= */
 
 function backToOrder(){
@@ -2668,7 +2667,7 @@ document.getElementById(
 
 
 /* =========================
-   CONFIRM PAYMENT
+CONFIRM PAYMENT
 ========================= */
 
 async function confirmPayment(){
@@ -2768,12 +2767,36 @@ throw new Error(
 }
 
 
-const extension =
+/* FILE EXTENSION */
+
+let extension =
 file.name
 .split(".")
 .pop()
 .toLowerCase();
 
+
+const allowedExtensions =
+[
+"jpg",
+"jpeg",
+"png",
+"webp"
+];
+
+
+if(
+!allowedExtensions.includes(extension)
+){
+
+throw new Error(
+"Only JPG, JPEG, PNG or WEBP images are allowed."
+);
+
+}
+
+
+/* UNIQUE FILE PATH */
 
 const filePath =
 user.id +
@@ -2782,6 +2805,8 @@ Date.now() +
 "-payment." +
 extension;
 
+
+/* UPLOAD */
 
 const {
 error:uploadError
@@ -2883,6 +2908,9 @@ document.getElementById(
 ).classList.remove("hidden");
 
 
+currentOrder = null;
+
+
 }
 catch(error){
 
@@ -2913,7 +2941,7 @@ button.textContent =
 
 
 /* =========================
-   NEW ORDER
+NEW ORDER
 ========================= */
 
 function newOrder(){
@@ -2986,7 +3014,7 @@ document.getElementById(
 
 
 /* =========================
-   ADMIN ORDERS
+ADMIN ORDERS
 ========================= */
 
 async function loadAdminOrders(){
@@ -2999,8 +3027,6 @@ document.getElementById(
 ordersContainer.innerHTML =
 "Loading orders...";
 
-
-/* CHECK CURRENT USER */
 
 const {
 data:{user}
@@ -3024,6 +3050,12 @@ await checkAdmin(user);
 
 
 if(!isAdmin){
+
+alert(
+"Admin access required."
+);
+
+await supabaseClient.auth.signOut();
 
 showSignin();
 
@@ -3141,7 +3173,7 @@ screenshotHTML = `
 class="admin-screenshot"
 href="${escapeAttribute(publicData.publicUrl)}"
 target="_blank"
-rel="noopener"
+rel="noopener noreferrer"
 >
 View Payment Screenshot
 </a>
@@ -3290,7 +3322,7 @@ orderBox
 
 
 /* =========================
-   UPDATE ORDER STATUS
+UPDATE STATUS
 ========================= */
 
 async function updateOrderStatus(orderId){
@@ -3315,8 +3347,6 @@ return;
 const newStatus =
 select.value;
 
-
-/* CHECK ADMIN */
 
 const {
 data:{user}
@@ -3346,6 +3376,8 @@ if(!isAdmin){
 alert(
 "Admin access required."
 );
+
+await supabaseClient.auth.signOut();
 
 showSignin();
 
@@ -3391,13 +3423,13 @@ alert(
 );
 
 
-loadAdminOrders();
+await loadAdminOrders();
 
 }
 
 
 /* =========================
-   ESCAPE HTML
+ESCAPE HTML
 ========================= */
 
 function escapeHTML(value){
@@ -3423,7 +3455,7 @@ return String(value)
 
 
 /* =========================
-   PAGE LOAD
+PAGE LOAD
 ========================= */
 
 (async function(){
@@ -3443,7 +3475,7 @@ return;
 }
 
 
-/* CHECK ADMIN */
+/* ADMIN */
 
 const isAdmin =
 await checkAdmin(user);
@@ -3465,9 +3497,9 @@ return;
 }
 
 
-/* NORMAL CUSTOMER */
+/* CUSTOMER */
 
-loadCustomer();
+await loadCustomer();
 
 })();
 
