@@ -7,6 +7,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- QR CODE LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -374,26 +377,67 @@ font-weight:900;
 .qr-frame{
 width:252px;
 max-width:100%;
+min-height:252px;
 padding:11px;
 margin:0 auto 16px;
+display:flex;
+align-items:center;
+justify-content:center;
 border-radius:20px;
 background:white;
 box-shadow:0 15px 45px rgba(0,0,0,.35);
 }
 
-.payment-qr{
-width:100%;
-height:auto;
+#paymentQR{
+width:230px;
+height:230px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+#paymentQR img,
+#paymentQR canvas{
+max-width:230px;
+max-height:230px;
 display:block;
-border-radius:11px;
 }
 
 .payment-note{
 color:#94a3b8;
 font-size:11px;
 line-height:1.6;
-margin:0 auto 20px;
+margin:0 auto 16px;
 max-width:350px;
+}
+
+.upi-pay-button{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+margin:0 auto 18px;
+min-height:48px;
+text-decoration:none;
+border-radius:14px;
+background:linear-gradient(135deg,#16a34a,#059669);
+color:white;
+font-size:13px;
+font-weight:850;
+box-shadow:0 12px 28px rgba(22,163,74,.22);
+}
+
+.upi-pay-button:hover{
+transform:translateY(-1px);
+box-shadow:0 16px 34px rgba(22,163,74,.30);
+}
+
+.upi-id-text{
+margin-top:-8px;
+margin-bottom:17px;
+color:#64748b;
+font-size:10px;
+word-break:break-all;
 }
 
 .upload-box{
@@ -872,6 +916,18 @@ font-size:22px;
 
 .qr-frame{
 width:235px;
+min-height:235px;
+}
+
+#paymentQR{
+width:210px;
+height:210px;
+}
+
+#paymentQR img,
+#paymentQR canvas{
+max-width:210px;
+max-height:210px;
 }
 
 .customer-menu{
@@ -1332,21 +1388,33 @@ id="paymentAmount"
 
 </div>
 
+<!-- DYNAMIC QR -->
+
 <div class="qr-frame">
 
-<img
-src="IMG-20260923-WA0004~2.jpg"
-alt="GROWX Payment QR"
-class="payment-qr"
->
+<div id="paymentQR"></div>
 
 </div>
 
 <div class="payment-note">
 
-Scan the QR code using your UPI app and complete the payment.
-Then upload your payment screenshot below.
+Scan this QR code using your UPI app.
+The order amount is automatically added to the payment.
 
+</div>
+
+<!-- OPEN UPI APP -->
+
+<a
+id="upiPayButton"
+class="upi-pay-button"
+href="#"
+>
+▣ Open UPI App & Pay
+</a>
+
+<div class="upi-id-text">
+UPI ID: taydeveer94@oksbi
 </div>
 
 <div class="upload-box">
@@ -1536,6 +1604,17 @@ supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+
+
+/* =========================
+   GROWX UPI SETTINGS
+========================= */
+
+const GROWX_UPI_ID =
+"taydeveer94@oksbi";
+
+const GROWX_UPI_NAME =
+"GROWX";
 
 
 /* =========================
@@ -2440,6 +2519,140 @@ total.toFixed(2);
 
 
 /* =========================
+   CREATE UPI PAYMENT URL
+========================= */
+
+function createUPIPaymentURL(
+amount,
+service,
+quantity
+){
+
+const safeAmount =
+Number(amount).toFixed(2);
+
+const transactionNote =
+"GROWX " +
+service +
+" " +
+quantity;
+
+return (
+"upi://pay" +
+"?pa=" +
+encodeURIComponent(GROWX_UPI_ID) +
+"&pn=" +
+encodeURIComponent(GROWX_UPI_NAME) +
+"&am=" +
+encodeURIComponent(safeAmount) +
+"&cu=INR" +
+"&tn=" +
+encodeURIComponent(transactionNote)
+);
+
+}
+
+
+/* =========================
+   GENERATE DYNAMIC QR
+========================= */
+
+function generatePaymentQR(){
+
+const qrContainer =
+document.getElementById(
+"paymentQR"
+);
+
+const upiButton =
+document.getElementById(
+"upiPayButton"
+);
+
+
+if(
+!qrContainer ||
+!currentOrder
+){
+
+return;
+
+}
+
+
+const amount =
+Number(
+currentOrder.price
+);
+
+
+if(
+!Number.isFinite(amount) ||
+amount <= 0
+){
+
+qrContainer.innerHTML =
+"<span style='color:#dc2626;font-size:12px;font-weight:700'>Invalid payment amount</span>";
+
+if(upiButton){
+
+upiButton.href =
+"#";
+
+}
+
+return;
+
+}
+
+
+const upiURL =
+createUPIPaymentURL(
+amount,
+currentOrder.service,
+currentOrder.quantity
+);
+
+
+/* CLEAR OLD QR */
+
+qrContainer.innerHTML =
+"";
+
+
+/* GENERATE NEW QR */
+
+new QRCode(
+qrContainer,
+{
+text:upiURL,
+width:230,
+height:230,
+colorDark:"#000000",
+colorLight:"#ffffff",
+correctLevel:QRCode.CorrectLevel.M
+}
+);
+
+
+/* OPEN UPI APP BUTTON */
+
+if(upiButton){
+
+upiButton.href =
+upiURL;
+
+upiButton.setAttribute(
+"data-amount",
+amount.toFixed(2)
+);
+
+}
+
+}
+
+
+/* =========================
    START PAYMENT
 ========================= */
 
@@ -2542,6 +2755,30 @@ const total =
 (quantity / 1000) * rate;
 
 
+const finalAmount =
+Number(
+total.toFixed(2)
+);
+
+
+/* EXTRA AMOUNT CHECK */
+
+if(
+!Number.isFinite(finalAmount) ||
+finalAmount <= 0
+){
+
+alert(
+"Invalid payment amount."
+);
+
+return;
+
+}
+
+
+/* SAVE CURRENT ORDER */
+
 currentOrder = {
 
 service:
@@ -2554,25 +2791,34 @@ link:
 link,
 
 price:
-Number(
-total.toFixed(2)
-)
+finalAmount
 
 };
 
+
+/* SHOW AMOUNT */
 
 document.getElementById(
 "paymentAmount"
 ).textContent =
 "₹" +
-total.toFixed(2);
+finalAmount.toFixed(2);
 
+
+/* GENERATE DYNAMIC QR */
+
+generatePaymentQR();
+
+
+/* RESET SCREENSHOT */
 
 document.getElementById(
 "paymentScreenshot"
 ).value =
 "";
 
+
+/* SHOW PAYMENT PAGE */
 
 document.getElementById(
 "myOrdersPage"
@@ -2915,6 +3161,40 @@ document.getElementById(
 "paymentScreenshot"
 ).value =
 "";
+
+
+/* CLEAR OLD QR */
+
+const qrContainer =
+document.getElementById(
+"paymentQR"
+);
+
+if(qrContainer){
+
+qrContainer.innerHTML =
+"";
+
+}
+
+
+/* RESET UPI BUTTON */
+
+const upiButton =
+document.getElementById(
+"upiPayButton"
+);
+
+if(upiButton){
+
+upiButton.href =
+"#";
+
+upiButton.removeAttribute(
+"data-amount"
+);
+
+}
 
 
 document.getElementById(
