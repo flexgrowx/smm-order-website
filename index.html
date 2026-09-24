@@ -6,8 +6,6 @@
 <title>GROWX ORDER</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- QR CODE LIBRARY -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
@@ -545,8 +543,6 @@ font-weight:700;
 color:#c4b5fd;
 }
 
-/* CUSTOMER MENU */
-
 .customer-menu-button{
 width:46px;
 height:46px;
@@ -673,8 +669,6 @@ background:rgba(239,68,68,.12);
 box-shadow:none;
 }
 
-/* MY ORDERS */
-
 .my-orders-page{
 padding-top:3px;
 }
@@ -772,8 +766,6 @@ color:#fca5a5;
 font-size:12px;
 line-height:1.5;
 }
-
-/* ADMIN */
 
 .admin-top{
 display:flex;
@@ -961,8 +953,6 @@ padding:8px 9px;
 
 <div class="container">
 
-<!-- SIGNUP -->
-
 <div id="signupPage" class="card hidden">
 
 <div class="brand">
@@ -976,62 +966,31 @@ padding:8px 9px;
 <div id="signupMessage" class="message"></div>
 
 <label>Name</label>
-
-<input
-type="text"
-id="signupName"
-placeholder="Enter your name"
->
+<input type="text" id="signupName" placeholder="Enter your name">
 
 <label>Email</label>
-
-<input
-type="email"
-id="signupEmail"
-placeholder="Enter your email"
->
+<input type="email" id="signupEmail" placeholder="Enter your email">
 
 <label>Password</label>
+<input type="password" id="signupPassword" placeholder="Create a password">
 
-<input
-type="password"
-id="signupPassword"
-placeholder="Create a password"
->
-
-<button onclick="signUp()">
-Create Account
-</button>
+<button onclick="signUp()">Create Account</button>
 
 <p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
-
 Already have an account?
-
-<span
-onclick="showSignin()"
-style="color:#a78bfa;cursor:pointer;font-weight:800"
->
+<span onclick="showSignin()" style="color:#a78bfa;cursor:pointer;font-weight:800">
 Sign In
 </span>
-
 </p>
 
 </div>
 
-<!-- SIGNIN -->
-
 <div id="signinPage" class="card hidden">
 
 <div class="brand">
-
 <div class="brand-icon">G</div>
-
 <div class="brand-name">GROWX</div>
-
-<div class="brand-subtitle">
-PREMIUM ORDER PANEL
-</div>
-
+<div class="brand-subtitle">PREMIUM ORDER PANEL</div>
 </div>
 
 <h2>Welcome Back</h2>
@@ -1039,150 +998,63 @@ PREMIUM ORDER PANEL
 <div id="signinMessage" class="message"></div>
 
 <label>Email</label>
-
-<input
-type="email"
-id="signinEmail"
-placeholder="Enter your email"
->
+<input type="email" id="signinEmail" placeholder="Enter your email">
 
 <label>Password</label>
+<input type="password" id="signinPassword" placeholder="Enter your password">
 
-<input
-type="password"
-id="signinPassword"
-placeholder="Enter your password"
->
-
-<button onclick="signIn()">
-Sign In
-</button>
+<button onclick="signIn()">Sign In</button>
 
 <p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
-
 Don't have an account?
-
-<span
-onclick="showSignup()"
-style="color:#a78bfa;cursor:pointer;font-weight:800"
->
+<span onclick="showSignup()" style="color:#a78bfa;cursor:pointer;font-weight:800">
 Create Account
 </span>
-
 </p>
 
 </div>
 
-<!-- CUSTOMER ORDER PAGE -->
-
 <div id="orderPage" class="card hidden">
 
-<button
-id="menuButton"
-class="customer-menu-button"
-onclick="openCustomerMenu()"
-aria-label="Open menu"
->
-☰
-</button>
+<button id="menuButton" class="customer-menu-button"
+onclick="openCustomerMenu()" aria-label="Open menu">☰</button>
 
-<div
-id="customerMenuOverlay"
-class="customer-menu-overlay hidden"
-onclick="closeCustomerMenu()"
-></div>
+<div id="customerMenuOverlay" class="customer-menu-overlay hidden"
+onclick="closeCustomerMenu()"></div>
 
-<div
-id="customerMenu"
-class="customer-menu"
->
+<div id="customerMenu" class="customer-menu">
 
-<button
-class="menu-close"
-onclick="closeCustomerMenu()"
-aria-label="Close menu"
->
-×
-</button>
+<button class="menu-close" onclick="closeCustomerMenu()" aria-label="Close menu">×</button>
 
 <div class="menu-user-section">
-
-<div class="menu-user-label">
-Customer User ID
+<div class="menu-user-label">Customer User ID</div>
+<div id="menuUserId" class="menu-user-id">-</div>
 </div>
 
-<div
-id="menuUserId"
-class="menu-user-id"
->
--
-</div>
-
-</div>
-
-<button
-class="menu-item"
-onclick="showCustomerNewOrder()"
->
-
-<span class="menu-item-icon">
-＋
-</span>
-
-<span>
-New Order
-</span>
-
+<button class="menu-item" onclick="showCustomerNewOrder()">
+<span class="menu-item-icon">＋</span>
+<span>New Order</span>
 </button>
 
-<button
-class="menu-item new-order"
-onclick="showMyOrders()"
->
-
-<span class="menu-item-icon">
-▣
-</span>
-
-<span>
-My Orders
-</span>
-
+<button class="menu-item new-order" onclick="showMyOrders()">
+<span class="menu-item-icon">▣</span>
+<span>My Orders</span>
 </button>
 
 </div>
 
 <div class="user-box">
 
-<div id="avatar" class="avatar">
-G
-</div>
+<div id="avatar" class="avatar">G</div>
 
 <div class="user-info">
-
-<div
-class="user-name"
-id="customerName"
->
-Customer
+<div class="user-name" id="customerName">Customer</div>
+<div class="user-label">GROWX CUSTOMER</div>
 </div>
 
-<div class="user-label">
-GROWX CUSTOMER
-</div>
+<button class="logout" onclick="logout()">Logout</button>
 
 </div>
-
-<button
-class="logout"
-onclick="logout()"
->
-Logout
-</button>
-
-</div>
-
-<!-- NEW ORDER -->
 
 <div id="orderForm">
 
@@ -1190,159 +1062,84 @@ Logout
 ORDER SERVICE
 </div>
 
-<h2>
-Place Your Order
-</h2>
+<h2>Place Your Order</h2>
 
-<div
-id="orderMessage"
-class="message"
-></div>
+<div id="orderMessage" class="message"></div>
 
-<label>
-Choose Service
-</label>
+<label>Choose Service</label>
 
 <select id="service">
 
-<option value="">
-Choose Service
-</option>
+<option value="">Choose Service</option>
 
-<option
-value="Instagram Views"
-data-min="501"
-data-max="2198765"
->
+<option value="Instagram Views" data-min="501" data-max="2198765">
 Instagram Views
 </option>
 
-<option
-value="Instagram Likes"
-data-min="50"
-data-max="500000"
->
+<option value="Instagram Likes" data-min="50" data-max="500000">
 Instagram Likes
 </option>
 
-<option
-value="Instagram Followers"
-data-rate="400"
-data-min="100"
-data-max="20000"
->
+<option value="Instagram Followers" data-rate="400" data-min="100" data-max="20000">
 Instagram Followers — ₹400 / 1000
 </option>
 
-<option
-value="Instagram Shares"
-data-rate="5"
-data-min="200"
-data-max="100000"
->
+<option value="Instagram Shares" data-rate="5" data-min="200" data-max="100000">
 Instagram Shares — ₹5 / 1000
 </option>
 
-<option
-value="Instagram Repost"
-data-rate="10"
-data-min="100"
-data-max="50000"
->
+<option value="Instagram Repost" data-rate="10" data-min="100" data-max="50000">
 Instagram Repost — ₹10 / 1000
 </option>
 
-<option
-value="Instagram Save"
-data-rate="10"
-data-min="100"
-data-max="50000"
->
+<option value="Instagram Save" data-rate="10" data-min="100" data-max="50000">
 Instagram Save — ₹10 / 1000
 </option>
 
 </select>
 
-<label>
-Quantity
-</label>
+<label>Quantity</label>
 
-<input
-type="number"
-id="quantity"
+<input type="number" id="quantity"
 placeholder="Enter quantity"
-oninput="calculatePrice()"
->
+oninput="calculatePrice()">
 
-<label>
-Post / Reel Link
-</label>
+<label>Post / Reel Link</label>
 
-<input
-type="url"
-id="link"
-placeholder="Paste your post or reel link"
->
+<input type="url" id="link"
+placeholder="Paste your post or reel link">
 
 <div class="price-box">
 
-<div class="price-label">
-Total Order Cost
-</div>
+<div class="price-label">Total Order Cost</div>
 
-<div
-class="price"
-id="price"
->
-₹0.00
-</div>
+<div class="price" id="price">₹0.00</div>
 
 </div>
 
-<button
-id="continuePaymentBtn"
-onclick="startPayment()"
->
+<button id="continuePaymentBtn" onclick="startPayment()">
 Continue to Payment
 </button>
 
 </div>
 
-<!-- MY ORDERS -->
+<div id="myOrdersPage" class="my-orders-page hidden">
 
-<div
-id="myOrdersPage"
-class="my-orders-page hidden"
->
+<div class="my-orders-heading">My Orders</div>
 
-<div class="my-orders-heading">
-My Orders
-</div>
-
-<div class="avg-time">
-avg time: 24 hours
-</div>
+<div class="avg-time">avg time: 24 hours</div>
 
 <div id="myOrdersContainer">
-<div class="my-orders-loading">
-Loading orders...
-</div>
+<div class="my-orders-loading">Loading orders...</div>
 </div>
 
 </div>
 
-<!-- PAYMENT PAGE -->
-
-<div
-id="paymentPage"
-class="hidden"
->
+<div id="paymentPage" class="hidden">
 
 <div class="payment-box">
 
-<div class="payment-title">
-Scan & Pay
-</div>
+<div class="payment-title">Scan & Pay</div>
 
 <div class="payment-subtitle">
 Complete your payment to continue
@@ -1350,37 +1147,26 @@ Complete your payment to continue
 
 <div class="payment-amount-box">
 
-<span class="payment-amount-label">
-PAY
-</span>
+<span class="payment-amount-label">PAY</span>
 
-<span
-class="payment-amount"
-id="paymentAmount"
->
+<span class="payment-amount" id="paymentAmount">
 ₹0.00
 </span>
 
 </div>
 
 <div class="qr-frame">
-
 <div id="paymentQR"></div>
-
 </div>
 
 <div class="payment-note">
-
 Scan this QR code using your UPI app.
 The order amount is automatically added to the payment.
-
 </div>
 
-<a
-id="upiPayButton"
+<a id="upiPayButton"
 class="upi-pay-button"
-href="#"
->
+href="#">
 ▣ Open UPI App & Pay
 </a>
 
@@ -1394,34 +1180,24 @@ UPI ID: taydeveer94@oksbi
 Payment Screenshot
 </label>
 
-<input
-type="file"
+<input type="file"
 id="paymentScreenshot"
 class="file-input"
-accept="image/*"
->
+accept="image/*">
 
 </div>
 
-<button
-class="confirm-btn"
+<button class="confirm-btn"
 id="confirmPaymentBtn"
-onclick="confirmPayment()"
->
+onclick="confirmPayment()">
 Payment Complete
 </button>
 
-<div
-id="paymentSubmitWait"
-class="payment-submit-wait"
->
+<div id="paymentSubmitWait" class="payment-submit-wait">
 Please wait 3–15 seconds...
 </div>
 
-<button
-class="back-btn"
-onclick="backToOrder()"
->
+<button class="back-btn" onclick="backToOrder()">
 Back to Order
 </button>
 
@@ -1429,47 +1205,28 @@ Back to Order
 
 </div>
 
-<!-- SUCCESS PAGE -->
-
-<div
-id="successPage"
-class="hidden"
->
+<div id="successPage" class="hidden">
 
 <div class="success-box">
 
-<div class="success-icon">
-✓
-</div>
+<div class="success-icon">✓</div>
 
 <div class="success-title">
 Order Successfully Submitted
 </div>
 
 <div class="success-text">
-
 Your order has been submitted successfully.
-
 <br>
-
 Please keep your Order ID for reference.
-
 </div>
 
 <div class="order-id">
-
 Order ID:
-
-<span id="successOrderId">
--
-</span>
-
+<span id="successOrderId">-</span>
 </div>
 
-<button
-style="margin-top:20px"
-onclick="newOrder()"
->
+<button style="margin-top:20px" onclick="newOrder()">
 Place New Order
 </button>
 
@@ -1479,22 +1236,13 @@ Place New Order
 
 </div>
 
-<!-- ADMIN PANEL -->
-
-<div
-id="adminPage"
-class="card hidden"
->
+<div id="adminPage" class="card hidden">
 
 <div class="brand">
 
-<div class="brand-icon">
-A
-</div>
+<div class="brand-icon">A</div>
 
-<div class="brand-name">
-GROWX ADMIN
-</div>
+<div class="brand-name">GROWX ADMIN</div>
 
 <div class="brand-subtitle">
 ORDER MANAGEMENT PANEL
@@ -1502,51 +1250,35 @@ ORDER MANAGEMENT PANEL
 
 </div>
 
-<div
-id="adminMessage"
-class="message"
-></div>
+<div id="adminMessage" class="message"></div>
 
 <div class="admin-top">
 
 <div>
 
-<div class="admin-top-title">
-ADMIN ACCOUNT
-</div>
+<div class="admin-top-title">ADMIN ACCOUNT</div>
 
-<div
-id="adminEmail"
-class="admin-top-email"
->
--
-</div>
+<div id="adminEmail" class="admin-top-email">-</div>
 
 </div>
 
-<button
-class="back-btn"
+<button class="back-btn"
 onclick="logoutAdmin()"
-style="margin-top:0;width:auto;padding:9px 13px"
->
+style="margin-top:0;width:auto;padding:9px 13px">
 Logout Admin
 </button>
 
 </div>
 
-<h2>
-Orders
-</h2>
+<h2>Orders</h2>
 
 <div id="adminOrders">
 Loading orders...
 </div>
 
-<button
-class="back-btn"
+<button class="back-btn"
 onclick="loadAdminOrders()"
-style="margin-top:5px"
->
+style="margin-top:5px">
 Refresh Orders
 </button>
 
@@ -1584,10 +1316,6 @@ const GROWX_UPI_NAME =
 "GROWX";
 
 
-/* =========================
-   CURRENT ORDER
-========================= */
-
 let currentOrder = null;
 
 
@@ -1608,7 +1336,7 @@ error
 await supabaseClient
 .from("admins")
 .select("*")
-.eq("Email", user.email)
+.eq("Email",user.email)
 .maybeSingle();
 
 if(error){
@@ -1633,17 +1361,10 @@ return !!admin;
 
 function showSignup(){
 
-document.getElementById("signupPage")
-.classList.remove("hidden");
-
-document.getElementById("signinPage")
-.classList.add("hidden");
-
-document.getElementById("orderPage")
-.classList.add("hidden");
-
-document.getElementById("adminPage")
-.classList.add("hidden");
+document.getElementById("signupPage").classList.remove("hidden");
+document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("adminPage").classList.add("hidden");
 
 }
 
@@ -1652,34 +1373,20 @@ function showSignin(){
 
 closeCustomerMenu();
 
-document.getElementById("signinPage")
-.classList.remove("hidden");
-
-document.getElementById("signupPage")
-.classList.add("hidden");
-
-document.getElementById("orderPage")
-.classList.add("hidden");
-
-document.getElementById("adminPage")
-.classList.add("hidden");
+document.getElementById("signinPage").classList.remove("hidden");
+document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("orderPage").classList.add("hidden");
+document.getElementById("adminPage").classList.add("hidden");
 
 }
 
 
 function showOrder(){
 
-document.getElementById("orderPage")
-.classList.remove("hidden");
-
-document.getElementById("signupPage")
-.classList.add("hidden");
-
-document.getElementById("signinPage")
-.classList.add("hidden");
-
-document.getElementById("adminPage")
-.classList.add("hidden");
+document.getElementById("orderPage").classList.remove("hidden");
+document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("adminPage").classList.add("hidden");
 
 }
 
@@ -1691,21 +1398,16 @@ document.getElementById("adminPage")
 function openCustomerMenu(){
 
 const menu =
-document.getElementById(
-"customerMenu"
-);
+document.getElementById("customerMenu");
 
 const overlay =
-document.getElementById(
-"customerMenuOverlay"
-);
+document.getElementById("customerMenuOverlay");
 
 if(!menu || !overlay){
 return;
 }
 
 overlay.classList.remove("hidden");
-
 menu.classList.add("open");
 
 }
@@ -1714,21 +1416,16 @@ menu.classList.add("open");
 function closeCustomerMenu(){
 
 const menu =
-document.getElementById(
-"customerMenu"
-);
+document.getElementById("customerMenu");
 
 const overlay =
-document.getElementById(
-"customerMenuOverlay"
-);
+document.getElementById("customerMenuOverlay");
 
 if(!menu || !overlay){
 return;
 }
 
 menu.classList.remove("open");
-
 overlay.classList.add("hidden");
 
 }
@@ -1755,21 +1452,10 @@ async function showMyOrders(){
 
 closeCustomerMenu();
 
-document.getElementById(
-"orderForm"
-).classList.add("hidden");
-
-document.getElementById(
-"paymentPage"
-).classList.add("hidden");
-
-document.getElementById(
-"successPage"
-).classList.add("hidden");
-
-document.getElementById(
-"myOrdersPage"
-).classList.remove("hidden");
+document.getElementById("orderForm").classList.add("hidden");
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("successPage").classList.add("hidden");
+document.getElementById("myOrdersPage").classList.remove("hidden");
 
 await loadMyOrders();
 
@@ -1783,9 +1469,7 @@ await loadMyOrders();
 async function loadMyOrders(){
 
 const container =
-document.getElementById(
-"myOrdersContainer"
-);
+document.getElementById("myOrdersContainer");
 
 if(!container){
 return;
@@ -1803,10 +1487,7 @@ error:userError
 } =
 await supabaseClient.auth.getUser();
 
-if(
-userError ||
-!user
-){
+if(userError || !user){
 
 container.innerHTML = `
 <div class="my-orders-error">
@@ -1832,16 +1513,8 @@ price,
 link,
 status
 `)
-.eq(
-"user_id",
-user.id
-)
-.order(
-"order_id",
-{
-ascending:false
-}
-);
+.eq("user_id",user.id)
+.order("order_id",{ascending:false});
 
 if(error){
 
@@ -1861,7 +1534,7 @@ return;
 
 }
 
-if(!orders || orders.length === 0){
+if(!orders || orders.length===0){
 
 container.innerHTML = `
 <div class="my-orders-empty">
@@ -1877,13 +1550,10 @@ return;
 
 container.innerHTML = "";
 
-orders.forEach(
-order => {
+orders.forEach(order=>{
 
 const orderCard =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 orderCard.className =
 "my-order-card";
@@ -1891,90 +1561,50 @@ orderCard.className =
 orderCard.innerHTML = `
 
 <div class="my-order-id">
-Order ID: ${escapeHTML(
-String(order.order_id || "-")
-)}
+Order ID:
+${escapeHTML(String(order.order_id || "-"))}
 </div>
 
 <div class="my-order-row">
-
-<div class="my-order-label">
-Service
-</div>
-
+<div class="my-order-label">Service</div>
 <div class="my-order-value">
-${escapeHTML(
-String(order.service || "-")
-)}
+${escapeHTML(String(order.service || "-"))}
 </div>
-
 </div>
 
 <div class="my-order-row">
-
-<div class="my-order-label">
-Quantity
-</div>
-
+<div class="my-order-label">Quantity</div>
 <div class="my-order-value">
-${escapeHTML(
-String(order.quantity ?? "-")
-)}
+${escapeHTML(String(order.quantity ?? "-"))}
 </div>
-
 </div>
 
 <div class="my-order-row">
-
-<div class="my-order-label">
-Amount
-</div>
-
+<div class="my-order-label">Amount</div>
 <div class="my-order-value">
-₹${escapeHTML(
-String(order.price ?? "0")
-)}
+₹${escapeHTML(String(order.price ?? "0"))}
 </div>
-
 </div>
 
 <div class="my-order-row">
-
-<div class="my-order-label">
-Link
-</div>
-
+<div class="my-order-label">Link</div>
 <div class="my-order-value">
-${escapeHTML(
-String(order.link || "-")
-)}
+${escapeHTML(String(order.link || "-"))}
 </div>
-
 </div>
 
 <div class="my-order-row">
-
-<div class="my-order-label">
-Current Status
-</div>
-
+<div class="my-order-label">Current Status</div>
 <div class="my-order-value">
-
 <span class="my-order-status">
-${escapeHTML(
-String(order.status || "-")
-)}
+${escapeHTML(String(order.status || "-"))}
 </span>
-
 </div>
-
 </div>
 
 `;
 
-container.appendChild(
-orderCard
-);
+container.appendChild(orderCard);
 
 });
 
@@ -2013,18 +1643,13 @@ element.style.display =
 async function signUp(){
 
 const name =
-document.getElementById("signupName")
-.value
-.trim();
+document.getElementById("signupName").value.trim();
 
 const email =
-document.getElementById("signupEmail")
-.value
-.trim();
+document.getElementById("signupEmail").value.trim();
 
 const password =
-document.getElementById("signupPassword")
-.value;
+document.getElementById("signupPassword").value;
 
 if(!name || !email || !password){
 
@@ -2042,7 +1667,6 @@ const {data,error} =
 await supabaseClient.auth.signUp({
 
 email:email,
-
 password:password,
 
 options:{
@@ -2081,13 +1705,10 @@ showMessage(
 async function signIn(){
 
 const email =
-document.getElementById("signinEmail")
-.value
-.trim();
+document.getElementById("signinEmail").value.trim();
 
 const password =
-document.getElementById("signinPassword")
-.value;
+document.getElementById("signinPassword").value;
 
 if(!email || !password){
 
@@ -2105,13 +1726,9 @@ const {
 data,
 error
 } =
-await supabaseClient.auth
-.signInWithPassword({
-
+await supabaseClient.auth.signInWithPassword({
 email:email,
-
 password:password
-
 });
 
 if(error){
@@ -2146,9 +1763,7 @@ await checkAdmin(user);
 
 if(isAdmin){
 
-document.getElementById(
-"adminEmail"
-).textContent =
+document.getElementById("adminEmail").textContent =
 user.email || "-";
 
 showAdmin();
@@ -2188,38 +1803,19 @@ user.user_metadata?.name ||
 user.email?.split("@")[0] ||
 "Customer";
 
-document.getElementById(
-"customerName"
-).textContent =
+document.getElementById("customerName").textContent =
 name;
 
-document.getElementById(
-"avatar"
-).textContent =
-name
-.charAt(0)
-.toUpperCase();
+document.getElementById("avatar").textContent =
+name.charAt(0).toUpperCase();
 
-document.getElementById(
-"menuUserId"
-).textContent =
+document.getElementById("menuUserId").textContent =
 user.id;
 
-document.getElementById(
-"myOrdersPage"
-).classList.add("hidden");
-
-document.getElementById(
-"paymentPage"
-).classList.add("hidden");
-
-document.getElementById(
-"successPage"
-).classList.add("hidden");
-
-document.getElementById(
-"orderForm"
-).classList.remove("hidden");
+document.getElementById("myOrdersPage").classList.add("hidden");
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("successPage").classList.add("hidden");
+document.getElementById("orderForm").classList.remove("hidden");
 
 showOrder();
 
@@ -2234,17 +1830,10 @@ function showAdmin(){
 
 closeCustomerMenu();
 
-document.getElementById("adminPage")
-.classList.remove("hidden");
-
-document.getElementById("signupPage")
-.classList.add("hidden");
-
-document.getElementById("signinPage")
-.classList.add("hidden");
-
-document.getElementById("orderPage")
-.classList.add("hidden");
+document.getElementById("adminPage").classList.remove("hidden");
+document.getElementById("signupPage").classList.add("hidden");
+document.getElementById("signinPage").classList.add("hidden");
+document.getElementById("orderPage").classList.add("hidden");
 
 }
 
@@ -2279,10 +1868,7 @@ showSignin();
 
 document
 .getElementById("service")
-.addEventListener(
-"change",
-calculatePrice
-);
+.addEventListener("change",calculatePrice);
 
 
 /* =========================
@@ -2347,10 +1933,7 @@ return 0;
    CURRENT RATE
 ========================= */
 
-function getCurrentRate(
-service,
-quantity
-){
+function getCurrentRate(service,quantity){
 
 if(service==="Instagram Views")
 return getViewsRate(quantity);
@@ -2385,15 +1968,10 @@ const service =
 document.getElementById("service");
 
 const selected =
-service.options[
-service.selectedIndex
-];
+service.options[service.selectedIndex];
 
 const quantity =
-Number(
-document.getElementById("quantity")
-.value
-);
+Number(document.getElementById("quantity").value);
 
 if(
 !selected ||
@@ -2401,9 +1979,7 @@ if(
 !quantity
 ){
 
-document.getElementById(
-"price"
-).textContent =
+document.getElementById("price").textContent =
 "₹0.00";
 
 return;
@@ -2411,16 +1987,11 @@ return;
 }
 
 const rate =
-getCurrentRate(
-selected.value,
-quantity
-);
+getCurrentRate(selected.value,quantity);
 
 if(rate<=0){
 
-document.getElementById(
-"price"
-).textContent =
+document.getElementById("price").textContent =
 "₹0.00";
 
 return;
@@ -2428,20 +1999,17 @@ return;
 }
 
 const total =
-(quantity / 1000) * rate;
+(quantity/1000)*rate;
 
-document.getElementById(
-"price"
-).textContent =
-"₹" +
-total.toFixed(2);
+document.getElementById("price").textContent =
+"₹"+total.toFixed(2);
 
 }
 
 
 /* =====================================================
-   FIXED STANDARD UPI PAYMENT URL
-   ===================================================== */
+   DYNAMIC UPI PAYMENT URL
+===================================================== */
 
 function createUPIPaymentURL(amount){
 
@@ -2450,26 +2018,15 @@ Number(amount);
 
 if(
 !Number.isFinite(numericAmount) ||
-numericAmount <= 0
+numericAmount<=0
 ){
+
 return "";
+
 }
 
 const safeAmount =
 numericAmount.toFixed(2);
-
-/*
-   IMPORTANT:
-   Only standard UPI parameters are used.
-
-   pa = UPI ID
-   pn = Payee name
-   am = Dynamic amount
-   cu = Currency
-
-   Transaction note (tn) intentionally removed
-   for better compatibility with UPI apps.
-*/
 
 return (
 "upi://pay" +
@@ -2484,7 +2041,7 @@ return (
 
 /* =====================================================
    GENERATE DYNAMIC UPI QR
-   ===================================================== */
+===================================================== */
 
 function generatePaymentQR(){
 
@@ -2494,10 +2051,7 @@ document.getElementById("paymentQR");
 const upiButton =
 document.getElementById("upiPayButton");
 
-if(
-!qrContainer ||
-!currentOrder
-){
+if(!qrContainer || !currentOrder){
 return;
 }
 
@@ -2506,7 +2060,7 @@ Number(currentOrder.price);
 
 if(
 !Number.isFinite(amount) ||
-amount <= 0
+amount<=0
 ){
 
 qrContainer.innerHTML = `
@@ -2521,7 +2075,7 @@ Invalid payment amount
 `;
 
 if(upiButton){
-upiButton.href = "#";
+upiButton.href="#";
 }
 
 return;
@@ -2545,7 +2099,7 @@ Could not create UPI payment QR
 `;
 
 if(upiButton){
-upiButton.href = "#";
+upiButton.href="#";
 }
 
 return;
@@ -2553,7 +2107,7 @@ return;
 }
 
 
-/* CLEAR OLD QR */
+/* CLEAR PREVIOUS QR */
 
 qrContainer.innerHTML = "";
 
@@ -2597,7 +2151,7 @@ QR generation failed
 }
 
 
-/* OPEN UPI APP BUTTON */
+/* DYNAMIC UPI BUTTON */
 
 if(upiButton){
 
@@ -2624,48 +2178,32 @@ const service =
 document.getElementById("service");
 
 const selected =
-service.options[
-service.selectedIndex
-];
+service.options[service.selectedIndex];
 
 const quantity =
-Number(
-document.getElementById("quantity")
-.value
-);
+Number(document.getElementById("quantity").value);
 
 const link =
-document.getElementById("link")
-.value
-.trim();
+document.getElementById("link").value.trim();
 
-if(
-!selected ||
-!selected.value
-){
+if(!selected || !selected.value){
 
-alert(
-"Please select a service."
-);
+alert("Please select a service.");
 
 return;
 
 }
 
 const min =
-Number(
-selected.dataset.min
-);
+Number(selected.dataset.min);
 
 const max =
-Number(
-selected.dataset.max
-);
+Number(selected.dataset.max);
 
 if(
 !quantity ||
-quantity < min ||
-quantity > max
+quantity<min ||
+quantity>max
 ){
 
 alert(
@@ -2681,10 +2219,7 @@ return;
 }
 
 const rate =
-getCurrentRate(
-selected.value,
-quantity
-);
+getCurrentRate(selected.value,quantity);
 
 if(rate<=0){
 
@@ -2707,21 +2242,17 @@ return;
 }
 
 const total =
-(quantity / 1000) * rate;
+(quantity/1000)*rate;
 
 const finalAmount =
-Number(
-total.toFixed(2)
-);
+Number(total.toFixed(2));
 
 if(
 !Number.isFinite(finalAmount) ||
-finalAmount <= 0
+finalAmount<=0
 ){
 
-alert(
-"Invalid payment amount."
-);
+alert("Invalid payment amount.");
 
 return;
 
@@ -2732,28 +2263,21 @@ return;
 
 currentOrder = {
 
-service:
-selected.value,
+service:selected.value,
 
-quantity:
-quantity,
+quantity:quantity,
 
-link:
-link,
+link:link,
 
-price:
-finalAmount
+price:finalAmount
 
 };
 
 
 /* SHOW AMOUNT */
 
-document.getElementById(
-"paymentAmount"
-).textContent =
-"₹" +
-finalAmount.toFixed(2);
+document.getElementById("paymentAmount").textContent =
+"₹"+finalAmount.toFixed(2);
 
 
 /* GENERATE DYNAMIC QR */
@@ -2763,29 +2287,15 @@ generatePaymentQR();
 
 /* RESET SCREENSHOT */
 
-document.getElementById(
-"paymentScreenshot"
-).value =
-"";
+document.getElementById("paymentScreenshot").value="";
 
 
 /* SHOW PAYMENT PAGE */
 
-document.getElementById(
-"myOrdersPage"
-).classList.add("hidden");
-
-document.getElementById(
-"orderForm"
-).classList.add("hidden");
-
-document.getElementById(
-"paymentPage"
-).classList.remove("hidden");
-
-document.getElementById(
-"successPage"
-).classList.add("hidden");
+document.getElementById("myOrdersPage").classList.add("hidden");
+document.getElementById("orderForm").classList.add("hidden");
+document.getElementById("paymentPage").classList.remove("hidden");
+document.getElementById("successPage").classList.add("hidden");
 
 }
 
@@ -2796,37 +2306,19 @@ document.getElementById(
 
 function backToOrder(){
 
-document.getElementById(
-"paymentSubmitWait"
-).style.display =
+document.getElementById("paymentSubmitWait").style.display =
 "none";
 
 const button =
-document.getElementById(
-"confirmPaymentBtn"
-);
+document.getElementById("confirmPaymentBtn");
 
-button.disabled =
-false;
+button.disabled=false;
+button.textContent="Payment Complete";
 
-button.textContent =
-"Payment Complete";
-
-document.getElementById(
-"paymentPage"
-).classList.add("hidden");
-
-document.getElementById(
-"successPage"
-).classList.add("hidden");
-
-document.getElementById(
-"myOrdersPage"
-).classList.add("hidden");
-
-document.getElementById(
-"orderForm"
-).classList.remove("hidden");
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("successPage").classList.add("hidden");
+document.getElementById("myOrdersPage").classList.add("hidden");
+document.getElementById("orderForm").classList.remove("hidden");
 
 }
 
@@ -2848,9 +2340,7 @@ return;
 }
 
 const file =
-document.getElementById(
-"paymentScreenshot"
-).files[0];
+document.getElementById("paymentScreenshot").files[0];
 
 if(!file){
 
@@ -2862,9 +2352,7 @@ return;
 
 }
 
-if(
-!file.type.startsWith("image/")
-){
+if(!file.type.startsWith("image/")){
 
 alert(
 "Please upload an image file."
@@ -2874,9 +2362,7 @@ return;
 
 }
 
-if(
-file.size > 10 * 1024 * 1024
-){
+if(file.size>10*1024*1024){
 
 alert(
 "Image size must be less than 10 MB."
@@ -2887,23 +2373,14 @@ return;
 }
 
 const button =
-document.getElementById(
-"confirmPaymentBtn"
-);
+document.getElementById("confirmPaymentBtn");
 
 const waitText =
-document.getElementById(
-"paymentSubmitWait"
-);
+document.getElementById("paymentSubmitWait");
 
-button.disabled =
-true;
-
-button.textContent =
-"Submitting...";
-
-waitText.style.display =
-"block";
+button.disabled=true;
+button.textContent="Submitting...";
+waitText.style.display="block";
 
 try{
 
@@ -2913,10 +2390,7 @@ error:userError
 } =
 await supabaseClient.auth.getUser();
 
-if(
-userError ||
-!user
-){
+if(userError || !user){
 
 throw new Error(
 "Please sign in again."
@@ -2925,10 +2399,7 @@ throw new Error(
 }
 
 const extension =
-file.name
-.split(".")
-.pop()
-.toLowerCase();
+file.name.split(".").pop().toLowerCase();
 
 const filePath =
 user.id +
@@ -2968,29 +2439,21 @@ await supabaseClient
 .from("Orders")
 .insert([{
 
-service:
-currentOrder.service,
+service:currentOrder.service,
 
-quantity:
-currentOrder.quantity,
+quantity:currentOrder.quantity,
 
-link:
-currentOrder.link,
+link:currentOrder.link,
 
-price:
-currentOrder.price,
+price:currentOrder.price,
 
-status:
-"Payment Submitted",
+status:"Payment Submitted",
 
-user_id:
-user.id,
+user_id:user.id,
 
-customer_email:
-user.email,
+customer_email:user.email,
 
-payment_screenshot_path:
-filePath
+payment_screenshot_path:filePath
 
 }])
 .select("order_id")
@@ -3000,9 +2463,7 @@ if(orderError){
 
 await supabaseClient.storage
 .from("payment-screenshots")
-.remove([
-filePath
-]);
+.remove([filePath]);
 
 throw orderError;
 
@@ -3011,27 +2472,13 @@ throw orderError;
 
 /* SUCCESS */
 
-document.getElementById(
-"successOrderId"
-).textContent =
-orderData?.order_id ||
-"Submitted";
+document.getElementById("successOrderId").textContent =
+orderData?.order_id || "Submitted";
 
-document.getElementById(
-"paymentPage"
-).classList.add("hidden");
-
-document.getElementById(
-"orderForm"
-).classList.add("hidden");
-
-document.getElementById(
-"myOrdersPage"
-).classList.add("hidden");
-
-document.getElementById(
-"successPage"
-).classList.remove("hidden");
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("orderForm").classList.add("hidden");
+document.getElementById("myOrdersPage").classList.add("hidden");
+document.getElementById("successPage").classList.remove("hidden");
 
 }
 catch(error){
@@ -3040,23 +2487,16 @@ console.error(error);
 
 alert(
 "Order submit failed: " +
-(
-error.message ||
-"Please try again."
-)
+(error.message || "Please try again.")
 );
 
 }
 finally{
 
-waitText.style.display =
-"none";
+waitText.style.display="none";
 
-button.disabled =
-false;
-
-button.textContent =
-"Payment Complete";
+button.disabled=false;
+button.textContent="Payment Complete";
 
 }
 
@@ -3069,101 +2509,49 @@ button.textContent =
 
 function newOrder(){
 
-currentOrder =
-null;
+currentOrder=null;
 
 closeCustomerMenu();
 
-document.getElementById(
-"service"
-).value =
-"";
+document.getElementById("service").value="";
+document.getElementById("quantity").value="";
+document.getElementById("link").value="";
+document.getElementById("price").textContent="₹0.00";
+document.getElementById("paymentScreenshot").value="";
 
-document.getElementById(
-"quantity"
-).value =
-"";
-
-document.getElementById(
-"link"
-).value =
-"";
-
-document.getElementById(
-"price"
-).textContent =
-"₹0.00";
-
-document.getElementById(
-"paymentScreenshot"
-).value =
-"";
-
-
-/* CLEAR OLD QR */
 
 const qrContainer =
-document.getElementById(
-"paymentQR"
-);
+document.getElementById("paymentQR");
 
 if(qrContainer){
-
-qrContainer.innerHTML =
-"";
-
+qrContainer.innerHTML="";
 }
 
 
-/* RESET UPI BUTTON */
-
 const upiButton =
-document.getElementById(
-"upiPayButton"
-);
+document.getElementById("upiPayButton");
 
 if(upiButton){
 
-upiButton.href =
-"#";
+upiButton.href="#";
 
-upiButton.removeAttribute(
-"data-amount"
-);
+upiButton.removeAttribute("data-amount");
 
 }
 
-document.getElementById(
-"paymentSubmitWait"
-).style.display =
-"none";
+
+document.getElementById("paymentSubmitWait").style.display="none";
 
 const button =
-document.getElementById(
-"confirmPaymentBtn"
-);
+document.getElementById("confirmPaymentBtn");
 
-button.disabled =
-false;
+button.disabled=false;
+button.textContent="Payment Complete";
 
-button.textContent =
-"Payment Complete";
-
-document.getElementById(
-"successPage"
-).classList.add("hidden");
-
-document.getElementById(
-"paymentPage"
-).classList.add("hidden");
-
-document.getElementById(
-"myOrdersPage"
-).classList.add("hidden");
-
-document.getElementById(
-"orderForm"
-).classList.remove("hidden");
+document.getElementById("successPage").classList.add("hidden");
+document.getElementById("paymentPage").classList.add("hidden");
+document.getElementById("myOrdersPage").classList.add("hidden");
+document.getElementById("orderForm").classList.remove("hidden");
 
 }
 
@@ -3175,15 +2563,11 @@ document.getElementById(
 async function loadAdminOrders(){
 
 const ordersContainer =
-document.getElementById(
-"adminOrders"
-);
+document.getElementById("adminOrders");
 
 ordersContainer.innerHTML =
 "Loading orders...";
 
-
-/* CHECK CURRENT USER */
 
 const {
 data:{user}
@@ -3198,9 +2582,6 @@ return;
 
 }
 
-
-/* VERIFY ADMIN */
-
 const isAdmin =
 await checkAdmin(user);
 
@@ -3212,8 +2593,6 @@ return;
 
 }
 
-
-/* LOAD ORDERS */
 
 const result =
 await supabaseClient
@@ -3229,19 +2608,14 @@ user_id,
 customer_email,
 payment_screenshot_path
 `)
-.order(
-"order_id",
-{
-ascending:false
-}
-);
+.order("order_id",{ascending:false});
+
 
 if(result.error){
 
 console.error(result.error);
 
-ordersContainer.innerHTML =
-"";
+ordersContainer.innerHTML="";
 
 showMessage(
 "adminMessage",
@@ -3254,10 +2628,11 @@ return;
 
 }
 
+
 const orders =
 result.data || [];
 
-if(orders.length === 0){
+if(orders.length===0){
 
 ordersContainer.innerHTML = `
 <div class="admin-empty">
@@ -3269,16 +2644,14 @@ return;
 
 }
 
-ordersContainer.innerHTML =
-"";
 
-orders.forEach(
-order => {
+ordersContainer.innerHTML="";
+
+
+orders.forEach(order=>{
 
 const orderBox =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 orderBox.className =
 "admin-order";
@@ -3290,8 +2663,8 @@ order.customer_email ||
 const screenshot =
 order.payment_screenshot_path;
 
-let screenshotHTML =
-"";
+let screenshotHTML="";
+
 
 if(screenshot){
 
@@ -3300,13 +2673,9 @@ data:publicData
 } =
 supabaseClient.storage
 .from("payment-screenshots")
-.getPublicUrl(
-screenshot
-);
+.getPublicUrl(screenshot);
 
-if(
-publicData?.publicUrl
-){
+if(publicData?.publicUrl){
 
 screenshotHTML = `
 <a
@@ -3322,6 +2691,7 @@ View Payment Screenshot
 }
 
 }
+
 
 orderBox.innerHTML = `
 
@@ -3342,9 +2712,7 @@ String(order.user_id || "-")
 
 <div>
 <strong>Customer Email:</strong>
-${escapeHTML(
-String(email)
-)}
+${escapeHTML(String(email))}
 </div>
 
 <div>
@@ -3392,48 +2760,48 @@ ${screenshotHTML}
 Change Order Status
 </label>
 
-<select
-id="status-${escapeAttribute(String(order.order_id))}"
->
+<select id="status-${escapeAttribute(
+String(order.order_id)
+)}">
 
 <option
 value="Payment Submitted"
-${order.status==="Payment Submitted" ? "selected" : ""}
+${order.status==="Payment Submitted"?"selected":""}
 >
 Payment Submitted
 </option>
 
 <option
 value="Payment Verified"
-${order.status==="Payment Verified" ? "selected" : ""}
+${order.status==="Payment Verified"?"selected":""}
 >
 Payment Verified
 </option>
 
 <option
 value="Processing"
-${order.status==="Processing" ? "selected" : ""}
+${order.status==="Processing"?"selected":""}
 >
 Processing
 </option>
 
 <option
 value="In Progress"
-${order.status==="In Progress" ? "selected" : ""}
+${order.status==="In Progress"?"selected":""}
 >
 In Progress
 </option>
 
 <option
 value="Completed"
-${order.status==="Completed" ? "selected" : ""}
+${order.status==="Completed"?"selected":""}
 >
 Completed
 </option>
 
 <option
 value="Cancelled"
-${order.status==="Cancelled" ? "selected" : ""}
+${order.status==="Cancelled"?"selected":""}
 >
 Cancelled
 </option>
@@ -3442,7 +2810,9 @@ Cancelled
 
 <button
 class="admin-action"
-onclick="updateOrderStatus('${escapeAttribute(String(order.order_id))}')"
+onclick="updateOrderStatus('${escapeAttribute(
+String(order.order_id)
+)}')"
 >
 Update Status
 </button>
@@ -3451,9 +2821,7 @@ Update Status
 
 `;
 
-ordersContainer.appendChild(
-orderBox
-);
+ordersContainer.appendChild(orderBox);
 
 });
 
@@ -3468,7 +2836,7 @@ async function updateOrderStatus(orderId){
 
 const select =
 document.getElementById(
-"status-" + orderId
+"status-"+orderId
 );
 
 if(!select){
@@ -3484,8 +2852,6 @@ return;
 const newStatus =
 select.value;
 
-
-/* CHECK ADMIN */
 
 const {
 data:{user}
@@ -3520,22 +2886,16 @@ return;
 }
 
 
-/* UPDATE */
-
 const {
 error
 } =
 await supabaseClient
 .from("Orders")
 .update({
-
 status:newStatus
-
 })
-.eq(
-"order_id",
-orderId
-);
+.eq("order_id",orderId);
+
 
 if(error){
 
@@ -3605,16 +2965,12 @@ return;
 }
 
 
-/* CHECK ADMIN */
-
 const isAdmin =
 await checkAdmin(user);
 
 if(isAdmin){
 
-document.getElementById(
-"adminEmail"
-).textContent =
+document.getElementById("adminEmail").textContent =
 user.email || "-";
 
 showAdmin();
@@ -3625,8 +2981,6 @@ return;
 
 }
 
-
-/* NORMAL CUSTOMER */
 
 loadCustomer();
 
