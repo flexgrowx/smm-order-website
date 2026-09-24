@@ -545,10 +545,7 @@ font-weight:700;
 color:#c4b5fd;
 }
 
-
-/* =========================
-   CUSTOMER MENU
-========================= */
+/* CUSTOMER MENU */
 
 .customer-menu-button{
 width:46px;
@@ -676,10 +673,7 @@ background:rgba(239,68,68,.12);
 box-shadow:none;
 }
 
-
-/* =========================
-   MY ORDERS
-========================= */
+/* MY ORDERS */
 
 .my-orders-page{
 padding-top:3px;
@@ -778,7 +772,6 @@ color:#fca5a5;
 font-size:12px;
 line-height:1.5;
 }
-
 
 /* ADMIN */
 
@@ -1025,7 +1018,6 @@ Sign In
 
 </div>
 
-
 <!-- SIGNIN -->
 
 <div id="signinPage" class="card hidden">
@@ -1081,12 +1073,9 @@ Create Account
 
 </div>
 
-
 <!-- CUSTOMER ORDER PAGE -->
 
 <div id="orderPage" class="card hidden">
-
-<!-- HAMBURGER -->
 
 <button
 id="menuButton"
@@ -1097,17 +1086,11 @@ aria-label="Open menu"
 ☰
 </button>
 
-
-<!-- CUSTOMER MENU OVERLAY -->
-
 <div
 id="customerMenuOverlay"
 class="customer-menu-overlay hidden"
 onclick="closeCustomerMenu()"
 ></div>
-
-
-<!-- CUSTOMER DRAWER -->
 
 <div
 id="customerMenu"
@@ -1137,7 +1120,6 @@ class="menu-user-id"
 
 </div>
 
-
 <button
 class="menu-item"
 onclick="showCustomerNewOrder()"
@@ -1152,7 +1134,6 @@ New Order
 </span>
 
 </button>
-
 
 <button
 class="menu-item new-order"
@@ -1170,9 +1151,6 @@ My Orders
 </button>
 
 </div>
-
-
-<!-- CUSTOMER INFO -->
 
 <div class="user-box">
 
@@ -1203,7 +1181,6 @@ Logout
 </button>
 
 </div>
-
 
 <!-- NEW ORDER -->
 
@@ -1331,7 +1308,6 @@ Continue to Payment
 
 </div>
 
-
 <!-- MY ORDERS -->
 
 <div
@@ -1354,7 +1330,6 @@ Loading orders...
 </div>
 
 </div>
-
 
 <!-- PAYMENT PAGE -->
 
@@ -1388,8 +1363,6 @@ id="paymentAmount"
 
 </div>
 
-<!-- DYNAMIC QR -->
-
 <div class="qr-frame">
 
 <div id="paymentQR"></div>
@@ -1402,8 +1375,6 @@ Scan this QR code using your UPI app.
 The order amount is automatically added to the payment.
 
 </div>
-
-<!-- OPEN UPI APP -->
 
 <a
 id="upiPayButton"
@@ -1458,7 +1429,6 @@ Back to Order
 
 </div>
 
-
 <!-- SUCCESS PAGE -->
 
 <div
@@ -1508,7 +1478,6 @@ Place New Order
 </div>
 
 </div>
-
 
 <!-- ADMIN PANEL -->
 
@@ -1583,13 +1552,11 @@ Refresh Orders
 
 </div>
 
-
 <div class="footer">
 GROWX • PREMIUM ORDER SYSTEM
 </div>
 
 </div>
-
 
 <script>
 
@@ -1830,13 +1797,11 @@ Loading orders...
 </div>
 `;
 
-
 const {
 data:{user},
 error:userError
 } =
 await supabaseClient.auth.getUser();
-
 
 if(
 userError ||
@@ -1852,9 +1817,6 @@ Your session has expired. Please sign in again.
 return;
 
 }
-
-
-/* ONLY CURRENT CUSTOMER ORDERS */
 
 const {
 data:orders,
@@ -1881,7 +1843,6 @@ ascending:false
 }
 );
 
-
 if(error){
 
 console.error(
@@ -1900,7 +1861,6 @@ return;
 
 }
 
-
 if(!orders || orders.length === 0){
 
 container.innerHTML = `
@@ -1915,9 +1875,7 @@ return;
 
 }
 
-
 container.innerHTML = "";
-
 
 orders.forEach(
 order => {
@@ -1929,7 +1887,6 @@ document.createElement(
 
 orderCard.className =
 "my-order-card";
-
 
 orderCard.innerHTML = `
 
@@ -1953,7 +1910,6 @@ String(order.service || "-")
 
 </div>
 
-
 <div class="my-order-row">
 
 <div class="my-order-label">
@@ -1967,7 +1923,6 @@ String(order.quantity ?? "-")
 </div>
 
 </div>
-
 
 <div class="my-order-row">
 
@@ -1983,7 +1938,6 @@ String(order.price ?? "0")
 
 </div>
 
-
 <div class="my-order-row">
 
 <div class="my-order-label">
@@ -1997,7 +1951,6 @@ String(order.link || "-")
 </div>
 
 </div>
-
 
 <div class="my-order-row">
 
@@ -2073,7 +2026,6 @@ const password =
 document.getElementById("signupPassword")
 .value;
 
-
 if(!name || !email || !password){
 
 showMessage(
@@ -2085,7 +2037,6 @@ showMessage(
 return;
 
 }
-
 
 const {data,error} =
 await supabaseClient.auth.signUp({
@@ -2102,7 +2053,6 @@ name:name
 
 });
 
-
 if(error){
 
 showMessage(
@@ -2114,7 +2064,6 @@ error.message,
 return;
 
 }
-
 
 showMessage(
 "signupMessage",
@@ -2140,7 +2089,6 @@ const password =
 document.getElementById("signinPassword")
 .value;
 
-
 if(!email || !password){
 
 showMessage(
@@ -2152,7 +2100,6 @@ showMessage(
 return;
 
 }
-
 
 const {
 data,
@@ -2167,7 +2114,6 @@ password:password
 
 });
 
-
 if(error){
 
 showMessage(
@@ -2180,10 +2126,8 @@ return;
 
 }
 
-
 const user =
 data?.user;
-
 
 if(!user){
 
@@ -2197,12 +2141,8 @@ return;
 
 }
 
-
-/* CHECK ADMIN */
-
 const isAdmin =
 await checkAdmin(user);
-
 
 if(isAdmin){
 
@@ -2218,9 +2158,6 @@ await loadAdminOrders();
 return;
 
 }
-
-
-/* NORMAL CUSTOMER */
 
 loadCustomer();
 
@@ -2238,7 +2175,6 @@ data:{user}
 } =
 await supabaseClient.auth.getUser();
 
-
 if(!user){
 
 showSignin();
@@ -2247,18 +2183,15 @@ return;
 
 }
 
-
 const name =
 user.user_metadata?.name ||
 user.email?.split("@")[0] ||
 "Customer";
 
-
 document.getElementById(
 "customerName"
 ).textContent =
 name;
-
 
 document.getElementById(
 "avatar"
@@ -2267,16 +2200,10 @@ name
 .charAt(0)
 .toUpperCase();
 
-
-/* SET CUSTOMER USER ID */
-
 document.getElementById(
 "menuUserId"
 ).textContent =
 user.id;
-
-
-/* RESET TO NEW ORDER */
 
 document.getElementById(
 "myOrdersPage"
@@ -2293,7 +2220,6 @@ document.getElementById(
 document.getElementById(
 "orderForm"
 ).classList.remove("hidden");
-
 
 showOrder();
 
@@ -2469,7 +2395,6 @@ document.getElementById("quantity")
 .value
 );
 
-
 if(
 !selected ||
 !selected.value ||
@@ -2485,13 +2410,11 @@ return;
 
 }
 
-
 const rate =
 getCurrentRate(
 selected.value,
 quantity
 );
-
 
 if(rate<=0){
 
@@ -2504,10 +2427,8 @@ return;
 
 }
 
-
 const total =
 (quantity / 1000) * rate;
-
 
 document.getElementById(
 "price"
@@ -2518,87 +2439,113 @@ total.toFixed(2);
 }
 
 
-/* =========================
-   CREATE UPI PAYMENT URL
-========================= */
+/* =====================================================
+   FIXED STANDARD UPI PAYMENT URL
+   ===================================================== */
 
-function createUPIPaymentURL(
-amount,
-service,
-quantity
+function createUPIPaymentURL(amount){
+
+const numericAmount =
+Number(amount);
+
+if(
+!Number.isFinite(numericAmount) ||
+numericAmount <= 0
 ){
+return "";
+}
 
 const safeAmount =
-Number(amount).toFixed(2);
+numericAmount.toFixed(2);
 
-const transactionNote =
-"GROWX " +
-service +
-" " +
-quantity;
+/*
+   IMPORTANT:
+   Only standard UPI parameters are used.
+
+   pa = UPI ID
+   pn = Payee name
+   am = Dynamic amount
+   cu = Currency
+
+   Transaction note (tn) intentionally removed
+   for better compatibility with UPI apps.
+*/
 
 return (
 "upi://pay" +
-"?pa=" +
-encodeURIComponent(GROWX_UPI_ID) +
-"&pn=" +
-encodeURIComponent(GROWX_UPI_NAME) +
-"&am=" +
-encodeURIComponent(safeAmount) +
-"&cu=INR" +
-"&tn=" +
-encodeURIComponent(transactionNote)
+"?pa=" + encodeURIComponent(GROWX_UPI_ID) +
+"&pn=" + encodeURIComponent(GROWX_UPI_NAME) +
+"&am=" + encodeURIComponent(safeAmount) +
+"&cu=INR"
 );
 
 }
 
 
-/* =========================
-   GENERATE DYNAMIC QR
-========================= */
+/* =====================================================
+   GENERATE DYNAMIC UPI QR
+   ===================================================== */
 
 function generatePaymentQR(){
 
 const qrContainer =
-document.getElementById(
-"paymentQR"
-);
+document.getElementById("paymentQR");
 
 const upiButton =
-document.getElementById(
-"upiPayButton"
-);
-
+document.getElementById("upiPayButton");
 
 if(
 !qrContainer ||
 !currentOrder
 ){
-
 return;
-
 }
 
-
 const amount =
-Number(
-currentOrder.price
-);
-
+Number(currentOrder.price);
 
 if(
 !Number.isFinite(amount) ||
 amount <= 0
 ){
 
-qrContainer.innerHTML =
-"<span style='color:#dc2626;font-size:12px;font-weight:700'>Invalid payment amount</span>";
+qrContainer.innerHTML = `
+<span style="
+color:#dc2626;
+font-size:12px;
+font-weight:700;
+text-align:center;
+">
+Invalid payment amount
+</span>
+`;
 
 if(upiButton){
+upiButton.href = "#";
+}
 
-upiButton.href =
-"#";
+return;
 
+}
+
+const upiURL =
+createUPIPaymentURL(amount);
+
+if(!upiURL){
+
+qrContainer.innerHTML = `
+<span style="
+color:#dc2626;
+font-size:12px;
+font-weight:700;
+text-align:center;
+">
+Could not create UPI payment QR
+</span>
+`;
+
+if(upiButton){
+upiButton.href = "#";
 }
 
 return;
@@ -2606,21 +2553,14 @@ return;
 }
 
 
-const upiURL =
-createUPIPaymentURL(
-amount,
-currentOrder.service,
-currentOrder.quantity
-);
-
-
 /* CLEAR OLD QR */
 
-qrContainer.innerHTML =
-"";
+qrContainer.innerHTML = "";
 
 
 /* GENERATE NEW QR */
+
+try{
 
 new QRCode(
 qrContainer,
@@ -2633,6 +2573,28 @@ colorLight:"#ffffff",
 correctLevel:QRCode.CorrectLevel.M
 }
 );
+
+}
+catch(error){
+
+console.error(
+"QR generation error:",
+error
+);
+
+qrContainer.innerHTML = `
+<span style="
+color:#dc2626;
+font-size:12px;
+font-weight:700;
+text-align:center;
+padding:10px;
+">
+QR generation failed
+</span>
+`;
+
+}
 
 
 /* OPEN UPI APP BUTTON */
@@ -2677,7 +2639,6 @@ document.getElementById("link")
 .value
 .trim();
 
-
 if(
 !selected ||
 !selected.value
@@ -2691,7 +2652,6 @@ return;
 
 }
 
-
 const min =
 Number(
 selected.dataset.min
@@ -2701,7 +2661,6 @@ const max =
 Number(
 selected.dataset.max
 );
-
 
 if(
 !quantity ||
@@ -2721,13 +2680,11 @@ return;
 
 }
 
-
 const rate =
 getCurrentRate(
 selected.value,
 quantity
 );
-
 
 if(rate<=0){
 
@@ -2739,7 +2696,6 @@ return;
 
 }
 
-
 if(!link){
 
 alert(
@@ -2750,18 +2706,13 @@ return;
 
 }
 
-
 const total =
 (quantity / 1000) * rate;
-
 
 const finalAmount =
 Number(
 total.toFixed(2)
 );
-
-
-/* EXTRA AMOUNT CHECK */
 
 if(
 !Number.isFinite(finalAmount) ||
@@ -2850,17 +2801,16 @@ document.getElementById(
 ).style.display =
 "none";
 
-
 const button =
 document.getElementById(
 "confirmPaymentBtn"
 );
 
-button.disabled = false;
+button.disabled =
+false;
 
 button.textContent =
 "Payment Complete";
-
 
 document.getElementById(
 "paymentPage"
@@ -2897,12 +2847,10 @@ return;
 
 }
 
-
 const file =
 document.getElementById(
 "paymentScreenshot"
 ).files[0];
-
 
 if(!file){
 
@@ -2913,7 +2861,6 @@ alert(
 return;
 
 }
-
 
 if(
 !file.type.startsWith("image/")
@@ -2927,7 +2874,6 @@ return;
 
 }
 
-
 if(
 file.size > 10 * 1024 * 1024
 ){
@@ -2940,7 +2886,6 @@ return;
 
 }
 
-
 const button =
 document.getElementById(
 "confirmPaymentBtn"
@@ -2951,15 +2896,14 @@ document.getElementById(
 "paymentSubmitWait"
 );
 
-
-button.disabled = true;
+button.disabled =
+true;
 
 button.textContent =
 "Submitting...";
 
 waitText.style.display =
 "block";
-
 
 try{
 
@@ -2968,7 +2912,6 @@ data:{user},
 error:userError
 } =
 await supabaseClient.auth.getUser();
-
 
 if(
 userError ||
@@ -2981,13 +2924,11 @@ throw new Error(
 
 }
 
-
 const extension =
 file.name
 .split(".")
 .pop()
 .toLowerCase();
-
 
 const filePath =
 user.id +
@@ -2995,7 +2936,6 @@ user.id +
 Date.now() +
 "-payment." +
 extension;
-
 
 const {
 error:uploadError
@@ -3010,7 +2950,6 @@ upsert:false,
 contentType:file.type
 }
 );
-
 
 if(uploadError){
 
@@ -3057,7 +2996,6 @@ filePath
 .select("order_id")
 .single();
 
-
 if(orderError){
 
 await supabaseClient.storage
@@ -3079,7 +3017,6 @@ document.getElementById(
 orderData?.order_id ||
 "Submitted";
 
-
 document.getElementById(
 "paymentPage"
 ).classList.add("hidden");
@@ -3095,7 +3032,6 @@ document.getElementById(
 document.getElementById(
 "successPage"
 ).classList.remove("hidden");
-
 
 }
 catch(error){
@@ -3116,7 +3052,8 @@ finally{
 waitText.style.display =
 "none";
 
-button.disabled = false;
+button.disabled =
+false;
 
 button.textContent =
 "Payment Complete";
@@ -3132,10 +3069,10 @@ button.textContent =
 
 function newOrder(){
 
-currentOrder = null;
+currentOrder =
+null;
 
 closeCustomerMenu();
-
 
 document.getElementById(
 "service"
@@ -3196,23 +3133,21 @@ upiButton.removeAttribute(
 
 }
 
-
 document.getElementById(
 "paymentSubmitWait"
 ).style.display =
 "none";
-
 
 const button =
 document.getElementById(
 "confirmPaymentBtn"
 );
 
-button.disabled = false;
+button.disabled =
+false;
 
 button.textContent =
 "Payment Complete";
-
 
 document.getElementById(
 "successPage"
@@ -3255,7 +3190,6 @@ data:{user}
 } =
 await supabaseClient.auth.getUser();
 
-
 if(!user){
 
 showSignin();
@@ -3269,7 +3203,6 @@ return;
 
 const isAdmin =
 await checkAdmin(user);
-
 
 if(!isAdmin){
 
@@ -3303,12 +3236,12 @@ ascending:false
 }
 );
 
-
 if(result.error){
 
 console.error(result.error);
 
-ordersContainer.innerHTML = "";
+ordersContainer.innerHTML =
+"";
 
 showMessage(
 "adminMessage",
@@ -3321,10 +3254,8 @@ return;
 
 }
 
-
 const orders =
 result.data || [];
-
 
 if(orders.length === 0){
 
@@ -3338,10 +3269,8 @@ return;
 
 }
 
-
 ordersContainer.innerHTML =
 "";
-
 
 orders.forEach(
 order => {
@@ -3354,19 +3283,15 @@ document.createElement(
 orderBox.className =
 "admin-order";
 
-
 const email =
 order.customer_email ||
 "Email not available";
 
-
 const screenshot =
 order.payment_screenshot_path;
 
-
 let screenshotHTML =
 "";
-
 
 if(screenshot){
 
@@ -3378,7 +3303,6 @@ supabaseClient.storage
 .getPublicUrl(
 screenshot
 );
-
 
 if(
 publicData?.publicUrl
@@ -3398,7 +3322,6 @@ View Payment Screenshot
 }
 
 }
-
 
 orderBox.innerHTML = `
 
@@ -3548,7 +3471,6 @@ document.getElementById(
 "status-" + orderId
 );
 
-
 if(!select){
 
 alert(
@@ -3558,7 +3480,6 @@ alert(
 return;
 
 }
-
 
 const newStatus =
 select.value;
@@ -3570,7 +3491,6 @@ const {
 data:{user}
 } =
 await supabaseClient.auth.getUser();
-
 
 if(!user){
 
@@ -3584,10 +3504,8 @@ return;
 
 }
 
-
 const isAdmin =
 await checkAdmin(user);
-
 
 if(!isAdmin){
 
@@ -3619,7 +3537,6 @@ status:newStatus
 orderId
 );
 
-
 if(error){
 
 console.error(error);
@@ -3633,11 +3550,9 @@ return;
 
 }
 
-
 alert(
 "Order status updated successfully."
 );
-
 
 loadAdminOrders();
 
@@ -3681,7 +3596,6 @@ data:{user}
 } =
 await supabaseClient.auth.getUser();
 
-
 if(!user){
 
 showSignin();
@@ -3695,7 +3609,6 @@ return;
 
 const isAdmin =
 await checkAdmin(user);
-
 
 if(isAdmin){
 
