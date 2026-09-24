@@ -6,1010 +6,1518 @@
 <title>GROWX ORDER</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-  --bg:#050816;
-  --card:#0d1428;
-  --card2:#111a31;
-  --border:rgba(255,255,255,.09);
-  --text:#fff;
-  --muted:#9ba8c7;
-  --primary:#6c63ff;
-  --primary2:#8b5cf6;
-  --green:#22c55e;
-  --red:#ef4444;
-  --yellow:#f59e0b;
+--bg:#050816;
+--card:rgba(15,23,42,.78);
+--border:rgba(148,163,184,.18);
+--text:#f8fafc;
+--muted:#94a3b8;
+--primary:#7c3aed;
+--primary2:#4f46e5;
+--green:#22c55e;
 }
+
+html{scroll-behavior:smooth}
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at top left,rgba(108,99,255,.18),transparent 35%),
-    radial-gradient(circle at bottom right,rgba(139,92,246,.12),transparent 35%),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
+min-height:100vh;
+background:
+radial-gradient(circle at 15% 10%,rgba(124,58,237,.24),transparent 30%),
+radial-gradient(circle at 85% 20%,rgba(6,182,212,.16),transparent 28%),
+radial-gradient(circle at 50% 100%,rgba(79,70,229,.18),transparent 35%),
+#050816;
+color:var(--text);
+font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+overflow-x:hidden;
 }
 
-button,input,select{
-  font:inherit;
+body:before{
+content:"";
+position:fixed;
+width:300px;
+height:300px;
+left:-140px;
+top:35%;
+background:rgba(124,58,237,.15);
+filter:blur(90px);
+border-radius:50%;
+pointer-events:none;
 }
 
-button{
-  cursor:pointer;
+body:after{
+content:"";
+position:fixed;
+width:280px;
+height:280px;
+right:-130px;
+top:55%;
+background:rgba(6,182,212,.12);
+filter:blur(90px);
+border-radius:50%;
+pointer-events:none;
 }
-
-.hidden{
-  display:none!important;
-}
-
-.app{
-  min-height:100vh;
-}
-
-/* HEADER */
-
-.header{
-  height:65px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  border-bottom:1px solid var(--border);
-  background:rgba(5,8,22,.85);
-  backdrop-filter:blur(15px);
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-
-.logo{
-  font-size:21px;
-  font-weight:800;
-  letter-spacing:.5px;
-}
-
-.logo span{
-  color:#8b7cff;
-}
-
-.menu-btn{
-  width:42px;
-  height:42px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:white;
-  border-radius:12px;
-  font-size:22px;
-}
-
-/* SIDE MENU */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:90;
-}
-
-.side-menu{
-  position:fixed;
-  top:0;
-  left:-300px;
-  width:285px;
-  height:100vh;
-  background:#090f20;
-  border-right:1px solid var(--border);
-  z-index:100;
-  transition:.25s;
-  padding:20px;
-}
-
-.side-menu.open{
-  left:0;
-}
-
-.menu-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:25px;
-}
-
-.menu-head h2{
-  font-size:20px;
-}
-
-.close-menu{
-  background:none;
-  border:0;
-  color:white;
-  font-size:25px;
-}
-
-.user-box{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:15px;
-  margin-bottom:20px;
-}
-
-.user-box small{
-  color:var(--muted);
-}
-
-.user-email{
-  margin-top:5px;
-  word-break:break-word;
-}
-
-.menu-item{
-  width:100%;
-  border:0;
-  background:transparent;
-  color:white;
-  text-align:left;
-  padding:14px 12px;
-  border-radius:10px;
-  margin-bottom:5px;
-}
-
-.menu-item:hover{
-  background:var(--card2);
-}
-
-.logout{
-  color:#ff7373;
-}
-
-/* MAIN */
 
 .container{
-  width:min(100%,1000px);
-  margin:auto;
-  padding:25px 15px 50px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
+width:100%;
+max-width:520px;
+margin:0 auto;
+padding:24px 16px 45px;
+position:relative;
+z-index:2;
 }
 
 .card{
-  background:rgba(13,20,40,.9);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 15px 50px rgba(0,0,0,.2);
+position:relative;
+background:linear-gradient(145deg,rgba(15,23,42,.92),rgba(15,23,42,.70));
+border:1px solid var(--border);
+border-radius:26px;
+padding:25px;
+box-shadow:0 25px 70px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04);
+backdrop-filter:blur(24px);
+-webkit-backdrop-filter:blur(24px);
+overflow:hidden;
 }
 
-.title{
-  font-size:27px;
-  font-weight:800;
-  margin-bottom:7px;
+.card:before{
+content:"";
+position:absolute;
+width:170px;
+height:170px;
+top:-100px;
+right:-80px;
+background:radial-gradient(circle,rgba(124,58,237,.28),transparent 70%);
+pointer-events:none;
 }
 
-.subtitle{
-  color:var(--muted);
-  margin-bottom:22px;
-  line-height:1.5;
+.brand{
+text-align:center;
+margin-bottom:28px;
 }
 
-/* FORMS */
+.brand-icon{
+width:58px;
+height:58px;
+margin:0 auto 13px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:18px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5,#06b6d4);
+box-shadow:0 12px 35px rgba(124,58,237,.35);
+font-size:25px;
+font-weight:1000;
+}
+
+.brand-name{
+font-size:27px;
+font-weight:950;
+letter-spacing:1.5px;
+background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+}
+
+.brand-subtitle{
+margin-top:5px;
+color:var(--muted);
+font-size:12px;
+letter-spacing:1.5px;
+}
+
+h1{display:none}
+
+h2{
+font-size:22px;
+font-weight:850;
+margin-bottom:20px;
+letter-spacing:-.3px;
+}
+
+.user-box{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+margin-bottom:25px;
+border-radius:17px;
+background:rgba(30,41,59,.58);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.avatar{
+width:46px;
+height:46px;
+flex-shrink:0;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:15px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+box-shadow:0 8px 25px rgba(124,58,237,.25);
+color:white;
+font-size:17px;
+font-weight:900;
+}
+
+.user-info{
+flex:1;
+min-width:0;
+}
+
+.user-name{
+font-size:14px;
+font-weight:800;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.user-label{
+margin-top:3px;
+color:var(--muted);
+font-size:11px;
+}
 
 label{
-  display:block;
-  color:#cbd5e1;
-  font-size:14px;
-  margin-bottom:7px;
-}
-
-.input-group{
-  margin-bottom:16px;
+display:block;
+margin-bottom:7px;
+color:#cbd5e1;
+font-size:12px;
+font-weight:750;
+letter-spacing:.3px;
 }
 
 input,select{
-  width:100%;
-  height:50px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:#080e20;
-  color:white;
-  padding:0 14px;
-  outline:none;
+width:100%;
+height:50px;
+margin-bottom:18px;
+padding:0 15px;
+border-radius:13px;
+border:1px solid rgba(148,163,184,.17);
+background:rgba(2,6,23,.60);
+color:#f8fafc;
+outline:none;
+font-size:14px;
+transition:border .2s,box-shadow .2s,background .2s;
 }
 
-input:focus,select:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(108,99,255,.12);
+input::placeholder{
+color:#64748b;
+}
+
+select{
+cursor:pointer;
 }
 
 select option{
-  background:#0b1225;
+background:#0f172a;
+color:white;
 }
 
-.btn{
-  width:100%;
-  min-height:50px;
-  border:0;
-  border-radius:12px;
-  color:white;
-  font-weight:700;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-  box-shadow:0 10px 25px rgba(108,99,255,.2);
+input:focus,select:focus{
+border-color:rgba(124,58,237,.85);
+background:rgba(2,6,23,.82);
+box-shadow:0 0 0 4px rgba(124,58,237,.10);
 }
 
-.btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
+button{
+width:100%;
+min-height:50px;
+border:0;
+border-radius:14px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+font-size:14px;
+font-weight:850;
+cursor:pointer;
+box-shadow:0 12px 28px rgba(79,70,229,.25);
+transition:transform .2s,box-shadow .2s,opacity .2s;
 }
 
-.btn-secondary{
-  background:#151e38;
-  box-shadow:none;
+button:hover{
+transform:translateY(-1px);
+box-shadow:0 16px 34px rgba(79,70,229,.34);
 }
 
-.btn-green{
-  background:linear-gradient(135deg,#16a34a,#22c55e);
+button:active{
+transform:translateY(0);
 }
 
-.btn-danger{
-  background:linear-gradient(135deg,#dc2626,#ef4444);
+button:disabled{
+opacity:.6;
+cursor:not-allowed;
+transform:none;
 }
 
-.link-btn{
-  border:0;
-  background:none;
-  color:#918aff;
-  margin-top:15px;
-  width:100%;
+.logout{
+width:auto;
+min-height:auto;
+padding:9px 13px;
+border-radius:10px;
+font-size:11px;
+background:rgba(239,68,68,.10);
+border:1px solid rgba(239,68,68,.22);
+color:#fca5a5;
+box-shadow:none;
 }
 
-/* AUTH */
-
-.auth-wrap{
-  max-width:480px;
-  margin:30px auto;
+.logout:hover{
+background:rgba(239,68,68,.18);
+box-shadow:none;
 }
-
-.auth-logo{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-.auth-logo h1{
-  font-size:32px;
-}
-
-.auth-logo span{
-  color:#8b7cff;
-}
-
-/* ORDER */
 
 .price-box{
-  margin:18px 0;
-  padding:18px;
-  border-radius:15px;
-  background:linear-gradient(135deg,rgba(108,99,255,.12),rgba(139,92,246,.07));
-  border:1px solid rgba(108,99,255,.25);
+position:relative;
+margin-top:2px;
+margin-bottom:20px;
+padding:17px;
+border-radius:17px;
+background:linear-gradient(135deg,rgba(124,58,237,.13),rgba(6,182,212,.07));
+border:1px solid rgba(124,58,237,.22);
 }
 
 .price-label{
-  color:var(--muted);
-  font-size:13px;
+color:#94a3b8;
+font-size:11px;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:1px;
 }
 
 .price{
-  font-size:30px;
-  font-weight:800;
-  margin-top:4px;
+margin-top:5px;
+font-size:29px;
+font-weight:950;
+color:#ffffff;
 }
 
-.service-info{
-  background:#080e20;
-  border:1px solid var(--border);
-  padding:13px;
-  border-radius:12px;
-  margin-bottom:15px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
+.message{
+display:none;
+margin-bottom:16px;
+padding:12px 14px;
+border-radius:12px;
+font-size:12px;
+line-height:1.5;
 }
 
-/* PAYMENT */
-
-.payment-card{
-  max-width:550px;
-  margin:auto;
-  text-align:center;
+.error{
+background:rgba(239,68,68,.10);
+border:1px solid rgba(239,68,68,.22);
+color:#fca5a5;
 }
 
-.amount-big{
-  font-size:38px;
-  font-weight:900;
-  margin:10px 0 5px;
+.success{
+background:rgba(34,197,94,.10);
+border:1px solid rgba(34,197,94,.22);
+color:#86efac;
 }
 
-.upi-id{
-  color:#aeb8d2;
-  margin-bottom:20px;
+.payment-submit-wait{
+display:none;
+text-align:center;
+margin-top:9px;
+margin-bottom:2px;
+color:#94a3b8;
+font-size:12px;
+line-height:1.5;
 }
 
-.qr-wrap{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:white;
-  padding:14px;
-  border-radius:18px;
-  min-width:260px;
-  min-height:260px;
+.payment-box{
+text-align:center;
+padding:8px 0 4px;
 }
 
-#qrcode img,
-#qrcode canvas{
-  display:block;
+.payment-title{
+font-size:24px;
+font-weight:900;
+background:linear-gradient(90deg,#fff,#c4b5fd);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+margin-bottom:8px;
 }
 
-.qr-note{
-  color:var(--muted);
-  font-size:13px;
-  margin:14px 0 20px;
+.payment-subtitle{
+color:var(--muted);
+font-size:12px;
+margin-bottom:18px;
+}
+
+.payment-amount-box{
+display:inline-flex;
+align-items:center;
+gap:5px;
+padding:9px 16px;
+margin-bottom:20px;
+border-radius:30px;
+background:rgba(34,197,94,.09);
+border:1px solid rgba(34,197,94,.20);
+}
+
+.payment-amount-label{
+color:#86efac;
+font-size:11px;
+font-weight:700;
+}
+
+.payment-amount{
+color:#bbf7d0;
+font-size:17px;
+font-weight:900;
+}
+
+.qr-frame{
+width:252px;
+max-width:100%;
+padding:11px;
+margin:0 auto 16px;
+border-radius:20px;
+background:white;
+box-shadow:0 15px 45px rgba(0,0,0,.35);
+}
+
+.payment-qr{
+width:100%;
+height:auto;
+display:block;
+border-radius:11px;
+}
+
+.payment-note{
+color:#94a3b8;
+font-size:11px;
+line-height:1.6;
+margin:0 auto 20px;
+max-width:350px;
 }
 
 .upload-box{
-  text-align:left;
-  margin-top:20px;
+text-align:left;
+margin-top:5px;
+margin-bottom:3px;
+padding:15px;
+border-radius:15px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
 }
 
-.upload-box input{
-  padding-top:13px;
+.upload-label{
+margin-bottom:9px;
+color:#e2e8f0;
+font-size:12px;
 }
 
-.file-name{
-  color:#aeb8d2;
-  font-size:13px;
-  margin-top:8px;
-  word-break:break-word;
+.file-input{
+height:auto;
+margin:0;
+padding:11px;
+background:rgba(2,6,23,.55);
+font-size:12px;
 }
 
-/* ORDERS */
-
-.order-list{
-  display:grid;
-  gap:12px;
+.file-input::file-selector-button{
+border:0;
+padding:8px 11px;
+margin-right:8px;
+border-radius:8px;
+background:rgba(124,58,237,.18);
+color:#c4b5fd;
+font-weight:700;
+cursor:pointer;
 }
 
-.order-card{
-  background:#080e20;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:16px;
+.confirm-btn{
+margin-top:15px;
+background:linear-gradient(135deg,#16a34a,#059669);
+box-shadow:0 12px 28px rgba(22,163,74,.22);
 }
 
-.order-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:12px;
+.confirm-btn:hover{
+box-shadow:0 16px 34px rgba(22,163,74,.30);
 }
 
-.order-id{
-  font-weight:800;
+.back-btn{
+margin-top:10px;
+background:rgba(100,116,139,.13);
+border:1px solid rgba(148,163,184,.18);
+color:#cbd5e1;
+box-shadow:none;
 }
 
-.status{
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:700;
+.back-btn:hover{
+background:rgba(100,116,139,.20);
+box-shadow:none;
 }
-
-.status.pending{
-  background:rgba(245,158,11,.12);
-  color:#fbbf24;
-}
-
-.status.success{
-  background:rgba(34,197,94,.12);
-  color:#4ade80;
-}
-
-.status.failed{
-  background:rgba(239,68,68,.12);
-  color:#f87171;
-}
-
-.order-info{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  color:#b7c0d8;
-  font-size:13px;
-}
-
-.order-info div{
-  padding:8px;
-  background:#0d1428;
-  border-radius:8px;
-}
-
-.order-info strong{
-  color:white;
-}
-
-.order-link{
-  margin-top:10px;
-  color:#8b7cff;
-  word-break:break-all;
-}
-
-/* ADMIN */
-
-.admin-grid{
-  display:grid;
-  gap:15px;
-}
-
-.admin-card{
-  background:#080e20;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:16px;
-}
-
-.admin-actions{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-}
-
-.admin-actions button{
-  flex:1;
-  border:0;
-  border-radius:9px;
-  padding:10px;
-  color:white;
-  font-weight:700;
-}
-
-.btn-complete{
-  background:#16a34a;
-}
-
-.btn-processing{
-  background:#2563eb;
-}
-
-.btn-cancel{
-  background:#dc2626;
-}
-
-.screenshot-link{
-  display:inline-block;
-  margin-top:10px;
-  color:#918aff;
-}
-
-/* ALERT */
-
-.alert{
-  padding:13px 14px;
-  border-radius:11px;
-  margin-bottom:15px;
-  font-size:14px;
-  display:none;
-}
-
-.alert.show{
-  display:block;
-}
-
-.alert.error{
-  background:rgba(239,68,68,.12);
-  border:1px solid rgba(239,68,68,.25);
-  color:#fca5a5;
-}
-
-.alert.success{
-  background:rgba(34,197,94,.12);
-  border:1px solid rgba(34,197,94,.25);
-  color:#86efac;
-}
-
-/* SUCCESS */
 
 .success-box{
-  text-align:center;
-  max-width:500px;
-  margin:auto;
+text-align:center;
+padding:18px 5px 5px;
 }
 
 .success-icon{
-  width:75px;
-  height:75px;
-  margin:0 auto 20px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(34,197,94,.12);
-  color:#4ade80;
-  font-size:40px;
+width:75px;
+height:75px;
+margin:0 auto 18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:24px;
+background:rgba(34,197,94,.10);
+border:1px solid rgba(34,197,94,.22);
+font-size:35px;
+box-shadow:0 15px 40px rgba(34,197,94,.10);
 }
 
-.success-order{
-  font-size:28px;
-  font-weight:900;
-  margin:10px 0 25px;
-  color:#8b7cff;
+.success-title{
+font-size:22px;
+font-weight:900;
+color:#86efac;
+margin-bottom:10px;
 }
 
-/* LOADING */
-
-.loader{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:200;
-  align-items:center;
-  justify-content:center;
+.success-text{
+color:#94a3b8;
+font-size:12px;
+line-height:1.7;
 }
 
-.loader.show{
-  display:flex;
+.order-id{
+margin-top:18px;
+padding:14px;
+border-radius:13px;
+background:rgba(30,41,59,.65);
+border:1px solid rgba(148,163,184,.14);
+color:#cbd5e1;
+font-size:12px;
+font-weight:700;
 }
 
-.spinner{
-  width:45px;
-  height:45px;
-  border:4px solid rgba(255,255,255,.15);
-  border-top-color:#8b7cff;
-  border-radius:50%;
-  animation:spin .7s linear infinite;
+#successOrderId{
+color:#c4b5fd;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
+
+/* =========================
+   CUSTOMER MENU
+========================= */
+
+.customer-menu-button{
+width:46px;
+height:46px;
+min-height:46px;
+padding:0;
+margin:0 0 17px 0;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:14px;
+font-size:24px;
+line-height:1;
+background:rgba(30,41,59,.65);
+border:1px solid rgba(148,163,184,.16);
+box-shadow:none;
 }
 
-/* ADMIN LOGIN */
-
-.admin-login{
-  max-width:480px;
-  margin:30px auto;
+.customer-menu-button:hover{
+background:rgba(124,58,237,.18);
+box-shadow:none;
 }
 
-/* DESKTOP */
-
-@media(min-width:700px){
-  .order-form-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-  }
-
-  .order-form-grid .full{
-    grid-column:1/-1;
-  }
-
-  .admin-grid{
-    grid-template-columns:1fr 1fr;
-  }
+.customer-menu-overlay{
+position:fixed;
+inset:0;
+z-index:9998;
+background:rgba(0,0,0,.60);
+backdrop-filter:blur(3px);
+-webkit-backdrop-filter:blur(3px);
 }
 
-@media(max-width:500px){
-  .container{
-    padding:18px 12px 40px;
-  }
+.customer-menu{
+position:fixed;
+top:0;
+left:0;
+bottom:0;
+z-index:9999;
+width:min(310px,82vw);
+padding:25px 18px;
+background:linear-gradient(160deg,#0f172a,#080d1d);
+border-right:1px solid rgba(148,163,184,.18);
+box-shadow:18px 0 50px rgba(0,0,0,.45);
+transform:translateX(-105%);
+transition:transform .25s ease;
+overflow-y:auto;
+}
 
-  .card{
-    padding:16px;
-    border-radius:16px;
-  }
+.customer-menu.open{
+transform:translateX(0);
+}
 
-  .title{
-    font-size:24px;
-  }
+.menu-user-section{
+padding:16px;
+margin-bottom:16px;
+border-radius:15px;
+background:rgba(30,41,59,.60);
+border:1px solid rgba(148,163,184,.14);
+}
 
-  .order-info{
-    grid-template-columns:1fr;
-  }
+.menu-user-label{
+color:#94a3b8;
+font-size:11px;
+font-weight:700;
+margin-bottom:7px;
+}
 
-  .qr-wrap{
-    min-width:230px;
-    min-height:230px;
-  }
+.menu-user-id{
+color:#e2e8f0;
+font-size:11px;
+line-height:1.55;
+word-break:break-all;
+}
+
+.menu-item{
+width:100%;
+min-height:48px;
+margin-bottom:8px;
+padding:0 15px;
+display:flex;
+align-items:center;
+gap:10px;
+text-align:left;
+border-radius:13px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.12);
+box-shadow:none;
+color:#e2e8f0;
+font-size:13px;
+font-weight:800;
+}
+
+.menu-item:hover{
+background:rgba(124,58,237,.17);
+box-shadow:none;
+}
+
+.menu-item.new-order{
+margin-bottom:15px;
+}
+
+.menu-item-icon{
+width:20px;
+text-align:center;
+font-size:16px;
+}
+
+.menu-close{
+position:absolute;
+top:16px;
+right:14px;
+width:38px;
+height:38px;
+min-height:38px;
+padding:0;
+border-radius:11px;
+background:rgba(100,116,139,.12);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:none;
+font-size:20px;
+}
+
+.menu-close:hover{
+background:rgba(239,68,68,.12);
+box-shadow:none;
+}
+
+
+/* =========================
+   MY ORDERS
+========================= */
+
+.my-orders-page{
+padding-top:3px;
+}
+
+.my-orders-heading{
+font-size:23px;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.avg-time{
+display:inline-flex;
+align-items:center;
+padding:8px 13px;
+margin-bottom:20px;
+border-radius:20px;
+background:rgba(34,197,94,.09);
+border:1px solid rgba(34,197,94,.20);
+color:#86efac;
+font-size:11px;
+font-weight:800;
+}
+
+.my-order-card{
+padding:16px;
+margin-bottom:13px;
+border-radius:17px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.my-order-id{
+font-size:14px;
+font-weight:900;
+color:#c4b5fd;
+margin-bottom:13px;
+}
+
+.my-order-row{
+display:flex;
+gap:8px;
+padding:6px 0;
+font-size:12px;
+line-height:1.5;
+}
+
+.my-order-label{
+width:82px;
+flex-shrink:0;
+color:#94a3b8;
+font-weight:700;
+}
+
+.my-order-value{
+flex:1;
+color:#e2e8f0;
+word-break:break-word;
+}
+
+.my-order-status{
+display:inline-block;
+padding:5px 9px;
+border-radius:8px;
+background:rgba(124,58,237,.13);
+border:1px solid rgba(124,58,237,.18);
+color:#c4b5fd;
+font-size:10px;
+font-weight:800;
+}
+
+.my-orders-loading{
+padding:25px 10px;
+text-align:center;
+color:#94a3b8;
+font-size:12px;
+}
+
+.my-orders-empty{
+padding:30px 15px;
+text-align:center;
+border-radius:17px;
+background:rgba(30,41,59,.40);
+border:1px solid rgba(148,163,184,.10);
+color:#64748b;
+font-size:12px;
+line-height:1.6;
+}
+
+.my-orders-error{
+padding:15px;
+border-radius:13px;
+background:rgba(239,68,68,.10);
+border:1px solid rgba(239,68,68,.22);
+color:#fca5a5;
+font-size:12px;
+line-height:1.5;
+}
+
+
+/* ADMIN */
+
+.admin-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+padding:13px;
+margin-bottom:18px;
+border-radius:15px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.admin-top-title{
+font-size:12px;
+font-weight:800;
+color:#cbd5e1;
+}
+
+.admin-top-email{
+font-size:11px;
+color:#94a3b8;
+margin-top:3px;
+word-break:break-all;
+}
+
+.admin-order{
+padding:16px;
+margin-bottom:13px;
+border-radius:17px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.admin-order-title{
+font-size:14px;
+font-weight:850;
+margin-bottom:12px;
+color:#f8fafc;
+}
+
+.admin-order-info{
+font-size:12px;
+color:#94a3b8;
+line-height:1.75;
+word-break:break-word;
+}
+
+.admin-order-info strong{
+color:#cbd5e1;
+font-weight:750;
+}
+
+.admin-status{
+margin-top:12px;
+}
+
+.admin-status label{
+margin-bottom:6px;
+}
+
+.admin-status select{
+height:44px;
+margin-bottom:0;
+font-size:12px;
+}
+
+.admin-action{
+margin-top:10px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+min-height:43px;
+font-size:12px;
+}
+
+.admin-screenshot{
+display:inline-block;
+margin-top:8px;
+padding:8px 11px;
+border-radius:9px;
+background:rgba(124,58,237,.12);
+border:1px solid rgba(124,58,237,.22);
+color:#c4b5fd;
+font-size:11px;
+font-weight:800;
+text-decoration:none;
+}
+
+.admin-screenshot:hover{
+background:rgba(124,58,237,.20);
+}
+
+.admin-empty{
+padding:20px 10px;
+text-align:center;
+color:#64748b;
+font-size:12px;
+}
+
+.hidden{
+display:none!important;
+}
+
+.footer{
+text-align:center;
+margin-top:17px;
+color:#475569;
+font-size:10px;
+letter-spacing:.7px;
+}
+
+@media(max-width:520px){
+
+.container{
+padding:14px 12px 35px;
+}
+
+.card{
+padding:20px 17px;
+border-radius:22px;
+}
+
+.brand-name{
+font-size:25px;
+}
+
+h2{
+font-size:20px;
+}
+
+.payment-title{
+font-size:22px;
+}
+
+.qr-frame{
+width:235px;
+}
+
+.customer-menu{
+width:min(300px,84vw);
+}
+
+}
+
+@media(max-width:350px){
+
+.container{
+padding-left:8px;
+padding-right:8px;
+}
+
+.card{
+padding:17px 13px;
+}
+
+.user-box{
+gap:8px;
+}
+
+.avatar{
+width:42px;
+height:42px;
+}
+
+.logout{
+padding:8px 9px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-<header class="header">
-  <div class="logo">GROW<span>X</span> ORDER</div>
-  <button class="menu-btn" id="menuBtn" onclick="openMenu()">☰</button>
-</header>
+<!-- SIGNUP -->
 
-<div class="overlay hidden" id="overlay" onclick="closeMenu()"></div>
+<div id="signupPage" class="card hidden">
 
-<aside class="side-menu" id="sideMenu">
+<div class="brand">
+<div class="brand-icon">G</div>
+<div class="brand-name">GROWX</div>
+<div class="brand-subtitle">PREMIUM ORDER PANEL</div>
+</div>
 
-  <div class="menu-head">
-    <h2>GROWX</h2>
-    <button class="close-menu" onclick="closeMenu()">×</button>
-  </div>
+<h2>Create Account</h2>
 
-  <div class="user-box">
-    <small>Customer User ID</small>
-    <div class="user-email" id="menuUserEmail">Not logged in</div>
-  </div>
+<div id="signupMessage" class="message"></div>
 
-  <button class="menu-item" onclick="showPage('orderPage');closeMenu()">
-    🛒 New Order
-  </button>
+<label>Name</label>
 
-  <button class="menu-item" onclick="showPage('ordersPage');loadMyOrders();closeMenu()">
-    📦 My Orders
-  </button>
+<input
+type="text"
+id="signupName"
+placeholder="Enter your name"
+>
 
-  <button class="menu-item" onclick="showPage('adminPage');closeMenu()">
-    ⚙️ Admin
-  </button>
+<label>Email</label>
 
-  <button class="menu-item logout" onclick="logout()">
-    🚪 Logout
-  </button>
+<input
+type="email"
+id="signupEmail"
+placeholder="Enter your email"
+>
 
-</aside>
+<label>Password</label>
 
-<main class="container">
+<input
+type="password"
+id="signupPassword"
+placeholder="Create a password"
+>
 
-<!-- SIGN IN -->
+<button onclick="signUp()">
+Create Account
+</button>
 
-<section id="signinPage" class="page active">
+<p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
 
-  <div class="auth-wrap">
+Already have an account?
 
-    <div class="auth-logo">
-      <h1>GROW<span>X</span></h1>
-      <p class="subtitle">SMM Order Panel</p>
-    </div>
+<span
+onclick="showSignin()"
+style="color:#a78bfa;cursor:pointer;font-weight:800"
+>
+Sign In
+</span>
 
-    <div class="card">
+</p>
 
-      <h2 class="title">Welcome Back</h2>
-      <p class="subtitle">Sign in to continue</p>
+</div>
 
-      <div id="signinAlert" class="alert"></div>
 
-      <div class="input-group">
-        <label>Email</label>
-        <input id="signinEmail" type="email" placeholder="Enter email">
-      </div>
+<!-- SIGNIN -->
 
-      <div class="input-group">
-        <label>Password</label>
-        <input id="signinPassword" type="password" placeholder="Enter password">
-      </div>
+<div id="signinPage" class="card hidden">
 
-      <button class="btn" onclick="signIn()">Sign In</button>
+<div class="brand">
 
-      <button class="link-btn" onclick="showPage('signupPage')">
-        Don't have an account? Create Account
-      </button>
+<div class="brand-icon">G</div>
 
-    </div>
-  </div>
+<div class="brand-name">GROWX</div>
 
-</section>
+<div class="brand-subtitle">
+PREMIUM ORDER PANEL
+</div>
 
+</div>
 
-<!-- SIGN UP -->
+<h2>Welcome Back</h2>
 
-<section id="signupPage" class="page">
+<div id="signinMessage" class="message"></div>
 
-  <div class="auth-wrap">
+<label>Email</label>
 
-    <div class="auth-logo">
-      <h1>GROW<span>X</span></h1>
-    </div>
+<input
+type="email"
+id="signinEmail"
+placeholder="Enter your email"
+>
 
-    <div class="card">
+<label>Password</label>
 
-      <h2 class="title">Create Account</h2>
-      <p class="subtitle">Create your GROWX customer account</p>
+<input
+type="password"
+id="signinPassword"
+placeholder="Enter your password"
+>
 
-      <div id="signupAlert" class="alert"></div>
+<button onclick="signIn()">
+Sign In
+</button>
 
-      <div class="input-group">
-        <label>Name</label>
-        <input id="signupName" type="text" placeholder="Your name">
-      </div>
+<p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
 
-      <div class="input-group">
-        <label>Email</label>
-        <input id="signupEmail" type="email" placeholder="Your email">
-      </div>
+Don't have an account?
 
-      <div class="input-group">
-        <label>Password</label>
-        <input id="signupPassword" type="password" placeholder="Minimum 6 characters">
-      </div>
+<span
+onclick="showSignup()"
+style="color:#a78bfa;cursor:pointer;font-weight:800"
+>
+Create Account
+</span>
 
-      <button class="btn" onclick="signUp()">Create Account</button>
+</p>
 
-      <button class="link-btn" onclick="showPage('signinPage')">
-        Already have an account? Sign In
-      </button>
+</div>
 
-    </div>
-  </div>
 
-</section>
+<!-- CUSTOMER ORDER PAGE -->
 
+<div id="orderPage" class="card hidden">
 
-<!-- ORDER -->
+<!-- HAMBURGER -->
 
-<section id="orderPage" class="page">
+<button
+id="menuButton"
+class="customer-menu-button"
+onclick="openCustomerMenu()"
+aria-label="Open menu"
+>
+☰
+</button>
 
-  <div class="card">
 
-    <h1 class="title">Create New Order</h1>
-    <p class="subtitle">Select service, quantity and submit your order.</p>
+<!-- CUSTOMER MENU OVERLAY -->
 
-    <div id="orderAlert" class="alert"></div>
+<div
+id="customerMenuOverlay"
+class="customer-menu-overlay hidden"
+onclick="closeCustomerMenu()"
+></div>
 
-    <div class="order-form-grid">
 
-      <div class="input-group">
-        <label>Service</label>
+<!-- CUSTOMER DRAWER -->
 
-        <select id="service" onchange="serviceChanged()">
-          <option value="">Select Service</option>
-          <option value="Instagram Views">Instagram Views</option>
-          <option value="Instagram Likes">Instagram Likes</option>
-          <option value="Instagram Followers">Instagram Followers</option>
-          <option value="Instagram Shares">Instagram Shares</option>
-          <option value="Instagram Repost">Instagram Repost</option>
-          <option value="Instagram Save">Instagram Save</option>
-        </select>
-      </div>
+<div
+id="customerMenu"
+class="customer-menu"
+>
 
-      <div class="input-group">
-        <label>Quantity</label>
-        <input
-          id="quantity"
-          type="number"
-          min="1"
-          placeholder="Enter quantity"
-          oninput="calculatePrice()"
-        >
-      </div>
+<button
+class="menu-close"
+onclick="closeCustomerMenu()"
+aria-label="Close menu"
+>
+×
+</button>
 
-      <div class="full service-info" id="serviceInfo">
-        Select a service to see minimum, maximum and rate.
-      </div>
+<div class="menu-user-section">
 
-      <div class="input-group full">
-        <label>Instagram Link</label>
-        <input
-          id="link"
-          type="url"
-          placeholder="https://www.instagram.com/..."
-        >
-      </div>
+<div class="menu-user-label">
+Customer User ID
+</div>
 
-    </div>
+<div
+id="menuUserId"
+class="menu-user-id"
+>
+-
+</div>
 
-    <div class="price-box">
-      <div class="price-label">Order Price</div>
-      <div class="price" id="priceDisplay">₹0.00</div>
-    </div>
+</div>
 
-    <button class="btn" onclick="startPayment()">
-      Continue to Payment →
-    </button>
 
-  </div>
+<button
+class="menu-item"
+onclick="showCustomerNewOrder()"
+>
 
-</section>
+<span class="menu-item-icon">
+＋
+</span>
 
+<span>
+New Order
+</span>
 
-<!-- PAYMENT -->
+</button>
 
-<section id="paymentPage" class="page">
 
-  <div class="card payment-card">
+<button
+class="menu-item new-order"
+onclick="showMyOrders()"
+>
 
-    <h1 class="title">Payment</h1>
-    <p class="subtitle">Scan the QR or open your UPI app.</p>
+<span class="menu-item-icon">
+▣
+</span>
 
-    <div class="amount-big" id="paymentAmount">₹0.00</div>
+<span>
+My Orders
+</span>
 
-    <div class="upi-id">
-      UPI ID: <strong>taydeveer94@oksbi</strong>
-    </div>
+</button>
 
-    <div class="qr-wrap">
-      <div id="qrcode"></div>
-    </div>
+</div>
 
-    <div class="qr-note">
-      🔄 This QR is dynamically generated for this exact order amount.
-    </div>
 
-    <a
-      id="upiButton"
-      class="btn"
-      style="display:flex;align-items:center;justify-content:center;text-decoration:none;"
-      href="#"
-    >
-      Open UPI App
-    </a>
+<!-- CUSTOMER INFO -->
 
-    <div class="upload-box">
+<div class="user-box">
 
-      <label>Payment Screenshot</label>
+<div id="avatar" class="avatar">
+G
+</div>
 
-      <input
-        id="paymentScreenshot"
-        type="file"
-        accept="image/png,image/jpeg,image/webp"
-        onchange="showFileName()"
-      >
+<div class="user-info">
 
-      <div class="file-name" id="fileName">
-        No file selected
-      </div>
+<div
+class="user-name"
+id="customerName"
+>
+Customer
+</div>
 
-    </div>
+<div class="user-label">
+GROWX CUSTOMER
+</div>
 
-    <br>
+</div>
 
-    <button class="btn btn-green" id="confirmBtn" onclick="confirmPayment()">
-      Confirm Payment
-    </button>
+<button
+class="logout"
+onclick="logout()"
+>
+Logout
+</button>
 
-    <br><br>
+</div>
 
-    <button class="btn btn-secondary" onclick="showPage('orderPage')">
-      ← Back
-    </button>
 
-  </div>
+<!-- NEW ORDER -->
 
-</section>
+<div id="orderForm">
 
+<div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
+ORDER SERVICE
+</div>
 
-<!-- SUCCESS -->
+<h2>
+Place Your Order
+</h2>
 
-<section id="successPage" class="page">
+<div
+id="orderMessage"
+class="message"
+></div>
 
-  <div class="card success-box">
+<label>
+Choose Service
+</label>
 
-    <div class="success-icon">✓</div>
+<select id="service">
 
-    <h1 class="title">Order Submitted!</h1>
+<option value="">
+Choose Service
+</option>
 
-    <p class="subtitle">
-      Your payment screenshot has been submitted successfully.
-    </p>
+<option
+value="Instagram Views"
+data-min="501"
+data-max="2000000"
+>
+Instagram Views
+</option>
 
-    <div class="success-order" id="successOrderId">
-      A-000001
-    </div>
+<option
+value="Instagram Likes"
+data-min="50"
+data-max="500000"
+>
+Instagram Likes
+</option>
 
-    <button class="btn" onclick="showPage('ordersPage');loadMyOrders()">
-      View My Orders
-    </button>
+<option
+value="Instagram Followers"
+data-rate="400"
+data-min="100"
+data-max="20000"
+>
+Instagram Followers — ₹400 / 1000
+</option>
 
-    <br><br>
+<option
+value="Instagram Shares"
+data-rate="5"
+data-min="200"
+data-max="100000"
+>
+Instagram Shares — ₹5 / 1000
+</option>
 
-    <button class="btn btn-secondary" onclick="showPage('orderPage')">
-      Create New Order
-    </button>
+<option
+value="Instagram Repost"
+data-rate="10"
+data-min="100"
+data-max="50000"
+>
+Instagram Repost — ₹10 / 1000
+</option>
 
-  </div>
+<option
+value="Instagram Save"
+data-rate="10"
+data-min="100"
+data-max="50000"
+>
+Instagram Save — ₹10 / 1000
+</option>
 
-</section>
+</select>
+
+<label>
+Quantity
+</label>
+
+<input
+type="number"
+id="quantity"
+placeholder="Enter quantity"
+oninput="calculatePrice()"
+>
+
+<label>
+Post / Reel Link
+</label>
+
+<input
+type="url"
+id="link"
+placeholder="Paste your post or reel link"
+>
+
+<div class="price-box">
+
+<div class="price-label">
+Total Order Cost
+</div>
+
+<div
+class="price"
+id="price"
+>
+₹0.00
+</div>
+
+</div>
+
+<button
+id="continuePaymentBtn"
+onclick="startPayment()"
+>
+Continue to Payment
+</button>
+
+</div>
 
 
 <!-- MY ORDERS -->
 
-<section id="ordersPage" class="page">
+<div
+id="myOrdersPage"
+class="my-orders-page hidden"
+>
 
-  <div class="card">
+<div class="my-orders-heading">
+My Orders
+</div>
 
-    <h1 class="title">My Orders</h1>
-    <p class="subtitle">View your previous orders and status.</p>
+<div class="avg-time">
+AVG Time: 12–24 Hours
+</div>
 
-    <div id="ordersAlert" class="alert"></div>
+<div id="myOrdersContainer">
+<div class="my-orders-loading">
+Loading orders...
+</div>
+</div>
 
-    <div id="myOrders" class="order-list">
-      Loading orders...
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ADMIN LOGIN -->
-
-<section id="adminPage" class="page">
-
-  <div class="admin-login">
-
-    <div class="card">
-
-      <h1 class="title">Admin Panel</h1>
-      <p class="subtitle">
-        Enter your admin email to access order management.
-      </p>
-
-      <div id="adminAlert" class="alert"></div>
-
-      <div class="input-group">
-        <label>Admin Email</label>
-        <input id="adminEmail" type="email" placeholder="Admin email">
-      </div>
-
-      <button class="btn" onclick="adminLogin()">
-        Access Admin
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
+</div>
 
 
-<!-- ADMIN DASHBOARD -->
+<!-- PAYMENT PAGE -->
 
-<section id="adminDashboardPage" class="page">
+<div
+id="paymentPage"
+class="hidden"
+>
 
-  <div class="card">
+<div class="payment-box">
 
-    <h1 class="title">Admin Orders</h1>
-    <p class="subtitle">Manage customer orders.</p>
+<div class="payment-title">
+Scan & Pay
+</div>
 
-    <button class="btn btn-secondary" onclick="loadAdminOrders()">
-      🔄 Refresh Orders
-    </button>
+<div class="payment-subtitle">
+Complete your payment to continue
+</div>
 
-    <br><br>
+<div class="payment-amount-box">
 
-    <div id="adminOrders" class="admin-grid">
-      Loading...
-    </div>
+<span class="payment-amount-label">
+PAY
+</span>
 
-  </div>
+<span
+class="payment-amount"
+id="paymentAmount"
+>
+₹0.00
+</span>
 
-</section>
+</div>
 
-</main>
+<div class="qr-frame">
 
-<div class="loader" id="loader">
-  <div class="spinner"></div>
+<img
+src="IMG-20260923-WA0004~2.jpg"
+alt="GROWX Payment QR"
+class="payment-qr"
+>
+
+</div>
+
+<div class="payment-note">
+
+Scan the QR code using your UPI app and complete the payment.
+Then upload your payment screenshot below.
+
+</div>
+
+<div class="upload-box">
+
+<label class="upload-label">
+Payment Screenshot
+</label>
+
+<input
+type="file"
+id="paymentScreenshot"
+class="file-input"
+accept="image/*"
+>
+
+</div>
+
+<button
+class="confirm-btn"
+id="confirmPaymentBtn"
+onclick="confirmPayment()"
+>
+Payment Complete
+</button>
+
+<div
+id="paymentSubmitWait"
+class="payment-submit-wait"
+>
+Please wait 10–15 seconds...
+</div>
+
+<button
+class="back-btn"
+onclick="backToOrder()"
+>
+Back to Order
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SUCCESS PAGE -->
+
+<div
+id="successPage"
+class="hidden"
+>
+
+<div class="success-box">
+
+<div class="success-icon">
+✓
+</div>
+
+<div class="success-title">
+Order Successfully Submitted
+</div>
+
+<div class="success-text">
+
+Your order has been submitted successfully.
+
+<br>
+
+Please keep your Order ID for reference.
+
+</div>
+
+<div class="order-id">
+
+Order ID:
+
+<span id="successOrderId">
+-
+</span>
+
+</div>
+
+<button
+style="margin-top:20px"
+onclick="newOrder()"
+>
+Place New Order
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div
+id="adminPage"
+class="card hidden"
+>
+
+<div class="brand">
+
+<div class="brand-icon">
+A
+</div>
+
+<div class="brand-name">
+GROWX ADMIN
+</div>
+
+<div class="brand-subtitle">
+ORDER MANAGEMENT PANEL
+</div>
+
+</div>
+
+<div
+id="adminMessage"
+class="message"
+></div>
+
+<div class="admin-top">
+
+<div>
+
+<div class="admin-top-title">
+ADMIN ACCOUNT
+</div>
+
+<div
+id="adminEmail"
+class="admin-top-email"
+>
+-
+</div>
+
+</div>
+
+</div>
+
+<h2>
+Orders
+</h2>
+
+<div id="adminOrders">
+Loading orders...
+</div>
+
+<button
+class="back-btn"
+onclick="loadAdminOrders()"
+style="margin-top:5px"
+>
+Refresh Orders
+</button>
+
+<button
+class="back-btn"
+onclick="logoutAdmin()"
+style="margin-top:10px"
+>
+Logout Admin
+</button>
+
+</div>
+
+
+<div class="footer">
+GROWX • PREMIUM ORDER SYSTEM
 </div>
 
 </div>
@@ -1017,1357 +1525,1919 @@ select option{
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
-
 const SUPABASE_URL =
-  "https://rxfffsibplxmhgxmbkvi.supabase.co";
+"https://rxfffsibplxmhgxmbkvi.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
+"sb_publishable_DfTUjHCF03-OLTAVvQB2Ag_tJd6fyvr";
 
 const supabaseClient =
-  supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
 
-/* =========================================================
-   PAYMENT DETAILS
-========================================================= */
+/* =========================
+   CURRENT ORDER
+========================= */
 
-const UPI_ID = "taydeveer94@oksbi";
-const UPI_NAME = "GROWX";
-
-
-/* =========================================================
-   SERVICE CONFIG
-========================================================= */
-
-const services = {
-
-  "Instagram Views":{
-    min:501,
-    max:2198765,
-    rates:[
-      {min:501,max:4999,rate:2},
-      {min:5000,max:9999,rate:1.5},
-      {min:10000,max:29999,rate:1},
-      {min:30000,max:49999,rate:.9},
-      {min:50000,max:79999,rate:.8},
-      {min:80000,max:99999,rate:.7},
-      {min:100000,max:2198765,rate:.6}
-    ]
-  },
-
-  "Instagram Likes":{
-    min:50,
-    max:500000,
-    rates:[
-      {min:50,max:999,rate:20},
-      {min:1000,max:2999,rate:15},
-      {min:3000,max:4999,rate:12},
-      {min:5000,max:9999,rate:11},
-      {min:10000,max:500000,rate:10}
-    ]
-  },
-
-  "Instagram Followers":{
-    min:100,
-    max:20000,
-    rates:[
-      {min:100,max:20000,rate:400}
-    ]
-  },
-
-  "Instagram Shares":{
-    min:200,
-    max:100000,
-    rates:[
-      {min:200,max:100000,rate:5}
-    ]
-  },
-
-  "Instagram Repost":{
-    min:100,
-    max:50000,
-    rates:[
-      {min:100,max:50000,rate:10}
-    ]
-  },
-
-  "Instagram Save":{
-    min:100,
-    max:50000,
-    rates:[
-      {min:100,max:50000,rate:10}
-    ]
-  }
-
-};
+let currentOrder = null;
 
 
-/* =========================================================
-   GLOBAL VARIABLES
-========================================================= */
+/* =========================
+   ADMIN CHECK
+========================= */
 
-let currentUser = null;
+async function checkAdmin(user){
 
-let currentOrder = {
-  service:"",
-  quantity:0,
-  link:"",
-  price:0
-};
+if(!user || !user.email){
+return false;
+}
 
-let isAdmin = false;
+const {
+data:admin,
+error
+} =
+await supabaseClient
+.from("admins")
+.select("*")
+.eq("Email", user.email)
+.maybeSingle();
 
+if(error){
 
-/* =========================================================
-   HELPERS
-========================================================= */
+console.error(
+"Admin check error:",
+error
+);
 
-function showLoader(show=true){
-  document.getElementById("loader").classList.toggle("show",show);
+return false;
+
+}
+
+return !!admin;
+
 }
 
 
-function showAlert(id,message,type="error"){
-  const el = document.getElementById(id);
+/* =========================
+   PAGE FUNCTIONS
+========================= */
 
-  if(!el) return;
+function showSignup(){
 
-  el.textContent = message;
-  el.className = "alert " + type + " show";
+document.getElementById("signupPage")
+.classList.remove("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
+
+document.getElementById("adminPage")
+.classList.add("hidden");
+
 }
 
 
-function clearAlert(id){
-  const el = document.getElementById(id);
+function showSignin(){
 
-  if(el){
-    el.textContent = "";
-    el.className = "alert";
-  }
+closeCustomerMenu();
+
+document.getElementById("signinPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
+
+document.getElementById("adminPage")
+.classList.add("hidden");
+
 }
 
 
-function escapeHTML(value){
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+function showOrder(){
+
+document.getElementById("orderPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("adminPage")
+.classList.add("hidden");
+
 }
 
 
-function formatPrice(value){
-  return Number(value || 0).toFixed(2);
+/* =========================
+   CUSTOMER MENU
+========================= */
+
+function openCustomerMenu(){
+
+const menu =
+document.getElementById(
+"customerMenu"
+);
+
+const overlay =
+document.getElementById(
+"customerMenuOverlay"
+);
+
+if(!menu || !overlay){
+return;
+}
+
+overlay.classList.remove("hidden");
+
+menu.classList.add("open");
+
 }
 
 
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
+function closeCustomerMenu(){
 
-function showPage(pageId){
+const menu =
+document.getElementById(
+"customerMenu"
+);
 
-  document.querySelectorAll(".page").forEach(page=>{
-    page.classList.remove("active");
-  });
+const overlay =
+document.getElementById(
+"customerMenuOverlay"
+);
 
-  const page = document.getElementById(pageId);
+if(!menu || !overlay){
+return;
+}
 
-  if(page){
-    page.classList.add("active");
-  }
+menu.classList.remove("open");
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+overlay.classList.add("hidden");
+
 }
 
 
-/* =========================================================
-   MENU
-========================================================= */
+/* =========================
+   SHOW CUSTOMER NEW ORDER
+========================= */
 
-function openMenu(){
+function showCustomerNewOrder(){
 
-  document.getElementById("sideMenu")
-    .classList.add("open");
+closeCustomerMenu();
 
-  document.getElementById("overlay")
-    .classList.remove("hidden");
+newOrder();
+
 }
 
 
-function closeMenu(){
+/* =========================
+   SHOW MY ORDERS
+========================= */
 
-  document.getElementById("sideMenu")
-    .classList.remove("open");
+async function showMyOrders(){
 
-  document.getElementById("overlay")
-    .classList.add("hidden");
+closeCustomerMenu();
+
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.remove("hidden");
+
+await loadMyOrders();
+
 }
 
 
-/* =========================================================
-   SERVICE
-========================================================= */
-
-function getRate(serviceName,quantity){
-
-  const service = services[serviceName];
-
-  if(!service) return 0;
-
-  const found = service.rates.find(
-    r => quantity >= r.min && quantity <= r.max
-  );
-
-  return found ? found.rate : 0;
-}
-
-
-function serviceChanged(){
-
-  const serviceName =
-    document.getElementById("service").value;
-
-  const info =
-    document.getElementById("serviceInfo");
-
-  const quantity =
-    document.getElementById("quantity");
-
-  if(!serviceName){
-
-    info.textContent =
-      "Select a service to see minimum, maximum and rate.";
-
-    quantity.removeAttribute("min");
-    quantity.removeAttribute("max");
-
-    calculatePrice();
-
-    return;
-  }
-
-  const service = services[serviceName];
-
-  quantity.min = service.min;
-  quantity.max = service.max;
-
-  info.innerHTML =
-    `Minimum: <strong>${service.min.toLocaleString()}</strong>
-     &nbsp; | &nbsp;
-     Maximum: <strong>${service.max.toLocaleString()}</strong>`;
-
-  calculatePrice();
-}
-
-
-function calculatePrice(){
-
-  const serviceName =
-    document.getElementById("service").value;
-
-  const quantity =
-    Number(document.getElementById("quantity").value);
-
-  const priceDisplay =
-    document.getElementById("priceDisplay");
-
-  if(!serviceName || !quantity){
-
-    priceDisplay.textContent = "₹0.00";
-    return 0;
-  }
-
-  const rate =
-    getRate(serviceName,quantity);
-
-  if(!rate){
-
-    priceDisplay.textContent = "₹0.00";
-    return 0;
-  }
-
-  const price =
-    (quantity / 1000) * rate;
-
-  priceDisplay.textContent =
-    "₹" + formatPrice(price);
-
-  return price;
-}
-
-
-/* =========================================================
-   SIGN UP
-========================================================= */
-
-async function signUp(){
-
-  clearAlert("signupAlert");
-
-  const name =
-    document.getElementById("signupName").value.trim();
-
-  const email =
-    document.getElementById("signupEmail").value.trim();
-
-  const password =
-    document.getElementById("signupPassword").value;
-
-  if(!name || !email || !password){
-
-    showAlert(
-      "signupAlert",
-      "Please fill all fields."
-    );
-
-    return;
-  }
-
-  if(password.length < 6){
-
-    showAlert(
-      "signupAlert",
-      "Password must be at least 6 characters."
-    );
-
-    return;
-  }
-
-  showLoader(true);
-
-  try{
-
-    const {data,error} =
-      await supabaseClient.auth.signUp({
-        email,
-        password,
-        options:{
-          data:{
-            name:name
-          }
-        }
-      });
-
-    if(error) throw error;
-
-    showAlert(
-      "signupAlert",
-      "Account created. Please check your email if email confirmation is enabled.",
-      "success"
-    );
-
-    setTimeout(()=>{
-      showPage("signinPage");
-    },1500);
-
-  }catch(error){
-
-    showAlert(
-      "signupAlert",
-      error.message || "Signup failed."
-    );
-
-  }finally{
-
-    showLoader(false);
-
-  }
-}
-
-
-/* =========================================================
-   SIGN IN
-========================================================= */
-
-async function signIn(){
-
-  clearAlert("signinAlert");
-
-  const email =
-    document.getElementById("signinEmail").value.trim();
-
-  const password =
-    document.getElementById("signinPassword").value;
-
-  if(!email || !password){
-
-    showAlert(
-      "signinAlert",
-      "Please enter email and password."
-    );
-
-    return;
-  }
-
-  showLoader(true);
-
-  try{
-
-    const {data,error} =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-
-    if(error) throw error;
-
-    currentUser = data.user;
-
-    loadCustomer();
-
-    showPage("orderPage");
-
-  }catch(error){
-
-    showAlert(
-      "signinAlert",
-      error.message || "Login failed."
-    );
-
-  }finally{
-
-    showLoader(false);
-
-  }
-}
-
-
-/* =========================================================
-   CUSTOMER
-========================================================= */
-
-function loadCustomer(){
-
-  if(!currentUser) return;
-
-  document.getElementById("menuUserEmail")
-    .textContent =
-      currentUser.email || "Customer";
-
-  showPage("orderPage");
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
-
-  await supabaseClient.auth.signOut();
-
-  currentUser = null;
-  isAdmin = false;
-
-  closeMenu();
-
-  showPage("signinPage");
-}
-
-
-/* =========================================================
-   START PAYMENT
-========================================================= */
-
-function startPayment(){
-
-  clearAlert("orderAlert");
-
-  if(!currentUser){
-
-    showAlert(
-      "orderAlert",
-      "Please sign in first."
-    );
-
-    showPage("signinPage");
-
-    return;
-  }
-
-  const serviceName =
-    document.getElementById("service").value;
-
-  const quantity =
-    Number(document.getElementById("quantity").value);
-
-  const link =
-    document.getElementById("link").value.trim();
-
-  if(!serviceName){
-
-    showAlert(
-      "orderAlert",
-      "Please select a service."
-    );
-
-    return;
-  }
-
-  const service = services[serviceName];
-
-  if(
-    !Number.isInteger(quantity) ||
-    quantity < service.min ||
-    quantity > service.max
-  ){
-
-    showAlert(
-      "orderAlert",
-      `Quantity must be between ${service.min.toLocaleString()} and ${service.max.toLocaleString()}.`
-    );
-
-    return;
-  }
-
-  if(!link){
-
-    showAlert(
-      "orderAlert",
-      "Please enter your Instagram link."
-    );
-
-    return;
-  }
-
-  const rate =
-    getRate(serviceName,quantity);
-
-  if(!rate){
-
-    showAlert(
-      "orderAlert",
-      "Unable to calculate price for this quantity."
-    );
-
-    return;
-  }
-
-  const price =
-    (quantity / 1000) * rate;
-
-  currentOrder = {
-    service:serviceName,
-    quantity:quantity,
-    link:link,
-    price:Number(price.toFixed(2))
-  };
-
-  document.getElementById("paymentAmount")
-    .textContent =
-      "₹" + formatPrice(currentOrder.price);
-
-  generatePaymentQR(currentOrder.price);
-
-  showPage("paymentPage");
-}
-
-
-/* =========================================================
-   DYNAMIC UPI PAYMENT
-========================================================= */
-
-function createUPIPaymentURL(amount){
-
-  const params = new URLSearchParams({
-    pa:UPI_ID,
-    pn:UPI_NAME,
-    am:Number(amount).toFixed(2),
-    cu:"INR"
-  });
-
-  return "upi://pay?" + params.toString();
-}
-
-
-function generatePaymentQR(amount){
-
-  const qrContainer =
-    document.getElementById("qrcode");
-
-  qrContainer.innerHTML = "";
-
-  const upiURL =
-    createUPIPaymentURL(amount);
-
-  new QRCode(qrContainer,{
-    text:upiURL,
-    width:230,
-    height:230,
-    correctLevel:QRCode.CorrectLevel.M
-  });
-
-  const upiButton =
-    document.getElementById("upiButton");
-
-  upiButton.href = upiURL;
-}
-
-
-/* =========================================================
-   PAYMENT FILE
-========================================================= */
-
-function showFileName(){
-
-  const input =
-    document.getElementById("paymentScreenshot");
-
-  const name =
-    document.getElementById("fileName");
-
-  if(input.files && input.files[0]){
-
-    name.textContent =
-      input.files[0].name;
-
-  }else{
-
-    name.textContent =
-      "No file selected";
-  }
-}
-
-
-/* =========================================================
-   CONFIRM PAYMENT
-========================================================= */
-
-async function confirmPayment(){
-
-  clearAlert("paymentAlert");
-
-  if(!currentUser){
-
-    showPage("signinPage");
-    return;
-  }
-
-  const fileInput =
-    document.getElementById("paymentScreenshot");
-
-  const file =
-    fileInput.files[0];
-
-  if(!file){
-
-    alert("Please upload payment screenshot.");
-    return;
-  }
-
-  const allowedTypes = [
-    "image/jpeg",
-    "image/png",
-    "image/webp"
-  ];
-
-  if(!allowedTypes.includes(file.type)){
-
-    alert("Only JPG, PNG or WEBP images are allowed.");
-    return;
-  }
-
-  if(file.size > 5 * 1024 * 1024){
-
-    alert("Screenshot must be smaller than 5 MB.");
-    return;
-  }
-
-  const button =
-    document.getElementById("confirmBtn");
-
-  button.disabled = true;
-  button.textContent = "Submitting...";
-
-  showLoader(true);
-
-  let uploadedPath = null;
-
-  try{
-
-    const extension =
-      file.type === "image/png"
-        ? "png"
-        : file.type === "image/webp"
-        ? "webp"
-        : "jpg";
-
-    const filePath =
-      `${currentUser.id}/${Date.now()}-payment.${extension}`;
-
-    uploadedPath = filePath;
-
-    const {error:uploadError} =
-      await supabaseClient
-        .storage
-        .from("payment-screenshots")
-        .upload(
-          filePath,
-          file,
-          {
-            cacheControl:"3600",
-            upsert:false,
-            contentType:file.type
-          }
-        );
-
-    if(uploadError) throw uploadError;
-
-
-    const {data:orderData,error:orderError} =
-      await supabaseClient
-        .from("Orders")
-        .insert({
-
-          service:currentOrder.service,
-
-          quantity:currentOrder.quantity,
-
-          link:currentOrder.link,
-
-          price:currentOrder.price,
-
-          status:"Payment Submitted",
-
-          user_id:currentUser.id,
-
-          customer_email:currentUser.email,
-
-          payment_screenshot_path:uploadedPath
-
-        })
-        .select()
-        .single();
-
-    if(orderError) throw orderError;
-
-
-    document.getElementById("successOrderId")
-      .textContent =
-        orderData.order_id || "Order Submitted";
-
-    fileInput.value = "";
-
-    document.getElementById("fileName")
-      .textContent =
-        "No file selected";
-
-    showPage("successPage");
-
-  }catch(error){
-
-    console.error(error);
-
-    /*
-      If database insert fails after successful upload,
-      try to remove the uploaded screenshot.
-    */
-
-    if(uploadedPath){
-
-      try{
-
-        await supabaseClient
-          .storage
-          .from("payment-screenshots")
-          .remove([uploadedPath]);
-
-      }catch(cleanupError){
-
-        console.error(
-          "Cleanup failed:",
-          cleanupError
-        );
-
-      }
-
-    }
-
-    alert(
-      error.message ||
-      "Unable to submit order."
-    );
-
-  }finally{
-
-    button.disabled = false;
-    button.textContent = "Confirm Payment";
-
-    showLoader(false);
-
-  }
-}
-
-
-/* =========================================================
-   MY ORDERS
-========================================================= */
+/* =========================
+   LOAD MY ORDERS
+========================= */
 
 async function loadMyOrders(){
 
-  const container =
-    document.getElementById("myOrders");
+const container =
+document.getElementById(
+"myOrdersContainer"
+);
 
-  if(!currentUser){
+if(!container){
+return;
+}
 
-    container.innerHTML =
-      "<p>Please sign in first.</p>";
+container.innerHTML = `
+<div class="my-orders-loading">
+Loading orders...
+</div>
+`;
 
-    return;
-  }
 
-  container.innerHTML =
-    "Loading orders...";
+const {
+data:{user},
+error:userError
+} =
+await supabaseClient.auth.getUser();
 
-  try{
 
-    const {data,error} =
-      await supabaseClient
-        .from("Orders")
-        .select("*")
-        .eq("user_id",currentUser.id)
-        .order("created_at",{ascending:false});
+if(
+userError ||
+!user
+){
 
-    if(error) throw error;
+container.innerHTML = `
+<div class="my-orders-error">
+Your session has expired. Please sign in again.
+</div>
+`;
 
-    if(!data || data.length === 0){
+return;
 
-      container.innerHTML =
-        `<div class="admin-card">
-          No orders found.
-        </div>`;
-
-      return;
-    }
-
-    container.innerHTML =
-      data.map(order=>{
-
-        const status =
-          String(order.status || "Pending");
-
-        let statusClass = "pending";
-
-        if(
-          status.toLowerCase().includes("complete") ||
-          status.toLowerCase().includes("success")
-        ){
-
-          statusClass = "success";
-
-        }else if(
-          status.toLowerCase().includes("cancel") ||
-          status.toLowerCase().includes("fail")
-        ){
-
-          statusClass = "failed";
-        }
-
-        return `
-          <div class="order-card">
-
-            <div class="order-top">
-
-              <div class="order-id">
-                ${escapeHTML(order.order_id || "N/A")}
-              </div>
-
-              <div class="status ${statusClass}">
-                ${escapeHTML(status)}
-              </div>
-
-            </div>
-
-            <div class="order-info">
-
-              <div>
-                Service<br>
-                <strong>
-                  ${escapeHTML(order.service)}
-                </strong>
-              </div>
-
-              <div>
-                Quantity<br>
-                <strong>
-                  ${Number(order.quantity || 0).toLocaleString()}
-                </strong>
-              </div>
-
-              <div>
-                Price<br>
-                <strong>
-                  ₹${formatPrice(order.price)}
-                </strong>
-              </div>
-
-              <div>
-                Date<br>
-                <strong>
-                  ${order.created_at
-                    ? new Date(order.created_at).toLocaleString()
-                    : "N/A"}
-                </strong>
-              </div>
-
-            </div>
-
-            <div class="order-link">
-              ${escapeHTML(order.link || "")}
-            </div>
-
-          </div>
-        `;
-
-      }).join("");
-
-  }catch(error){
-
-    console.error(error);
-
-    container.innerHTML =
-      `<div class="admin-card">
-        Unable to load orders.<br><br>
-        ${escapeHTML(error.message)}
-      </div>`;
-  }
 }
 
 
-/* =========================================================
-   ADMIN LOGIN
-========================================================= */
+/* ONLY CURRENT CUSTOMER ORDERS */
 
-async function adminLogin(){
+const {
+data:orders,
+error
+} =
+await supabaseClient
+.from("Orders")
+.select(`
+order_id,
+service,
+quantity,
+price,
+link,
+status
+`)
+.eq(
+"user_id",
+user.id
+)
+.order(
+"order_id",
+{
+ascending:false
+}
+);
 
-  clearAlert("adminAlert");
 
-  const email =
-    document.getElementById("adminEmail")
-      .value
-      .trim()
-      .toLowerCase();
+if(error){
 
-  if(!email){
+console.error(
+"My Orders error:",
+error
+);
 
-    showAlert(
-      "adminAlert",
-      "Enter admin email."
-    );
+container.innerHTML = `
+<div class="my-orders-error">
+Could not load your orders.<br><br>
+${escapeHTML(error.message)}
+</div>
+`;
 
-    return;
-  }
+return;
 
-  showLoader(true);
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-        .from("admins")
-        .select("Email")
-        .eq("Email",email)
-        .maybeSingle();
-
-    if(error) throw error;
-
-    if(!data){
-
-      showAlert(
-        "adminAlert",
-        "This email is not registered as admin."
-      );
-
-      return;
-    }
-
-    isAdmin = true;
-
-    await loadAdminOrders();
-
-    showPage("adminDashboardPage");
-
-  }catch(error){
-
-    showAlert(
-      "adminAlert",
-      error.message || "Admin verification failed."
-    );
-
-  }finally{
-
-    showLoader(false);
-
-  }
 }
 
 
-/* =========================================================
+if(!orders || orders.length === 0){
+
+container.innerHTML = `
+<div class="my-orders-empty">
+You have not placed any orders yet.
+<br><br>
+Tap ☰ → New Order to place your first order.
+</div>
+`;
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+orders.forEach(
+order => {
+
+const orderCard =
+document.createElement(
+"div"
+);
+
+orderCard.className =
+"my-order-card";
+
+
+orderCard.innerHTML = `
+
+<div class="my-order-id">
+Order ID: ${escapeHTML(
+String(order.order_id || "-")
+)}
+</div>
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Service
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.service || "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Quantity
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.quantity ?? "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Amount
+</div>
+
+<div class="my-order-value">
+₹${escapeHTML(
+String(order.price ?? "0")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Link
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.link || "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Current Status
+</div>
+
+<div class="my-order-value">
+
+<span class="my-order-status">
+${escapeHTML(
+String(order.status || "-")
+)}
+</span>
+
+</div>
+
+</div>
+
+`;
+
+container.appendChild(
+orderCard
+);
+
+});
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(
+elementId,
+message,
+type
+){
+
+const element =
+document.getElementById(elementId);
+
+element.textContent =
+message;
+
+element.className =
+"message " + type;
+
+element.style.display =
+"block";
+
+}
+
+
+/* =========================
+   SIGN UP
+========================= */
+
+async function signUp(){
+
+const name =
+document.getElementById("signupName")
+.value
+.trim();
+
+const email =
+document.getElementById("signupEmail")
+.value
+.trim();
+
+const password =
+document.getElementById("signupPassword")
+.value;
+
+
+if(!name || !email || !password){
+
+showMessage(
+"signupMessage",
+"Please fill all fields.",
+"error"
+);
+
+return;
+
+}
+
+
+const {data,error} =
+await supabaseClient.auth.signUp({
+
+email:email,
+
+password:password,
+
+options:{
+data:{
+name:name
+}
+}
+
+});
+
+
+if(error){
+
+showMessage(
+"signupMessage",
+error.message,
+"error"
+);
+
+return;
+
+}
+
+
+showMessage(
+"signupMessage",
+"Account created successfully. Please sign in.",
+"success"
+);
+
+}
+
+
+/* =========================
+   SIGN IN
+========================= */
+
+async function signIn(){
+
+const email =
+document.getElementById("signinEmail")
+.value
+.trim();
+
+const password =
+document.getElementById("signinPassword")
+.value;
+
+
+if(!email || !password){
+
+showMessage(
+"signinMessage",
+"Please enter email and password.",
+"error"
+);
+
+return;
+
+}
+
+
+const {
+data,
+error
+} =
+await supabaseClient.auth
+.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+
+if(error){
+
+showMessage(
+"signinMessage",
+error.message,
+"error"
+);
+
+return;
+
+}
+
+
+const user =
+data?.user;
+
+
+if(!user){
+
+showMessage(
+"signinMessage",
+"Login failed. Please try again.",
+"error"
+);
+
+return;
+
+}
+
+
+/* CHECK ADMIN */
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(isAdmin){
+
+document.getElementById(
+"adminEmail"
+).textContent =
+user.email || "-";
+
+showAdmin();
+
+await loadAdminOrders();
+
+return;
+
+}
+
+
+/* NORMAL CUSTOMER */
+
+loadCustomer();
+
+}
+
+
+/* =========================
+   CUSTOMER
+========================= */
+
+async function loadCustomer(){
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+showSignin();
+
+return;
+
+}
+
+
+const name =
+user.user_metadata?.name ||
+user.email?.split("@")[0] ||
+"Customer";
+
+
+document.getElementById(
+"customerName"
+).textContent =
+name;
+
+
+document.getElementById(
+"avatar"
+).textContent =
+name
+.charAt(0)
+.toUpperCase();
+
+
+/* SET CUSTOMER USER ID */
+
+document.getElementById(
+"menuUserId"
+).textContent =
+user.id;
+
+
+/* RESET TO NEW ORDER */
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
+
+
+showOrder();
+
+}
+
+
+/* =========================
+   ADMIN PAGE
+========================= */
+
+function showAdmin(){
+
+closeCustomerMenu();
+
+document.getElementById("adminPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+closeCustomerMenu();
+
+await supabaseClient.auth.signOut();
+
+showSignin();
+
+}
+
+
+async function logoutAdmin(){
+
+await supabaseClient.auth.signOut();
+
+showSignin();
+
+}
+
+
+/* =========================
+   SERVICE CHANGE
+========================= */
+
+document
+.getElementById("service")
+.addEventListener(
+"change",
+calculatePrice
+);
+
+
+/* =========================
+   VIEWS RATE
+========================= */
+
+function getViewsRate(quantity){
+
+if(quantity>=501 && quantity<=9999)
+return 2;
+
+if(quantity>=10000 && quantity<=19999)
+return 1.8;
+
+if(quantity>=20000 && quantity<=29999)
+return 1.5;
+
+if(quantity>=30000 && quantity<=49999)
+return 1;
+
+if(quantity>=50000 && quantity<=79999)
+return .8;
+
+if(quantity>=80000 && quantity<=99999)
+return .7;
+
+if(quantity>=100000)
+return .6;
+
+return 0;
+
+}
+
+
+/* =========================
+   LIKES RATE
+========================= */
+
+function getLikesRate(quantity){
+
+if(quantity>=50 && quantity<=999)
+return 20;
+
+if(quantity>=1000 && quantity<=2999)
+return 18;
+
+if(quantity>=3000 && quantity<=4999)
+return 15;
+
+if(quantity>=5000 && quantity<=9999)
+return 12;
+
+if(quantity>=10000)
+return 10;
+
+return 0;
+
+}
+
+
+/* =========================
+   CURRENT RATE
+========================= */
+
+function getCurrentRate(
+service,
+quantity
+){
+
+if(service==="Instagram Views")
+return getViewsRate(quantity);
+
+if(service==="Instagram Likes")
+return getLikesRate(quantity);
+
+if(service==="Instagram Followers")
+return 400;
+
+if(service==="Instagram Shares")
+return 5;
+
+if(service==="Instagram Repost")
+return 10;
+
+if(service==="Instagram Save")
+return 10;
+
+return 0;
+
+}
+
+
+/* =========================
+   CALCULATE PRICE
+========================= */
+
+function calculatePrice(){
+
+const service =
+document.getElementById("service");
+
+const selected =
+service.options[
+service.selectedIndex
+];
+
+const quantity =
+Number(
+document.getElementById("quantity")
+.value
+);
+
+
+if(
+!selected ||
+!selected.value ||
+!quantity
+){
+
+document.getElementById(
+"price"
+).textContent =
+"₹0.00";
+
+return;
+
+}
+
+
+const rate =
+getCurrentRate(
+selected.value,
+quantity
+);
+
+
+if(rate<=0){
+
+document.getElementById(
+"price"
+).textContent =
+"₹0.00";
+
+return;
+
+}
+
+
+const total =
+(quantity / 1000) * rate;
+
+
+document.getElementById(
+"price"
+).textContent =
+"₹" +
+total.toFixed(2);
+
+}
+
+
+/* =========================
+   START PAYMENT
+========================= */
+
+function startPayment(){
+
+const service =
+document.getElementById("service");
+
+const selected =
+service.options[
+service.selectedIndex
+];
+
+const quantity =
+Number(
+document.getElementById("quantity")
+.value
+);
+
+const link =
+document.getElementById("link")
+.value
+.trim();
+
+
+if(
+!selected ||
+!selected.value
+){
+
+alert(
+"Please select a service."
+);
+
+return;
+
+}
+
+
+const min =
+Number(
+selected.dataset.min
+);
+
+const max =
+Number(
+selected.dataset.max
+);
+
+
+if(
+!quantity ||
+quantity < min ||
+quantity > max
+){
+
+alert(
+"Quantity must be between " +
+min +
+" and " +
+max +
+"."
+);
+
+return;
+
+}
+
+
+const rate =
+getCurrentRate(
+selected.value,
+quantity
+);
+
+
+if(rate<=0){
+
+alert(
+"Please enter a valid quantity."
+);
+
+return;
+
+}
+
+
+if(!link){
+
+alert(
+"Please enter your post or reel link."
+);
+
+return;
+
+}
+
+
+const total =
+(quantity / 1000) * rate;
+
+
+currentOrder = {
+
+service:
+selected.value,
+
+quantity:
+quantity,
+
+link:
+link,
+
+price:
+Number(
+total.toFixed(2)
+)
+
+};
+
+
+document.getElementById(
+"paymentAmount"
+).textContent =
+"₹" +
+total.toFixed(2);
+
+
+document.getElementById(
+"paymentScreenshot"
+).value =
+"";
+
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.remove("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+}
+
+
+/* =========================
+   BACK TO ORDER
+========================= */
+
+function backToOrder(){
+
+document.getElementById(
+"paymentSubmitWait"
+).style.display =
+"none";
+
+
+const button =
+document.getElementById(
+"confirmPaymentBtn"
+);
+
+button.disabled = false;
+
+button.textContent =
+"Payment Complete";
+
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
+
+}
+
+
+/* =========================
+   CONFIRM PAYMENT
+========================= */
+
+async function confirmPayment(){
+
+if(!currentOrder){
+
+alert(
+"Order information not found. Please try again."
+);
+
+return;
+
+}
+
+
+const file =
+document.getElementById(
+"paymentScreenshot"
+).files[0];
+
+
+if(!file){
+
+alert(
+"Please upload your payment screenshot first."
+);
+
+return;
+
+}
+
+
+if(
+!file.type.startsWith("image/")
+){
+
+alert(
+"Please upload an image file."
+);
+
+return;
+
+}
+
+
+if(
+file.size > 10 * 1024 * 1024
+){
+
+alert(
+"Image size must be less than 10 MB."
+);
+
+return;
+
+}
+
+
+const button =
+document.getElementById(
+"confirmPaymentBtn"
+);
+
+const waitText =
+document.getElementById(
+"paymentSubmitWait"
+);
+
+
+button.disabled = true;
+
+button.textContent =
+"Submitting...";
+
+waitText.style.display =
+"block";
+
+
+try{
+
+const {
+data:{user},
+error:userError
+} =
+await supabaseClient.auth.getUser();
+
+
+if(
+userError ||
+!user
+){
+
+throw new Error(
+"Please sign in again."
+);
+
+}
+
+
+const extension =
+file.name
+.split(".")
+.pop()
+.toLowerCase();
+
+
+const filePath =
+user.id +
+"/" +
+Date.now() +
+"-payment." +
+extension;
+
+
+const {
+error:uploadError
+} =
+await supabaseClient.storage
+.from("payment-screenshots")
+.upload(
+filePath,
+file,
+{
+upsert:false,
+contentType:file.type
+}
+);
+
+
+if(uploadError){
+
+throw uploadError;
+
+}
+
+
+/* SAVE ORDER */
+
+const {
+data:orderData,
+error:orderError
+} =
+await supabaseClient
+.from("Orders")
+.insert([{
+
+service:
+currentOrder.service,
+
+quantity:
+currentOrder.quantity,
+
+link:
+currentOrder.link,
+
+price:
+currentOrder.price,
+
+status:
+"Payment Submitted",
+
+user_id:
+user.id,
+
+customer_email:
+user.email,
+
+payment_screenshot_path:
+filePath
+
+}])
+.select("order_id")
+.single();
+
+
+if(orderError){
+
+await supabaseClient.storage
+.from("payment-screenshots")
+.remove([
+filePath
+]);
+
+throw orderError;
+
+}
+
+
+/* SUCCESS */
+
+document.getElementById(
+"successOrderId"
+).textContent =
+orderData?.order_id ||
+"Submitted";
+
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.remove("hidden");
+
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"Order submit failed: " +
+(
+error.message ||
+"Please try again."
+)
+);
+
+}
+finally{
+
+waitText.style.display =
+"none";
+
+button.disabled = false;
+
+button.textContent =
+"Payment Complete";
+
+}
+
+}
+
+
+/* =========================
+   NEW ORDER
+========================= */
+
+function newOrder(){
+
+currentOrder = null;
+
+closeCustomerMenu();
+
+
+document.getElementById(
+"service"
+).value =
+"";
+
+document.getElementById(
+"quantity"
+).value =
+"";
+
+document.getElementById(
+"link"
+).value =
+"";
+
+document.getElementById(
+"price"
+).textContent =
+"₹0.00";
+
+document.getElementById(
+"paymentScreenshot"
+).value =
+"";
+
+
+document.getElementById(
+"paymentSubmitWait"
+).style.display =
+"none";
+
+
+const button =
+document.getElementById(
+"confirmPaymentBtn"
+);
+
+button.disabled = false;
+
+button.textContent =
+"Payment Complete";
+
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
+
+}
+
+
+/* =========================
    ADMIN ORDERS
-========================================================= */
+========================= */
 
 async function loadAdminOrders(){
 
-  const container =
-    document.getElementById("adminOrders");
+const ordersContainer =
+document.getElementById(
+"adminOrders"
+);
 
-  container.innerHTML =
-    "Loading orders...";
+ordersContainer.innerHTML =
+"Loading orders...";
 
-  try{
 
-    const {data,error} =
-      await supabaseClient
-        .from("Orders")
-        .select("*")
-        .order("created_at",{ascending:false});
+/* CHECK CURRENT USER */
 
-    if(error) throw error;
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
 
-    if(!data || data.length === 0){
 
-      container.innerHTML =
-        `<div class="admin-card">
-          No orders found.
-        </div>`;
+if(!user){
 
-      return;
-    }
+showSignin();
 
-    container.innerHTML =
-      data.map(order=>{
+return;
 
-        const safeId =
-          encodeURIComponent(
-            String(order.order_id || "")
-          );
-
-        return `
-          <div class="admin-card">
-
-            <div class="order-top">
-
-              <div class="order-id">
-                ${escapeHTML(order.order_id || "N/A")}
-              </div>
-
-              <div class="status pending">
-                ${escapeHTML(order.status || "Pending")}
-              </div>
-
-            </div>
-
-            <div class="order-info">
-
-              <div>
-                Customer<br>
-                <strong>
-                  ${escapeHTML(order.customer_email || "N/A")}
-                </strong>
-              </div>
-
-              <div>
-                Service<br>
-                <strong>
-                  ${escapeHTML(order.service || "N/A")}
-                </strong>
-              </div>
-
-              <div>
-                Quantity<br>
-                <strong>
-                  ${Number(order.quantity || 0).toLocaleString()}
-                </strong>
-              </div>
-
-              <div>
-                Price<br>
-                <strong>
-                  ₹${formatPrice(order.price)}
-                </strong>
-              </div>
-
-            </div>
-
-            <div class="order-link">
-              ${escapeHTML(order.link || "")}
-            </div>
-
-            ${
-              order.payment_screenshot_path
-              ? `
-                <button
-                  class="btn btn-secondary"
-                  style="margin-top:12px"
-                  onclick="viewPaymentScreenshot('${safeId}')"
-                >
-                  🧾 View Payment Screenshot
-                </button>
-              `
-              : ""
-            }
-
-            <div class="admin-actions">
-
-              <button
-                class="btn-processing"
-                onclick="changeOrderStatus('${safeId}','Processing')"
-              >
-                Processing
-              </button>
-
-              <button
-                class="btn-complete"
-                onclick="changeOrderStatus('${safeId}','Completed')"
-              >
-                Completed
-              </button>
-
-              <button
-                class="btn-cancel"
-                onclick="changeOrderStatus('${safeId}','Cancelled')"
-              >
-                Cancel
-              </button>
-
-            </div>
-
-          </div>
-        `;
-
-      }).join("");
-
-  }catch(error){
-
-    console.error(error);
-
-    container.innerHTML =
-      `<div class="admin-card">
-        ${escapeHTML(error.message)}
-      </div>`;
-  }
 }
 
 
-/* =========================================================
-   ADMIN STATUS
-========================================================= */
+/* VERIFY ADMIN */
 
-async function changeOrderStatus(encodedOrderId,status){
+const isAdmin =
+await checkAdmin(user);
 
-  if(!isAdmin){
 
-    alert("Admin access required.");
-    return;
-  }
+if(!isAdmin){
 
-  const orderId =
-    decodeURIComponent(encodedOrderId);
+showSignin();
 
-  if(!orderId){
+return;
 
-    alert("Invalid order ID.");
-    return;
-  }
-
-  try{
-
-    const {error} =
-      await supabaseClient
-        .from("Orders")
-        .update({
-          status:status
-        })
-        .eq("order_id",orderId);
-
-    if(error) throw error;
-
-    await loadAdminOrders();
-
-  }catch(error){
-
-    alert(
-      error.message ||
-      "Unable to update order."
-    );
-  }
 }
 
 
-/* =========================================================
-   PAYMENT SCREENSHOT
-========================================================= */
+/* LOAD ORDERS */
 
-async function viewPaymentScreenshot(encodedOrderId){
-
-  if(!isAdmin){
-
-    alert("Admin access required.");
-    return;
-  }
-
-  const orderId =
-    decodeURIComponent(encodedOrderId);
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-        .from("Orders")
-        .select("payment_screenshot_path")
-        .eq("order_id",orderId)
-        .maybeSingle();
-
-    if(error) throw error;
-
-    if(!data || !data.payment_screenshot_path){
-
-      alert("Screenshot not found.");
-      return;
-    }
-
-    /*
-      This uses a signed URL so the bucket can remain private.
-      Make sure your Storage policies allow the admin session
-      to read the file.
-    */
-
-    const {data:urlData,error:urlError} =
-      await supabaseClient
-        .storage
-        .from("payment-screenshots")
-        .createSignedUrl(
-          data.payment_screenshot_path,
-          300
-        );
-
-    if(urlError) throw urlError;
-
-    if(urlData && urlData.signedUrl){
-
-      window.open(
-        urlData.signedUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-    }
-
-  }catch(error){
-
-    /*
-      Fallback for a public bucket.
-    */
-
-    try{
-
-      const {data} =
-        supabaseClient
-          .storage
-          .from("payment-screenshots")
-          .getPublicUrl(
-            data?.payment_screenshot_path || ""
-          );
-
-      if(data?.publicUrl){
-
-        window.open(
-          data.publicUrl,
-          "_blank",
-          "noopener,noreferrer"
-        );
-
-        return;
-      }
-
-    }catch(e){}
-
-    alert(
-      error.message ||
-      "Unable to open screenshot."
-    );
-  }
+const result =
+await supabaseClient
+.from("Orders")
+.select(`
+order_id,
+service,
+quantity,
+link,
+price,
+status,
+user_id,
+customer_email,
+payment_screenshot_path
+`)
+.order(
+"order_id",
+{
+ascending:false
 }
-
-
-/* =========================================================
-   SESSION CHECK
-========================================================= */
-
-async function checkSession(){
-
-  try{
-
-    const {data} =
-      await supabaseClient.auth.getSession();
-
-    if(data && data.session){
-
-      currentUser =
-        data.session.user;
-
-      document.getElementById("menuUserEmail")
-        .textContent =
-          currentUser.email || "Customer";
-
-      showPage("orderPage");
-
-    }else{
-
-      showPage("signinPage");
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    showPage("signinPage");
-  }
-}
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-supabaseClient.auth.onAuthStateChange(
-  (_event,session)=>{
-
-    currentUser =
-      session ? session.user : null;
-
-    if(currentUser){
-
-      document.getElementById("menuUserEmail")
-        .textContent =
-          currentUser.email || "Customer";
-
-    }
-
-  }
 );
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+if(result.error){
 
-document.addEventListener(
-  "DOMContentLoaded",
-  ()=>{
-    checkSession();
-  }
+console.error(result.error);
+
+ordersContainer.innerHTML = "";
+
+showMessage(
+"adminMessage",
+"Could not load orders: " +
+result.error.message,
+"error"
 );
+
+return;
+
+}
+
+
+const orders =
+result.data || [];
+
+
+if(orders.length === 0){
+
+ordersContainer.innerHTML = `
+<div class="admin-empty">
+No orders found.
+</div>
+`;
+
+return;
+
+}
+
+
+ordersContainer.innerHTML =
+"";
+
+
+orders.forEach(
+order => {
+
+const orderBox =
+document.createElement(
+"div"
+);
+
+orderBox.className =
+"admin-order";
+
+
+const email =
+order.customer_email ||
+"Email not available";
+
+
+const screenshot =
+order.payment_screenshot_path;
+
+
+let screenshotHTML =
+"";
+
+
+if(screenshot){
+
+const {
+data:publicData
+} =
+supabaseClient.storage
+.from("payment-screenshots")
+.getPublicUrl(
+screenshot
+);
+
+
+if(
+publicData?.publicUrl
+){
+
+screenshotHTML = `
+<a
+class="admin-screenshot"
+href="${escapeAttribute(publicData.publicUrl)}"
+target="_blank"
+rel="noopener"
+>
+View Payment Screenshot
+</a>
+`;
+
+}
+
+}
+
+
+orderBox.innerHTML = `
+
+<div class="admin-order-title">
+Order #${escapeHTML(
+String(order.order_id || "-")
+)}
+</div>
+
+<div class="admin-order-info">
+
+<div>
+<strong>Customer ID:</strong>
+${escapeHTML(
+String(order.user_id || "-")
+)}
+</div>
+
+<div>
+<strong>Customer Email:</strong>
+${escapeHTML(
+String(email)
+)}
+</div>
+
+<div>
+<strong>Service:</strong>
+${escapeHTML(
+String(order.service || "-")
+)}
+</div>
+
+<div>
+<strong>Quantity:</strong>
+${escapeHTML(
+String(order.quantity || "-")
+)}
+</div>
+
+<div>
+<strong>Price:</strong>
+₹${escapeHTML(
+String(order.price ?? "0")
+)}
+</div>
+
+<div>
+<strong>Status:</strong>
+${escapeHTML(
+String(order.status || "-")
+)}
+</div>
+
+<div>
+<strong>Post / Reel Link:</strong>
+${escapeHTML(
+String(order.link || "-")
+)}
+</div>
+
+${screenshotHTML}
+
+</div>
+
+<div class="admin-status">
+
+<label>
+Change Order Status
+</label>
+
+<select
+id="status-${escapeAttribute(String(order.order_id))}"
+>
+
+<option
+value="Payment Submitted"
+${order.status==="Payment Submitted" ? "selected" : ""}
+>
+Payment Submitted
+</option>
+
+<option
+value="Payment Verified"
+${order.status==="Payment Verified" ? "selected" : ""}
+>
+Payment Verified
+</option>
+
+<option
+value="Processing"
+${order.status==="Processing" ? "selected" : ""}
+>
+Processing
+</option>
+
+<option
+value="In Progress"
+${order.status==="In Progress" ? "selected" : ""}
+>
+In Progress
+</option>
+
+<option
+value="Completed"
+${order.status==="Completed" ? "selected" : ""}
+>
+Completed
+</option>
+
+<option
+value="Cancelled"
+${order.status==="Cancelled" ? "selected" : ""}
+>
+Cancelled
+</option>
+
+</select>
+
+<button
+class="admin-action"
+onclick="updateOrderStatus('${escapeAttribute(String(order.order_id))}')"
+>
+Update Status
+</button>
+
+</div>
+
+`;
+
+ordersContainer.appendChild(
+orderBox
+);
+
+});
+
+}
+
+
+/* =========================
+   UPDATE ORDER STATUS
+========================= */
+
+async function updateOrderStatus(orderId){
+
+const select =
+document.getElementById(
+"status-" + orderId
+);
+
+
+if(!select){
+
+alert(
+"Status selector not found."
+);
+
+return;
+
+}
+
+
+const newStatus =
+select.value;
+
+
+/* CHECK ADMIN */
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+alert(
+"Please sign in again."
+);
+
+showSignin();
+
+return;
+
+}
+
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(!isAdmin){
+
+alert(
+"Admin access required."
+);
+
+showSignin();
+
+return;
+
+}
+
+
+/* UPDATE */
+
+const {
+error
+} =
+await supabaseClient
+.from("Orders")
+.update({
+
+status:newStatus
+
+})
+.eq(
+"order_id",
+orderId
+);
+
+
+if(error){
+
+console.error(error);
+
+alert(
+"Status update failed: " +
+error.message
+);
+
+return;
+
+}
+
+
+alert(
+"Order status updated successfully."
+);
+
+
+loadAdminOrders();
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+return String(value)
+.replace(/\\/g,"\\\\")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   PAGE LOAD
+========================= */
+
+(async function(){
+
+const {
+data:{user}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+showSignin();
+
+return;
+
+}
+
+
+/* CHECK ADMIN */
+
+const isAdmin =
+await checkAdmin(user);
+
+
+if(isAdmin){
+
+document.getElementById(
+"adminEmail"
+).textContent =
+user.email || "-";
+
+showAdmin();
+
+await loadAdminOrders();
+
+return;
+
+}
+
+
+/* NORMAL CUSTOMER */
+
+loadCustomer();
+
+})();
 
 </script>
 
