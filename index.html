@@ -763,6 +763,22 @@ margin-top:3px;
 word-break:break-all;
 }
 
+/* ADMIN TOP ACTION BUTTONS */
+
+.admin-actions{
+display:flex;
+gap:10px;
+margin-bottom:18px;
+}
+
+.admin-actions .back-btn{
+flex:1;
+margin-top:0;
+min-height:46px;
+font-size:12px;
+font-weight:800;
+}
+
 .admin-order{
 padding:16px;
 margin-bottom:13px;
@@ -902,6 +918,16 @@ height:42px;
 
 .logout{
 padding:8px 9px;
+}
+
+.admin-actions{
+gap:7px;
+}
+
+.admin-actions .back-btn{
+font-size:11px;
+padding-left:6px;
+padding-right:6px;
 }
 
 }
@@ -1489,6 +1515,28 @@ class="admin-top-email"
 
 </div>
 
+
+<!-- ADMIN BUTTONS MOVED ABOVE ORDERS -->
+
+<div class="admin-actions">
+
+<button
+class="back-btn"
+onclick="loadAdminOrders()"
+>
+🔄 Refresh Orders
+</button>
+
+<button
+class="back-btn"
+onclick="logoutAdmin()"
+>
+🚪 Logout Admin
+</button>
+
+</div>
+
+
 <h2>
 Orders
 </h2>
@@ -1496,22 +1544,6 @@ Orders
 <div id="adminOrders">
 Loading orders...
 </div>
-
-<button
-class="back-btn"
-onclick="loadAdminOrders()"
-style="margin-top:5px"
->
-Refresh Orders
-</button>
-
-<button
-class="back-btn"
-onclick="logoutAdmin()"
-style="margin-top:10px"
->
-Logout Admin
-</button>
 
 </div>
 
