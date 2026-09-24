@@ -501,6 +501,241 @@ font-weight:700;
 color:#c4b5fd;
 }
 
+
+/* =========================
+   CUSTOMER MENU
+========================= */
+
+.customer-menu-button{
+width:46px;
+height:46px;
+min-height:46px;
+padding:0;
+margin:0 0 17px 0;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:14px;
+font-size:24px;
+line-height:1;
+background:rgba(30,41,59,.65);
+border:1px solid rgba(148,163,184,.16);
+box-shadow:none;
+}
+
+.customer-menu-button:hover{
+background:rgba(124,58,237,.18);
+box-shadow:none;
+}
+
+.customer-menu-overlay{
+position:fixed;
+inset:0;
+z-index:9998;
+background:rgba(0,0,0,.60);
+backdrop-filter:blur(3px);
+-webkit-backdrop-filter:blur(3px);
+}
+
+.customer-menu{
+position:fixed;
+top:0;
+left:0;
+bottom:0;
+z-index:9999;
+width:min(310px,82vw);
+padding:25px 18px;
+background:linear-gradient(160deg,#0f172a,#080d1d);
+border-right:1px solid rgba(148,163,184,.18);
+box-shadow:18px 0 50px rgba(0,0,0,.45);
+transform:translateX(-105%);
+transition:transform .25s ease;
+overflow-y:auto;
+}
+
+.customer-menu.open{
+transform:translateX(0);
+}
+
+.menu-user-section{
+padding:16px;
+margin-bottom:16px;
+border-radius:15px;
+background:rgba(30,41,59,.60);
+border:1px solid rgba(148,163,184,.14);
+}
+
+.menu-user-label{
+color:#94a3b8;
+font-size:11px;
+font-weight:700;
+margin-bottom:7px;
+}
+
+.menu-user-id{
+color:#e2e8f0;
+font-size:11px;
+line-height:1.55;
+word-break:break-all;
+}
+
+.menu-item{
+width:100%;
+min-height:48px;
+margin-bottom:8px;
+padding:0 15px;
+display:flex;
+align-items:center;
+gap:10px;
+text-align:left;
+border-radius:13px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.12);
+box-shadow:none;
+color:#e2e8f0;
+font-size:13px;
+font-weight:800;
+}
+
+.menu-item:hover{
+background:rgba(124,58,237,.17);
+box-shadow:none;
+}
+
+.menu-item.new-order{
+margin-bottom:15px;
+}
+
+.menu-item-icon{
+width:20px;
+text-align:center;
+font-size:16px;
+}
+
+.menu-close{
+position:absolute;
+top:16px;
+right:14px;
+width:38px;
+height:38px;
+min-height:38px;
+padding:0;
+border-radius:11px;
+background:rgba(100,116,139,.12);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:none;
+font-size:20px;
+}
+
+.menu-close:hover{
+background:rgba(239,68,68,.12);
+box-shadow:none;
+}
+
+
+/* =========================
+   MY ORDERS
+========================= */
+
+.my-orders-page{
+padding-top:3px;
+}
+
+.my-orders-heading{
+font-size:23px;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.avg-time{
+display:inline-flex;
+align-items:center;
+padding:8px 13px;
+margin-bottom:20px;
+border-radius:20px;
+background:rgba(34,197,94,.09);
+border:1px solid rgba(34,197,94,.20);
+color:#86efac;
+font-size:11px;
+font-weight:800;
+}
+
+.my-order-card{
+padding:16px;
+margin-bottom:13px;
+border-radius:17px;
+background:rgba(30,41,59,.55);
+border:1px solid rgba(148,163,184,.13);
+}
+
+.my-order-id{
+font-size:14px;
+font-weight:900;
+color:#c4b5fd;
+margin-bottom:13px;
+}
+
+.my-order-row{
+display:flex;
+gap:8px;
+padding:6px 0;
+font-size:12px;
+line-height:1.5;
+}
+
+.my-order-label{
+width:82px;
+flex-shrink:0;
+color:#94a3b8;
+font-weight:700;
+}
+
+.my-order-value{
+flex:1;
+color:#e2e8f0;
+word-break:break-word;
+}
+
+.my-order-status{
+display:inline-block;
+padding:5px 9px;
+border-radius:8px;
+background:rgba(124,58,237,.13);
+border:1px solid rgba(124,58,237,.18);
+color:#c4b5fd;
+font-size:10px;
+font-weight:800;
+}
+
+.my-orders-loading{
+padding:25px 10px;
+text-align:center;
+color:#94a3b8;
+font-size:12px;
+}
+
+.my-orders-empty{
+padding:30px 15px;
+text-align:center;
+border-radius:17px;
+background:rgba(30,41,59,.40);
+border:1px solid rgba(148,163,184,.10);
+color:#64748b;
+font-size:12px;
+line-height:1.6;
+}
+
+.my-orders-error{
+padding:15px;
+border-radius:13px;
+background:rgba(239,68,68,.10);
+border:1px solid rgba(239,68,68,.22);
+color:#fca5a5;
+font-size:12px;
+line-height:1.5;
+}
+
+
 /* ADMIN */
 
 .admin-top{
@@ -637,6 +872,10 @@ font-size:22px;
 
 .qr-frame{
 width:235px;
+}
+
+.customer-menu{
+width:min(300px,84vw);
 }
 
 }
@@ -791,15 +1030,19 @@ Create Account
 
 <div id="orderPage" class="card hidden">
 
-   <!-- CUSTOMER SIDE MENU -->
+<!-- HAMBURGER -->
 
 <button
 id="menuButton"
-class="menu-button"
+class="customer-menu-button"
 onclick="openCustomerMenu()"
+aria-label="Open menu"
 >
 ☰
 </button>
+
+
+<!-- CUSTOMER MENU OVERLAY -->
 
 <div
 id="customerMenuOverlay"
@@ -807,37 +1050,73 @@ class="customer-menu-overlay hidden"
 onclick="closeCustomerMenu()"
 ></div>
 
+
+<!-- CUSTOMER DRAWER -->
+
 <div
 id="customerMenu"
 class="customer-menu"
 >
 
-<div class="menu-header">
-<div class="menu-title">GROWX</div>
+<button
+class="menu-close"
+onclick="closeCustomerMenu()"
+aria-label="Close menu"
+>
+×
+</button>
+
+<div class="menu-user-section">
+
+<div class="menu-user-label">
+Customer User ID
+</div>
 
 <div
-class="menu-user-id"
 id="menuUserId"
+class="menu-user-id"
 >
-User ID
+-
 </div>
+
 </div>
+
 
 <button
 class="menu-item"
 onclick="showCustomerNewOrder()"
 >
-🆕 <span>New Order</span>
+
+<span class="menu-item-icon">
+＋
+</span>
+
+<span>
+New Order
+</span>
+
 </button>
 
+
 <button
-class="menu-item"
+class="menu-item new-order"
 onclick="showMyOrders()"
 >
-📦 <span>My Orders</span>
+
+<span class="menu-item-icon">
+▣
+</span>
+
+<span>
+My Orders
+</span>
+
 </button>
 
 </div>
+
+
+<!-- CUSTOMER INFO -->
 
 <div class="user-box">
 
@@ -869,6 +1148,8 @@ Logout
 
 </div>
 
+
+<!-- NEW ORDER -->
 
 <div id="orderForm">
 
@@ -991,6 +1272,30 @@ onclick="startPayment()"
 >
 Continue to Payment
 </button>
+
+</div>
+
+
+<!-- MY ORDERS -->
+
+<div
+id="myOrdersPage"
+class="my-orders-page hidden"
+>
+
+<div class="my-orders-heading">
+My Orders
+</div>
+
+<div class="avg-time">
+AVG Time: 12–24 Hours
+</div>
+
+<div id="myOrdersContainer">
+<div class="my-orders-loading">
+Loading orders...
+</div>
+</div>
 
 </div>
 
@@ -1242,7 +1547,6 @@ let currentOrder = null;
 
 /* =========================
    ADMIN CHECK
-   FIXED FOR Email COLUMN
 ========================= */
 
 async function checkAdmin(user){
@@ -1300,6 +1604,8 @@ document.getElementById("adminPage")
 
 function showSignin(){
 
+closeCustomerMenu();
+
 document.getElementById("signinPage")
 .classList.remove("hidden");
 
@@ -1332,19 +1638,313 @@ document.getElementById("adminPage")
 }
 
 
-function showAdmin(){
+/* =========================
+   CUSTOMER MENU
+========================= */
 
-document.getElementById("adminPage")
-.classList.remove("hidden");
+function openCustomerMenu(){
 
-document.getElementById("signupPage")
-.classList.add("hidden");
+const menu =
+document.getElementById(
+"customerMenu"
+);
 
-document.getElementById("signinPage")
-.classList.add("hidden");
+const overlay =
+document.getElementById(
+"customerMenuOverlay"
+);
 
-document.getElementById("orderPage")
-.classList.add("hidden");
+if(!menu || !overlay){
+return;
+}
+
+overlay.classList.remove("hidden");
+
+menu.classList.add("open");
+
+}
+
+
+function closeCustomerMenu(){
+
+const menu =
+document.getElementById(
+"customerMenu"
+);
+
+const overlay =
+document.getElementById(
+"customerMenuOverlay"
+);
+
+if(!menu || !overlay){
+return;
+}
+
+menu.classList.remove("open");
+
+overlay.classList.add("hidden");
+
+}
+
+
+/* =========================
+   SHOW CUSTOMER NEW ORDER
+========================= */
+
+function showCustomerNewOrder(){
+
+closeCustomerMenu();
+
+newOrder();
+
+}
+
+
+/* =========================
+   SHOW MY ORDERS
+========================= */
+
+async function showMyOrders(){
+
+closeCustomerMenu();
+
+document.getElementById(
+"orderForm"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
+).classList.remove("hidden");
+
+await loadMyOrders();
+
+}
+
+
+/* =========================
+   LOAD MY ORDERS
+========================= */
+
+async function loadMyOrders(){
+
+const container =
+document.getElementById(
+"myOrdersContainer"
+);
+
+if(!container){
+return;
+}
+
+container.innerHTML = `
+<div class="my-orders-loading">
+Loading orders...
+</div>
+`;
+
+
+const {
+data:{user},
+error:userError
+} =
+await supabaseClient.auth.getUser();
+
+
+if(
+userError ||
+!user
+){
+
+container.innerHTML = `
+<div class="my-orders-error">
+Your session has expired. Please sign in again.
+</div>
+`;
+
+return;
+
+}
+
+
+/* ONLY CURRENT CUSTOMER ORDERS */
+
+const {
+data:orders,
+error
+} =
+await supabaseClient
+.from("Orders")
+.select(`
+order_id,
+service,
+quantity,
+price,
+link,
+status
+`)
+.eq(
+"user_id",
+user.id
+)
+.order(
+"order_id",
+{
+ascending:false
+}
+);
+
+
+if(error){
+
+console.error(
+"My Orders error:",
+error
+);
+
+container.innerHTML = `
+<div class="my-orders-error">
+Could not load your orders.<br><br>
+${escapeHTML(error.message)}
+</div>
+`;
+
+return;
+
+}
+
+
+if(!orders || orders.length === 0){
+
+container.innerHTML = `
+<div class="my-orders-empty">
+You have not placed any orders yet.
+<br><br>
+Tap ☰ → New Order to place your first order.
+</div>
+`;
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+orders.forEach(
+order => {
+
+const orderCard =
+document.createElement(
+"div"
+);
+
+orderCard.className =
+"my-order-card";
+
+
+orderCard.innerHTML = `
+
+<div class="my-order-id">
+Order ID: ${escapeHTML(
+String(order.order_id || "-")
+)}
+</div>
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Service
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.service || "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Quantity
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.quantity ?? "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Amount
+</div>
+
+<div class="my-order-value">
+₹${escapeHTML(
+String(order.price ?? "0")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Link
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.link || "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Current Status
+</div>
+
+<div class="my-order-value">
+
+<span class="my-order-status">
+${escapeHTML(
+String(order.status || "-")
+)}
+</span>
+
+</div>
+
+</div>
+
+`;
+
+container.appendChild(
+orderCard
+);
+
+});
 
 }
 
@@ -1589,7 +2189,57 @@ name
 .toUpperCase();
 
 
+/* SET CUSTOMER USER ID */
+
+document.getElementById(
+"menuUserId"
+).textContent =
+user.id;
+
+
+/* RESET TO NEW ORDER */
+
+document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
+"paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"orderForm"
+).classList.remove("hidden");
+
+
 showOrder();
+
+}
+
+
+/* =========================
+   ADMIN PAGE
+========================= */
+
+function showAdmin(){
+
+closeCustomerMenu();
+
+document.getElementById("adminPage")
+.classList.remove("hidden");
+
+document.getElementById("signupPage")
+.classList.add("hidden");
+
+document.getElementById("signinPage")
+.classList.add("hidden");
+
+document.getElementById("orderPage")
+.classList.add("hidden");
 
 }
 
@@ -1599,6 +2249,8 @@ showOrder();
 ========================= */
 
 async function logout(){
+
+closeCustomerMenu();
 
 await supabaseClient.auth.signOut();
 
@@ -1923,6 +2575,10 @@ document.getElementById(
 
 
 document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
 "orderForm"
 ).classList.add("hidden");
 
@@ -1966,6 +2622,10 @@ document.getElementById(
 
 document.getElementById(
 "successPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
 ).classList.add("hidden");
 
 document.getElementById(
@@ -2183,6 +2843,10 @@ document.getElementById(
 ).classList.add("hidden");
 
 document.getElementById(
+"myOrdersPage"
+).classList.add("hidden");
+
+document.getElementById(
 "successPage"
 ).classList.remove("hidden");
 
@@ -2223,6 +2887,8 @@ button.textContent =
 function newOrder(){
 
 currentOrder = null;
+
+closeCustomerMenu();
 
 
 document.getElementById(
@@ -2274,6 +2940,10 @@ document.getElementById(
 
 document.getElementById(
 "paymentPage"
+).classList.add("hidden");
+
+document.getElementById(
+"myOrdersPage"
 ).classList.add("hidden");
 
 document.getElementById(
