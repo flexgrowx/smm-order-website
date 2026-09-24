@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GROWX ORDER</title>
+
+<!-- =========================
+PWA
+========================= -->
+
+<link rel="manifest" href="./manifest.json">
+
+<meta name="theme-color" content="#050816">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="apple-mobile-web-app-title" content="GROWX">
+
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+
+<!-- =========================
+SUPABASE
+========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
 
 :root{
 --bg:#050816;
@@ -21,7 +53,9 @@
 --green:#22c55e;
 }
 
-html{scroll-behavior:smooth}
+html{
+scroll-behavior:smooth
+}
 
 body{
 min-height:100vh;
@@ -129,7 +163,9 @@ font-size:12px;
 letter-spacing:1.5px;
 }
 
-h1{display:none}
+h1{
+display:none
+}
 
 h2{
 font-size:22px;
@@ -192,7 +228,8 @@ font-weight:750;
 letter-spacing:.3px;
 }
 
-input,select{
+input,
+select{
 width:100%;
 height:50px;
 margin-bottom:18px;
@@ -219,7 +256,8 @@ background:#0f172a;
 color:white;
 }
 
-input:focus,select:focus{
+input:focus,
+select:focus{
 border-color:rgba(124,58,237,.85);
 background:rgba(2,6,23,.82);
 box-shadow:0 0 0 4px rgba(124,58,237,.10);
@@ -931,28 +969,48 @@ padding-right:6px;
 }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
-<!-- SIGNUP -->
+
+<!-- =========================
+SIGNUP
+========================= -->
 
 <div id="signupPage" class="card hidden">
 
 <div class="brand">
-<div class="brand-icon">G</div>
-<div class="brand-name">GROWX</div>
-<div class="brand-subtitle">PREMIUM ORDER PANEL</div>
+
+<div class="brand-icon">
+G
 </div>
 
-<h2>Create Account</h2>
+<div class="brand-name">
+GROWX
+</div>
+
+<div class="brand-subtitle">
+PREMIUM ORDER PANEL
+</div>
+
+</div>
+
+<h2>
+Create Account
+</h2>
 
 <div id="signupMessage" class="message"></div>
 
-<label>Name</label>
+<label>
+Name
+</label>
 
 <input
 type="text"
@@ -960,7 +1018,9 @@ id="signupName"
 placeholder="Enter your name"
 >
 
-<label>Email</label>
+<label>
+Email
+</label>
 
 <input
 type="email"
@@ -968,7 +1028,9 @@ id="signupEmail"
 placeholder="Enter your email"
 >
 
-<label>Password</label>
+<label>
+Password
+</label>
 
 <input
 type="password"
@@ -996,15 +1058,21 @@ Sign In
 </div>
 
 
-<!-- SIGNIN -->
+<!-- =========================
+SIGNIN
+========================= -->
 
 <div id="signinPage" class="card hidden">
 
 <div class="brand">
 
-<div class="brand-icon">G</div>
+<div class="brand-icon">
+G
+</div>
 
-<div class="brand-name">GROWX</div>
+<div class="brand-name">
+GROWX
+</div>
 
 <div class="brand-subtitle">
 PREMIUM ORDER PANEL
@@ -1012,11 +1080,15 @@ PREMIUM ORDER PANEL
 
 </div>
 
-<h2>Welcome Back</h2>
+<h2>
+Welcome Back
+</h2>
 
 <div id="signinMessage" class="message"></div>
 
-<label>Email</label>
+<label>
+Email
+</label>
 
 <input
 type="email"
@@ -1024,7 +1096,9 @@ id="signinEmail"
 placeholder="Enter your email"
 >
 
-<label>Password</label>
+<label>
+Password
+</label>
 
 <input
 type="password"
@@ -1052,7 +1126,9 @@ Create Account
 </div>
 
 
-<!-- CUSTOMER ORDER PAGE -->
+<!-- =========================
+CUSTOMER ORDER PAGE
+========================= -->
 
 <div id="orderPage" class="card hidden">
 
@@ -1085,6 +1161,7 @@ aria-label="Close menu"
 >
 ×
 </button>
+
 
 <div class="menu-user-section">
 
@@ -1138,7 +1215,10 @@ My Orders
 
 <div class="user-box">
 
-<div id="avatar" class="avatar">
+<div
+id="avatar"
+class="avatar"
+>
 G
 </div>
 
@@ -1166,6 +1246,10 @@ Logout
 
 </div>
 
+
+<!-- =========================
+ORDER FORM
+========================= -->
 
 <div id="orderForm">
 
@@ -1292,6 +1376,10 @@ Continue to Payment
 </div>
 
 
+<!-- =========================
+MY ORDERS
+========================= -->
+
 <div
 id="myOrdersPage"
 class="my-orders-page hidden"
@@ -1306,13 +1394,19 @@ Avg time: 24 hours
 </div>
 
 <div id="myOrdersContainer">
+
 <div class="my-orders-loading">
 Loading orders...
 </div>
-</div>
 
 </div>
 
+</div>
+
+
+<!-- =========================
+PAYMENT
+========================= -->
 
 <div
 id="paymentPage"
@@ -1345,8 +1439,6 @@ id="paymentAmount"
 </div>
 
 <div class="qr-frame">
-
-<!-- QR SOURCE INTENTIONALLY NOT LOADED ON INITIAL PAGE LOAD -->
 
 <img
 id="paymentQR"
@@ -1405,6 +1497,10 @@ Back to Order
 </div>
 
 
+<!-- =========================
+SUCCESS
+========================= -->
+
 <div
 id="successPage"
 class="hidden"
@@ -1454,7 +1550,9 @@ Place New Order
 </div>
 
 
-<!-- ADMIN PANEL -->
+<!-- =========================
+ADMIN PANEL
+========================= -->
 
 <div
 id="adminPage"
@@ -1556,6 +1654,50 @@ supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+
+
+/* =========================
+PWA SERVICE WORKER
+========================= */
+
+if(
+"serviceWorker" in navigator
+){
+
+window.addEventListener(
+"load",
+function(){
+
+navigator.serviceWorker
+.register(
+"./service-worker.js"
+)
+.then(
+function(registration){
+
+console.log(
+"GROWX PWA Service Worker registered:",
+registration.scope
+);
+
+}
+)
+.catch(
+function(error){
+
+console.error(
+"GROWX PWA Service Worker registration failed:",
+error
+);
+
+}
+
+);
+
+}
+);
+
+}
 
 
 /* =========================
@@ -2607,9 +2749,7 @@ document.getElementById(
 "";
 
 
-/* =========================
-LOAD QR ONLY WHEN PAYMENT PAGE OPENS
-========================= */
+/* LOAD QR ONLY WHEN PAYMENT PAGE OPENS */
 
 const paymentQR =
 document.getElementById("paymentQR");
@@ -2617,7 +2757,7 @@ document.getElementById("paymentQR");
 if(paymentQR){
 
 paymentQR.src =
-"IMG-20260923-WA0004~2.jpg";
+"./IMG-20260923-WA0004~2.jpg";
 
 }
 
@@ -2663,8 +2803,6 @@ button.disabled = false;
 button.textContent =
 "Payment Complete";
 
-
-/* REMOVE QR SOURCE AGAIN */
 
 const paymentQR =
 document.getElementById("paymentQR");
@@ -2937,7 +3075,7 @@ document.getElementById(
 ).classList.remove("hidden");
 
 
-/* REMOVE QR SOURCE AFTER SUCCESS */
+/* REMOVE QR */
 
 const paymentQR =
 document.getElementById("paymentQR");
@@ -3017,8 +3155,6 @@ document.getElementById(
 ).value =
 "";
 
-
-/* REMOVE QR SOURCE */
 
 const paymentQR =
 document.getElementById("paymentQR");
