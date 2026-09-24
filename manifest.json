@@ -1,0 +1,13 @@
+{
+  "name": "GROWX ORDER",
+  "short_name": "GROWX",
+  "description": "GROWX Premium Order System",
+  "start_url": "./",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050816",
+  "theme_color": "#050816",
+  "lang": "en"
+}
