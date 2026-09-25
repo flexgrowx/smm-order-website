@@ -1895,19 +1895,37 @@ String(order.service || "-")
 </div>  
   
   
-<div class="my-order-row">  
-  
-<div class="my-order-label">  
-Quantity  
-</div>  
-  
-<div class="my-order-value">  
-${escapeHTML(  
-String(order.quantity ?? "-")  
-)}  
-</div>  
-  
-</div>  
+<div class="my-order-row">
+
+<div class="my-order-label">
+Link
+</div>
+
+<div class="my-order-value">
+
+${
+order.link
+?
+`<a
+href="${escapeAttribute(String(order.link))}"
+target="_blank"
+rel="noopener noreferrer"
+style="
+color:#a78bfa;
+font-weight:800;
+text-decoration:none;
+word-break:break-all;
+"
+>
+Open Post / Reel ↗
+</a>`
+:
+"-"
+}
+
+</div>
+
+</div>
   
   
 <div class="my-order-row">  
