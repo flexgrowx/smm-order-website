@@ -1797,20 +1797,20 @@ return;
   
 /* CURRENT USER ONLY */  
   
-const {  
-data:orders,  
-error  
-} =  
-await supabaseClient  
-.from("Orders")  
-.select(`  
-order_id,  
-service,  
-quantity,  
-price,  
-link,  
-status  
-`)  
+const {
+  data:orders,
+  error
+} = await supabaseClient
+.from("Orders")
+.select(`
+order_id,
+service,
+quantity,
+price,
+link,
+status,
+created_at
+`)
 .eq(  
 "user_id",  
 user.id  
@@ -1880,19 +1880,63 @@ String(order.order_id || "-")
 )}  
 </div>  
   
-<div class="my-order-row">  
-  
-<div class="my-order-label">  
-Service  
-</div>  
-  
-<div class="my-order-value">  
-${escapeHTML(  
-String(order.service || "-")  
-)}  
-</div>  
-  
-</div>  
+<div class="my-order-row">
+
+<div class="my-order-label">
+Quantity
+</div>
+
+<div class="my-order-value">
+${escapeHTML(
+String(order.quantity ?? "-")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Amount
+</div>
+
+<div class="my-order-value">
+₹${escapeHTML(
+String(order.price ?? "0")
+)}
+</div>
+
+</div>
+
+
+<div class="my-order-row">
+
+<div class="my-order-label">
+Order Date
+</div>
+
+<div class="my-order-value">
+${
+order.created_at
+?
+escapeHTML(
+new Date(order.created_at).toLocaleString("en-IN", {
+day:"2-digit",
+month:"2-digit",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit",
+hour12:true
+})
+)
+:
+"-"
+}
+</div>
+
+</div>
   
   
 <div class="my-order-row">
