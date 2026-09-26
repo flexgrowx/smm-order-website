@@ -1228,11 +1228,20 @@ Low Quality Followers — ₹10 / 100
 
 <option
 value="YouTube Subscribe"
-data-rate="15"
-data-min="700"
+data-rate="20"
+data-min="500"
 data-max="20000"
 >
-YouTube Subscribe — ₹15 / 1000 — New Added — Try Now
+YouTube Subscribe — ₹15 / 1000 — New Added 
+</option>
+
+  <option
+value="YouTube Likes"
+data-rate="10"
+data-min="500"
+data-max="20000"
+>
+YouTube Likes — ₹10 / 1000 — New Added 
 </option>
 
 <option
@@ -2431,20 +2440,20 @@ LIKES RATE
 
 function getLikesRate(quantity){
 
-if(quantity>=50 && quantity<=499)
+if(quantity>=50 && quantity<=99)
+return 25;
+
+if(quantity>=100 && quantity<=2999)
 return 20;
 
-if(quantity>=500 && quantity<=2999)
-return 15;
-
 if(quantity>=3000 && quantity<=4999)
-return 12;
+return 18;
 
 if(quantity>=5000 && quantity<=9999)
-return 11;
+return 16;
 
 if(quantity>=10000)
-return 10;
+return 15;
 
 return 0;
 
