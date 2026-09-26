@@ -296,10 +296,6 @@ font-weight:950;
 color:#ffffff;
 }
 
-/* =========================
-QUANTITY LIMITS
-========================= */
-
 .quantity-limits{
 display:flex;
 justify-content:space-between;
@@ -1003,13 +999,77 @@ placeholder="Create a password"
 Create Account
 </button>
 
-<p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
+
+<!-- GOOGLE SIGN UP -->
+
+<div style="
+display:flex;
+align-items:center;
+gap:10px;
+margin:20px 0;
+color:#64748b;
+font-size:11px;
+">
+<div style="
+height:1px;
+flex:1;
+background:rgba(148,163,184,.15);
+"></div>
+
+<span>OR</span>
+
+<div style="
+height:1px;
+flex:1;
+background:rgba(148,163,184,.15);
+"></div>
+</div>
+
+
+<button
+type="button"
+onclick="signInWithGoogle()"
+style="
+background:#fff;
+color:#111827;
+border:1px solid rgba(148,163,184,.25);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+"
+>
+
+<span style="
+font-size:18px;
+font-weight:900;
+font-family:Arial,sans-serif;
+">
+G
+</span>
+
+Continue with Google
+
+</button>
+
+
+<p style="
+text-align:center;
+margin-top:18px;
+color:#64748b;
+font-size:12px;
+">
 
 Already have an account?
 
 <span
 onclick="showSignin()"
-style="color:#a78bfa;cursor:pointer;font-weight:800"
+style="
+color:#a78bfa;
+cursor:pointer;
+font-weight:800
+"
 >
 Sign In
 </span>
@@ -1059,6 +1119,9 @@ placeholder="Enter your password"
 Sign In
 </button>
 
+
+<!-- GOOGLE SIGN IN -->
+
 <div style="
 display:flex;
 align-items:center;
@@ -1067,35 +1130,68 @@ margin:18px 0;
 color:#64748b;
 font-size:11px;
 ">
-  <div style="height:1px;flex:1;background:rgba(148,163,184,.15)"></div>
-  <span>OR</span>
-  <div style="height:1px;flex:1;background:rgba(148,163,184,.15)"></div>
+
+<div style="
+height:1px;
+flex:1;
+background:rgba(148,163,184,.15)
+"></div>
+
+<span>OR</span>
+
+<div style="
+height:1px;
+flex:1;
+background:rgba(148,163,184,.15)
+"></div>
+
 </div>
 
+
 <button
-  type="button"
-  onclick="signInWithGoogle()"
-  style="
-    background:#fff;
-    color:#111827;
-    border:1px solid rgba(148,163,184,.25);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-  "
+type="button"
+onclick="signInWithGoogle()"
+style="
+background:#fff;
+color:#111827;
+border:1px solid rgba(148,163,184,.25);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+"
 >
-  <span style="font-size:18px;font-weight:800;">G</span>
-  Continue with Google
+
+<span style="
+font-size:18px;
+font-weight:900;
+font-family:Arial,sans-serif;
+">
+G
+</span>
+
+Continue with Google
+
 </button>
 
-<p style="text-align:center;margin-top:18px;color:#64748b;font-size:12px">
+
+<p style="
+text-align:center;
+margin-top:18px;
+color:#64748b;
+font-size:12px
+">
 
 Don't have an account?
 
 <span
 onclick="showSignup()"
-style="color:#a78bfa;cursor:pointer;font-weight:800"
+style="
+color:#a78bfa;
+cursor:pointer;
+font-weight:800
+"
 >
 Create Account
 </span>
@@ -1222,7 +1318,13 @@ Logout
 
 <div id="orderForm">
 
-<div style="color:#64748b;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:7px">
+<div style="
+color:#64748b;
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+margin-bottom:7px
+">
 ORDER SERVICE
 </div>
 
@@ -1336,8 +1438,6 @@ id="quantity"
 placeholder="Enter quantity"
 oninput="calculatePrice()"
 >
-
-<!-- AUTOMATIC MINIMUM / MAXIMUM -->
 
 <div
 id="quantityLimits"
@@ -1895,8 +1995,8 @@ return;
 /* CURRENT USER ONLY */
 
 const {
-  data:orders,
-  error
+data:orders,
+error
 } = await supabaseClient
 .from("Orders")
 .select(`
@@ -2072,36 +2172,6 @@ Open Post / Reel ↗
 <div class="my-order-row">
 
 <div class="my-order-label">
-Amount
-</div>
-
-<div class="my-order-value">
-₹${escapeHTML(
-String(order.price ?? "0")
-)}
-</div>
-
-</div>
-
-
-<div class="my-order-row">
-
-<div class="my-order-label">
-Link
-</div>
-
-<div class="my-order-value">
-${escapeHTML(
-String(order.link || "-")
-)}
-</div>
-
-</div>
-
-
-<div class="my-order-row">
-
-<div class="my-order-label">
 Current Status
 </div>
 
@@ -2140,6 +2210,10 @@ type
 
 const element =
 document.getElementById(elementId);
+
+if(!element){
+return;
+}
 
 element.textContent =
 message;
@@ -2229,15 +2303,141 @@ return;
 }
 
 
+/*
+EMAIL/PASSWORD SIGNUP
+
+If email confirmation is enabled,
+the user must verify email first.
+Google signup does not need this
+when Google OAuth returns a session.
+*/
+
+if(
+data?.user &&
+data?.session
+){
+
+await loadCustomer();
+
+return;
+
+}
+
+
 showMessage(
 "signupMessage",
-"Account created successfully. Please sign in.",
+"Account created successfully. Please check your email and sign in.",
 "success"
 );
 
 document.getElementById(
 "signupPassword"
 ).value = "";
+
+}
+
+
+/* =========================
+GOOGLE SIGN IN / SIGN UP
+========================= */
+
+async function signInWithGoogle(){
+
+/*
+Use the current GitHub Pages URL.
+
+Example:
+https://flexgrowx.github.io/smm-order-website/
+*/
+
+const redirectTo =
+window.location.origin +
+window.location.pathname;
+
+
+try{
+
+const {
+error
+} =
+await supabaseClient.auth.signInWithOAuth({
+
+provider:"google",
+
+options:{
+
+redirectTo:redirectTo
+
+}
+
+});
+
+
+if(error){
+
+console.error(
+"Google Sign In Error:",
+error
+);
+
+
+/*
+Show error on whichever
+auth page is currently visible.
+*/
+
+const signupPage =
+document.getElementById(
+"signupPage"
+);
+
+const messageId =
+signupPage &&
+!signupPage.classList.contains("hidden")
+?
+"signupMessage"
+:
+"signinMessage";
+
+
+showMessage(
+messageId,
+error.message,
+"error"
+);
+
+}
+
+}
+catch(error){
+
+console.error(
+"Google OAuth Error:",
+error
+);
+
+const signupPage =
+document.getElementById(
+"signupPage"
+);
+
+const messageId =
+signupPage &&
+!signupPage.classList.contains("hidden")
+?
+"signupMessage"
+:
+"signinMessage";
+
+
+showMessage(
+messageId,
+error.message ||
+"Google Sign-In failed. Please try again.",
+"error"
+);
+
+}
 
 }
 
@@ -2367,6 +2567,7 @@ return;
 
 const name =
 user.user_metadata?.name ||
+user.user_metadata?.full_name ||
 user.email?.split("@")[0] ||
 "Customer";
 
@@ -2612,8 +2813,6 @@ return 100;
 if(service==="YouTube Subscribe")
 return 15;
 
-/* YOUTUBE LIKES = ₹10 / 1000 */
-
 if(service==="YouTube Likes")
 return 10;
 
@@ -2843,10 +3042,6 @@ document.getElementById(
 "";
 
 
-/* =========================
-LOAD QR ONLY WHEN PAYMENT PAGE OPENS
-========================= */
-
 const paymentQR =
 document.getElementById("paymentQR");
 
@@ -2899,8 +3094,6 @@ button.disabled = false;
 button.textContent =
 "Payment Complete";
 
-
-/* REMOVE QR SOURCE AGAIN */
 
 const paymentQR =
 document.getElementById("paymentQR");
@@ -3173,8 +3366,6 @@ document.getElementById(
 ).classList.remove("hidden");
 
 
-/* REMOVE QR SOURCE AFTER SUCCESS */
-
 const paymentQR =
 document.getElementById("paymentQR");
 
@@ -3249,12 +3440,8 @@ document.getElementById(
 "₹0.00";
 
 
-/* RESET QUANTITY LIMITS */
-
 updateQuantityLimits();
 
-
-/* CLEAR ORDER MESSAGE */
 
 const orderMessage =
 document.getElementById(
@@ -3279,8 +3466,6 @@ document.getElementById(
 ).value =
 "";
 
-
-/* REMOVE QR SOURCE */
 
 const paymentQR =
 document.getElementById("paymentQR");
@@ -3763,6 +3948,7 @@ function escapeAttribute(value){
 
 return String(value)
 .replace(/\\/g,"\\\\")
+.replace(/&/g,"&amp;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
 
