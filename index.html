@@ -296,6 +296,29 @@ font-weight:950;
 color:#ffffff;
 }
 
+/* =========================
+QUANTITY LIMITS
+========================= */
+
+.quantity-limits{
+display:flex;
+justify-content:space-between;
+gap:10px;
+margin-top:-8px;
+margin-bottom:18px;
+padding:10px 12px;
+border-radius:11px;
+background:rgba(124,58,237,.08);
+border:1px solid rgba(124,58,237,.16);
+color:#94a3b8;
+font-size:11px;
+font-weight:700;
+}
+
+.quantity-limits strong{
+color:#c4b5fd;
+}
+
 .message{
 display:none;
 margin-bottom:16px;
@@ -1232,7 +1255,7 @@ data-rate="20"
 data-min="500"
 data-max="20000"
 >
-YouTube Subscribe — ₹15 / 1000 — New Added 
+YouTube Subscribe — ₹15 / 1000 — New Added
 </option>
 
 <option
@@ -1241,7 +1264,7 @@ data-rate="10"
 data-min="300"
 data-max="20000"
 >
-YouTube Likes — ₹10 / 1000 — New Added 
+YouTube Likes — ₹10 / 1000 — New Added
 </option>
 
 <option
@@ -1283,6 +1306,25 @@ id="quantity"
 placeholder="Enter quantity"
 oninput="calculatePrice()"
 >
+
+<!-- AUTOMATIC MINIMUM / MAXIMUM -->
+
+<div
+id="quantityLimits"
+class="quantity-limits hidden"
+>
+
+<span>
+Minimum:
+<strong id="quantityMin">-</strong>
+</span>
+
+<span>
+Maximum:
+<strong id="quantityMax">-</strong>
+</span>
+
+</div>
 
 <label>
 Post / Reel Link
@@ -1372,8 +1414,6 @@ id="paymentAmount"
 </div>
 
 <div class="qr-frame">
-
-<!-- QR SOURCE INTENTIONALLY NOT LOADED ON INITIAL PAGE LOAD -->
 
 <img
 id="paymentQR"
@@ -2391,14 +2431,72 @@ showSignin();
 
 
 /* =========================
-SERVICE
+SERVICE + QUANTITY LIMITS
 ========================= */
+
+function updateQuantityLimits(){
+
+const service =
+document.getElementById("service");
+
+const selected =
+service.options[
+service.selectedIndex
+];
+
+const limits =
+document.getElementById("quantityLimits");
+
+const minElement =
+document.getElementById("quantityMin");
+
+const maxElement =
+document.getElementById("quantityMax");
+
+
+if(
+!selected ||
+!selected.value ||
+!selected.dataset.min ||
+!selected.dataset.max
+){
+
+limits.classList.add("hidden");
+
+minElement.textContent="-";
+maxElement.textContent="-";
+
+return;
+
+}
+
+
+minElement.textContent =
+Number(
+selected.dataset.min
+).toLocaleString("en-IN");
+
+maxElement.textContent =
+Number(
+selected.dataset.max
+).toLocaleString("en-IN");
+
+limits.classList.remove("hidden");
+
+}
+
 
 document
 .getElementById("service")
 .addEventListener(
 "change",
-calculatePrice
+function(){
+
+calculatePrice();
+
+updateQuantityLimits();
+
+}
 );
 
 
@@ -2483,6 +2581,11 @@ return 100;
 
 if(service==="YouTube Subscribe")
 return 15;
+
+/* YOUTUBE LIKES = ₹10 / 1000 */
+
+if(service==="YouTube Likes")
+return 10;
 
 if(service==="Instagram Shares")
 return 5;
@@ -2598,8 +2701,10 @@ if(
 !selected.value
 ){
 
-alert(
-"Please select a service."
+showMessage(
+"orderMessage",
+"Please select a service.",
+"error"
 );
 
 return;
@@ -2624,12 +2729,14 @@ quantity < min ||
 quantity > max
 ){
 
-alert(
+showMessage(
+"orderMessage",
 "Quantity must be between " +
-min +
+min.toLocaleString("en-IN") +
 " and " +
-max +
-"."
+max.toLocaleString("en-IN") +
+".",
+"error"
 );
 
 return;
@@ -2646,8 +2753,10 @@ quantity
 
 if(rate<=0){
 
-alert(
-"Please enter a valid quantity."
+showMessage(
+"orderMessage",
+"Please enter a valid quantity.",
+"error"
 );
 
 return;
@@ -2657,8 +2766,10 @@ return;
 
 if(!link){
 
-alert(
-"Please enter your post or reel link."
+showMessage(
+"orderMessage",
+"Please enter your post or reel link.",
+"error"
 );
 
 return;
@@ -3106,6 +3217,32 @@ document.getElementById(
 "price"
 ).textContent =
 "₹0.00";
+
+
+/* RESET QUANTITY LIMITS */
+
+updateQuantityLimits();
+
+
+/* CLEAR ORDER MESSAGE */
+
+const orderMessage =
+document.getElementById(
+"orderMessage"
+);
+
+if(orderMessage){
+
+orderMessage.textContent = "";
+
+orderMessage.className =
+"message";
+
+orderMessage.style.display =
+"none";
+
+}
+
 
 document.getElementById(
 "paymentScreenshot"
