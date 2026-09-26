@@ -2343,13 +2343,6 @@ GOOGLE SIGN IN / SIGN UP
 
 async function signInWithGoogle(){
 
-/*
-Use the current GitHub Pages URL.
-
-Example:
-https://flexgrowx.github.io/smm-order-website/
-*/
-
 const redirectTo =
 window.location.origin +
 window.location.pathname;
@@ -2379,12 +2372,6 @@ console.error(
 "Google Sign In Error:",
 error
 );
-
-
-/*
-Show error on whichever
-auth page is currently visible.
-*/
 
 const signupPage =
 document.getElementById(
